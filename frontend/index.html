@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<form id="loginform">
+		<input type="text" name="name">
+		<input type="password" name="pw">
+		<input type="submit">
+	</form>
+	<script>
+		const loginform = document.getElementById("loginform");
+		loginform.addEventListener("submit", async e => {
+			e.preventDefault();
+			let param = new URLSearchParams();
+			e.target.querySelectorAll("input").forEach(i => {
+				if(i.hasAttribute("name")) {
+					param.append(i.getAttribute("name"), i.value);
+				}
+			});
+			let req = await fetch("/api/login?"+param.toString());
+			if(req.status != 200) {
+				alert(await req.text());
+			}
+			else {
+				alert("login OK!");
+			}
+		});
+	</script>
+</body>
+</html>

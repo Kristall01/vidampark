@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</head>
+<body class="bg-dark text-light">
+	<div class="mw-100 border position-absolute top-50 start-50 translate-middle" id="authpanel">
+		<div class="container">
+			<div class="row fs-4">
+				<div class="login-mode disabled border-bottom-0  btn btn-dark rounded-0 col border-end border-bottom d-flex justify-content-center align-items-center">
+					belépés
+				</div>
+				<div class="register-mode border-start btn btn-dark rounded-0 col border-bottom d-flex justify-content-center align-items-center">
+					regisztráció
+				</div>
+			</div>
+		</div>
+		<div class="px-3">
+			<div class="d-none auth-login-content">
+				<form class="login-form">
+					<div class="text-center form-group my-4">
+						<h2>Bejelentkezés</h2>
+					</div>
+						<div class="form-group my-3">
+					  <label for="exampleInputEmail1">Email cím</label>
+					  <input type="email" class="form-control" name="name" placeholder="Email cím">
+					</div>
+					<div class="form-group my-3">
+					  <label for="exampleInputPassword1">Jelszó</label>
+					  <input type="password" class="form-control" name="password" placeholder="Jelszó">
+					</div>
+					<div class="form-group my-3 d-flex flex-column align-items-center">
+						<span class="text-danger mb-1 login-message invisible">(empty)</span>
+						<input type="submit" class="w-100 btn btn-primary login-btn" value="Bejelentkezés">
+						<div class="d-none login-spinner spinner-border text-primary" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="d-none auth-reg-content">
+				<form class="register-form">
+					<div class="text-center form-group my-4">
+						<h2>Regisztráció</h2>
+					</div>
+						<div class="form-group my-3">
+					  <label for="exampleInputEmail1">Email cím</label>
+					  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email cím">
+					</div>
+					<div class="form-group my-3">
+					  <label for="exampleInputPassword1">Jelszó</label>
+					  <input type="password" class="form-control" name="password" placeholder="Jelszó">
+					</div>
+					<div class="form-group my-3">
+						<label for="exampleInputPassword1">Jelszó újra</label>
+						<input type="password" class="form-control" name="password2" placeholder="Jelszó újra">
+					</div>
+					<div class="form-group my-3 d-flex flex-column align-items-center">
+						<span class="text-danger mb-2">Hibás felbasználónév / jelszó</span>
+						<button type="submit" class="w-100 btn btn-primary">Bejelentkezés</button>
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script type="module" src="script.js"></script>
+</body>
+</html>

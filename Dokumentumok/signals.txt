@@ -1,0 +1,28 @@
+perzisztencia 0.5
+növények 0.5
+Áramellátás [0.5 pont]
+karbantartás 1
+
+/*--> belépődíj beállítása
+--> karbantartók felvétele
+--> karbantartók elbocsájtása
+*/
+
+--> init
+--> katalógus megnyitása
+--> épület lerakás
+--> épület törlése
+
+
+<-- debug üzenet küldése
+<-- katalógus kínálat frissítése
+<-- mapsize
+<-- cell update
+
+
+MILESTONE 1:
+	- login/regisztrációs rendszer
+	- gamestate létrehozás/törlése
+	- scheduler rendszer
+	- placeable lerakása/törlése
+	- alap view
