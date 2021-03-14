@@ -1,5 +1,5 @@
 node_modules/
 /backend/demo_login
 jsconfig.json
-#.idea/
-# *.iml
+.idea/
+*.iml
