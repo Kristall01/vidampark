@@ -1,9 +1,8 @@
-import * as Apilib from "./apilib.js"
+import * as Apilib from "/apilib.js"
 
 class Authpanel {
 
 	/**
-	 * 
 	 * @param {HTMLElement} rootElement 
 	 */
 	constructor(rootElement) {
@@ -16,8 +15,9 @@ class Authpanel {
 		this.registerViewButton.addEventListener("click", e => this.setRegisterMode());
 
 		this.select(".login-form").addEventListener("submit", e => this.login(e));
+		this.select(".register-form").addEventListener("submit", e => this.register(e));
 
-		this.setLoginMode();
+		//this.setLoginMode();
 	}
 
 	/**
@@ -48,7 +48,22 @@ class Authpanel {
 		})();
 	}
 
+	register(e) {
+		e.preventDefault();
+		(async () => {
+			this.select(".register-btn").classList.add("d-none");
+			this.select(".register-spinner").classList.remove("d-none");
+			this.showLoginMessage(null);
+			await Apilib.sleep(1000);
+			this.showRegisterMessage("Ez a név már foglalt.");
+
+			this.select(".register-btn").classList.remove("d-none");
+			this.select(".register-spinner").classList.add("d-none");
+		})();
+	}
+
 	setLoginMode() {
+		this.showLoginMessage(null);
 		this.loginViewButton.classList.add("border-bottom-0", "disabled");
 		this.registerViewButton.classList.remove("border-bottom-0", "disabled");
 		this.select(".auth-reg-content").classList.add("d-none");
@@ -56,10 +71,22 @@ class Authpanel {
 	}
 
 	setRegisterMode() {
+		this.showRegisterMessage(null);
 		this.registerViewButton.classList.add("border-bottom-0", "disabled");
 		this.loginViewButton.classList.remove("border-bottom-0", "disabled");
 		this.select(".auth-reg-content").classList.remove("d-none");
 		this.select(".auth-login-content").classList.add("d-none");
+	}
+
+	showRegisterMessage(msg) {
+		let msgElement = this.select(".register-message");
+		if(msg === null) {
+			msgElement.classList.add("invisible");
+		}
+		else {
+			msgElement.classList.remove("invisible");
+			msgElement.innerText = msg;
+		}
 	}
 
 	showLoginMessage(msg) {

@@ -12,28 +12,28 @@
 <body class="bg-dark text-light">
 	<div class="mw-100 border position-absolute top-50 start-50 translate-middle" id="authpanel">
 		<div class="container">
-			<div class="row fs-4">
-				<div class="login-mode disabled border-bottom-0  btn btn-dark rounded-0 col border-end border-bottom d-flex justify-content-center align-items-center">
+			<div class="row">
+				<div class="btn-lg py-3 login-mode disabled border-bottom-0  btn btn-dark rounded-0 col border-end border-bottom d-flex justify-content-center align-items-center">
 					belépés
 				</div>
-				<div class="register-mode border-start btn btn-dark rounded-0 col border-bottom d-flex justify-content-center align-items-center">
+				<div class="btn-lg py-3 register-mode border-start btn btn-dark rounded-0 col border-bottom d-flex justify-content-center align-items-center">
 					regisztráció
 				</div>
 			</div>
 		</div>
 		<div class="px-3">
-			<div class="d-none auth-login-content">
+			<div class="auth-login-content">
 				<form class="login-form">
 					<div class="text-center form-group my-4">
 						<h2>Bejelentkezés</h2>
 					</div>
-						<div class="form-group my-3">
-					  <label for="exampleInputEmail1">Email cím</label>
-					  <input type="email" class="form-control" name="name" placeholder="Email cím">
+					<div class="form-group my-3">
+						<label>Email cím</label>
+						<input type="email" class="form-control" name="email" placeholder="Email cím">
 					</div>
 					<div class="form-group my-3">
-					  <label for="exampleInputPassword1">Jelszó</label>
-					  <input type="password" class="form-control" name="password" placeholder="Jelszó">
+						<label>Jelszó</label>
+						<input type="password" class="form-control" name="password" placeholder="Jelszó">
 					</div>
 					<div class="form-group my-3 d-flex flex-column align-items-center">
 						<span class="text-danger mb-1 login-message invisible">(empty)</span>
@@ -49,22 +49,22 @@
 					<div class="text-center form-group my-4">
 						<h2>Regisztráció</h2>
 					</div>
-						<div class="form-group my-3">
-					  <label for="exampleInputEmail1">Email cím</label>
-					  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email cím">
+					<div class="form-group my-3">
+						<label for="exampleInputEmail1">Email cím</label>
+						<input type="email" class="form-control" name="email" placeholder="Email cím">
 					</div>
 					<div class="form-group my-3">
-					  <label for="exampleInputPassword1">Jelszó</label>
-					  <input type="password" class="form-control" name="password" placeholder="Jelszó">
+						<label>Jelszó</label>
+						<input type="password" class="form-control" name="password" placeholder="Jelszó">
 					</div>
 					<div class="form-group my-3">
-						<label for="exampleInputPassword1">Jelszó újra</label>
+						<label>Jelszó újra</label>
 						<input type="password" class="form-control" name="password2" placeholder="Jelszó újra">
 					</div>
 					<div class="form-group my-3 d-flex flex-column align-items-center">
-						<span class="text-danger mb-2">Hibás felbasználónév / jelszó</span>
-						<button type="submit" class="w-100 btn btn-primary">Bejelentkezés</button>
-						<div class="spinner-border" role="status">
+						<span class="text-danger mb-1 register-message invisible">(empty)</span>
+						<input type="submit" class="w-100 btn btn-primary register-btn" value="Regisztráció">
+						<div class="d-none register-spinner spinner-border text-primary" role="status">
 							<span class="visually-hidden">Loading...</span>
 						</div>
 					</div>
