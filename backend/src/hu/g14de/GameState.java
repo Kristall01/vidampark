@@ -16,7 +16,7 @@ public class GameState
     /**
      * Money balance
      */
-    private BigInteger balance;
+    private Balance balance;
     /**
      * The actual map
      */
@@ -50,37 +50,37 @@ public class GameState
 //Getters
     public String getId()
     {
-        return id;
+        return this.id;
     }
 
     public String getName()
     {
-        return name;
+        return this.name;
     }
 
-    public BigInteger getBalance()
+    public Balance getBalance()
     {
-        return balance;
+        return this.balance;
     }
 
     public Map getMap()
     {
-        return map;
+        return this.map;
     }
 
     public BuildingCatalog getBuildingCatalog()
     {
-        return buildingCatalog;
+        return this.buildingCatalog;
     }
 
     public Scheduler getScheduler()
     {
-        return scheduler;
+        return this.scheduler;
     }
 
     public long getStartTime()
     {
-        return startTime;
+        return this.startTime;
     }
 
 //Setters
