@@ -10,6 +10,7 @@ public class BuildingTemplate
 
     public BuildingInstance createInstance()
     {
-
+        BuildingInstance b = new BuildingInstance();
+        return b;
     }
 }
