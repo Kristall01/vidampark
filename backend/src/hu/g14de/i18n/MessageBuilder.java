@@ -19,7 +19,7 @@ public class MessageBuilder
 	
 	private void readCommand()
 	{
-		int startPosition = 0;
+		int startPosition = i;
 		boolean run = true;
 		while(run && hasNext())
 		{
@@ -27,7 +27,7 @@ public class MessageBuilder
 			{
 				try
 				{
-					int buildIndex = Integer.parseInt(this.original, startPosition, this.i, 10);
+					int buildIndex = Integer.parseInt(this.original, startPosition, this.i-1, 10);
 					this.components.add(new DynamicComponent(buildIndex));
 					run = false;
 				}
@@ -58,7 +58,7 @@ public class MessageBuilder
 			{
 				if(i != beginIndex+1)
 				{
-					this.components.add(new StaticComponent(this.original, beginIndex, i));
+					this.components.add(new StaticComponent(this.original, beginIndex, i-1));
 				}
 				readCommand();
 				beginIndex = i;

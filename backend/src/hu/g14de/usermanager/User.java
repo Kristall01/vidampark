@@ -1,14 +1,15 @@
 package hu.g14de.usermanager;
 
+import hu.g14de.JsonPrintable;
 import hu.g14de.Utils;
 import hu.g14de.TranslatedException;
 
-public class User
+public class User implements JsonPrintable
 {
 	
 	private String emailAddress;
 	private String password;
-	private final UserManager manager;
+	private final transient UserManager manager;
 	
 	public User(UserManager manager, String emailAddress, String password) throws InvalidEmailAddressException, InvalidPasswordException
 	{
