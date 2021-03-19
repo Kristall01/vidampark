@@ -1,11 +1,13 @@
 package hu.g14de.usermanager;
 
+import hu.g14de.Utils;
+import hu.g14de.TranslatedException;
 import java.util.HashMap;
 
 public class UserManager
 {
 
-	private HashMap<String, User> usermap = new HashMap<String, User>();
+	private final HashMap<String, User> usermap = new HashMap<>();
 	
 	/**
 	 * Creates a new user and stores it.
@@ -14,14 +16,14 @@ public class UserManager
 	 * @param password new user's email address
 	 * @return new user on success, null if creation failed
 	 */
-	public User createUser(String email, String password)
+	public User createUser(String email, String password) throws User.InvalidEmailAddressException, User.InvalidPasswordException
 	{
-		if(!usermap.containsKey(email))
+		if(this.usermap.containsKey(email))
 		{
-			return null;
+			throw new EmailTakenException();
 		}
 		User u = new User(this, email, password);
-		usermap.put(email, u);
+		this.usermap.put(email, u);
 		return u;
 	}
 	
@@ -32,7 +34,19 @@ public class UserManager
 	 */
 	public User getUserByEmail(String email)
 	{
-		return usermap.getOrDefault(email, null);
+		Utils.checkNull(email);
+		
+		return this.usermap.getOrDefault(email, null);
+	}
+	
+	public static class EmailTakenException extends TranslatedException
+	{
+		
+		public EmailTakenException()
+		{
+			super("error.usermanager.email-address-taken");
+		}
+		
 	}
 
 }
