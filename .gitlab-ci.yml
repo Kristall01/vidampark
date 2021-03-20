@@ -1,5 +1,5 @@
 default:
-    image: jhelloworld
+    image: szofttech.inf.elte.hu:5050/szt-ab-2020212/group-06/g14-digital-entertainment/jhelloworld
 
 build-job:
   stage: build
