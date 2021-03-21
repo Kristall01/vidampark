@@ -4,6 +4,8 @@ stages:
 
 build:
     stage: build
+    services:
+        - gradle:latest
     script:
         - cd backend
         - mkdir sources
