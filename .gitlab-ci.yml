@@ -10,7 +10,9 @@ build:
         - mv src/* sources
         - mkdir -p src/main/java
         - mv sources/* src/main/java
-        - docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle init build
+        #- docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle init build
+        - tree
+        - gradle help
     artifacts:
         paths:
             - backend/build/libs/project.jar
