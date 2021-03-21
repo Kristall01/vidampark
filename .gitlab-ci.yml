@@ -15,7 +15,7 @@ build:
         - ls -R
     artifacts:
         paths:
-            - backend/build/libs/project.jar
+            - backend/build/libs/backend.jar
 
 #deploy:
 #    stage: deploy
