@@ -3,6 +3,6 @@ apply plugin: 'application'
 
 jar {
     manifest {
-        attributes 'Main-Class': 'hu.g14.Main'
+        attributes 'Main-Class': 'hu.g14de.VidamparkApp'
     }
 }
