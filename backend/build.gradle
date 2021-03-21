@@ -15,6 +15,6 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'hu.g14de.VidamparkApp'
+        attributes 'Main-Class': 'Main'
     }
 }
