@@ -4,7 +4,7 @@ stages:
 
 build:
     stage: build
-    image: gradle:latest
+    image: gradle:jdk11
     script:
         - cd backend
         - mkdir sources
