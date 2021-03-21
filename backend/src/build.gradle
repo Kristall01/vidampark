@@ -1,8 +1,0 @@
-apply plugin: 'java'
-apply plugin: 'application'
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'hu.g14.Main'
-    }
-}
