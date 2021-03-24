@@ -1,14 +1,23 @@
 package hu.g14de;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
+
+import hu.g14de.usermanager.User;
 
 public class GameState
 {
     /**
+     * Reference to User
+     */
+    private User user;
+    private static int nextId = 0;
+    /**
      * Unique ID
      */
-    private String id;
+    private int id;
     /**
      * Player given name
      */
@@ -28,7 +37,7 @@ public class GameState
     /**
      * Guests who are actually visiting the park
      */
-    private Collection<Guest> guests;
+    private ArrayList<Guest> guests;
     /**
      * Responsible for ticking
      */
@@ -42,9 +51,18 @@ public class GameState
      */
     private long startTime;
 
-    public GameState()
+    public GameState(User user, String name)
     {
-
+        this.user = user;
+        this.name = name;
+        this.id = nextId++;
+        balance = new Balance();
+        map = new Map();
+        buildingCatalog = new BuildingCatalog();
+        guests = new ArrayList<Guest>();
+        scheduler = new Scheduler();
+        started = false;
+        startTime = System.currentTimeMillis();
     }
 
 //Getters
