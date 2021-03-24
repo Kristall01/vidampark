@@ -39,16 +39,16 @@ public class Map
     }
 
     //Methods
-    public Cell getCellByID(int x, int y) //[FIXME] Convention error: not throwing valid exception
+    public Cell getCellByID(int x, int y)
     {
         if(InBounds(x,y))
         {
             return searchCellByCoordinates(x,y);
         }
-        else return null;
+        else throw new TranslatedException("error.map.invalid-ID", x, y);
     }
 
-    private Cell searchCellByCoordinates(int x, int y) // [FIXME] Redundancy: can be swapped to a lambda function
+    private Cell searchCellByCoordinates(int x, int y) // [TODO] Redundancy: can be swapped to a lambda function
     {
         for (Cell var : cellmatrix)
         {
@@ -69,7 +69,7 @@ public class Map
     public boolean addCell(Cell cell) //[FIXME] Convention error: not throwing valid exception
     {
         if (InBounds(cell.getX(), cell.getY())) {this.cellmatrix.add(cell); return true;}
-        else return false;
+        else throw new TranslatedException("error.map.invalid-ID", x, y);
     }
 
     private ArrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY) //[FIXME] 0/negative numbers?
