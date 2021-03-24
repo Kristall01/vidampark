@@ -10,9 +10,26 @@ public class BuildingInstance implements  Placeable
     private int width;
     private String content; //[FIXME] Ambiguous: may be changed for enum or whatever
 
-    @Override
-    public ArrayList<Cell> cellsOccuppied() //[FIXME]
+    private ArrayList<Cell> occuppiedCells;
+
+
+    //Constructor
+    public BuildingInstance(int h, int w)
     {
-        return null;
+        this.height = h;
+        this.width = w;
+        occuppiedCells = new ArrayList<Cell>();
+    }
+
+
+    public void addCellToList(Cell cell)
+    {
+        occuppiedCells.add(cell);
+    }
+
+    @Override
+    public ArrayList<Cell> cellsOccuppied()
+    {
+        return occuppiedCells;
     }
 }
