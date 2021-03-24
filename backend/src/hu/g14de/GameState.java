@@ -111,11 +111,8 @@ public class GameState
 //Setters
     public void setName(String name)
     {
-        //Checks...
-        if(name.length() > 16)
-            throw new TranslatedException(error.gamestate.invalid-name, " túl hosszú.");
-        else if(name.length() < 3)
-            throw new TranslatedException(error.gamestate.invalid-name, " túl rövid.");
+        if(name.length() > 16 || name.length() < 3)
+            throw new TranslatedException("error.gamestate.invalid-name");
 
         this.name = name;
     }
