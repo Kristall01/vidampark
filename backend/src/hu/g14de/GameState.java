@@ -1,7 +1,6 @@
 package hu.g14de;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -51,13 +50,18 @@ public class GameState
      */
     private long startTime;
 
+    /**
+     * Constructor with strictly new game
+     * @param user
+     * @param name
+     */
     public GameState(User user, String name)
     {
         this.user = user;
         this.name = name;
         this.id = nextId++;
         balance = new Balance();
-        map = new Map();
+        this.map = new Map(25,25,this);
         buildingCatalog = new BuildingCatalog();
         guests = new ArrayList<Guest>();
         scheduler = new Scheduler();

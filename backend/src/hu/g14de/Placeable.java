@@ -1,6 +1,6 @@
 package hu.g14de;
 
-public class Placeable
+public interface Placeable
 {
-    //IDFK
+
 }
