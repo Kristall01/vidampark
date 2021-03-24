@@ -77,7 +77,7 @@ public class Map
         ArrayList<Coordinate>  temp = new ArrayList<Coordinate>();
         for(int i = startX; i <= endX; i++)
         {
-            for(int j = startY; j <= endY; j--)
+            for(int j = startY; j <= endY; j++)
             {
                 temp.add(new Coordinate(i,j));
             }
