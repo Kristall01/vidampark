@@ -91,7 +91,8 @@ public class Map
         {
             //Valid building placement
             ArrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y+height-1);
-            for (Coordinate coord : validCoordinates) {
+            for (Coordinate coord : validCoordinates)
+            {
                 searchCellByCoordinates(coord.getX(), coord.getY()).setBuildingInstance(buildingInstance);
             }
         }

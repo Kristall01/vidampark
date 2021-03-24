@@ -1,5 +1,6 @@
 package hu.g14de;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class BuildingInstance implements  Placeable

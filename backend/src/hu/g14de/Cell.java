@@ -32,9 +32,6 @@ public class Cell
 
     public void setBuildingInstance(BuildingInstance buildingInstance) { this.buildingInstance = buildingInstance; }
 
-
-
-
     //Methods
 
 }
