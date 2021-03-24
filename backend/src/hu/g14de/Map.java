@@ -85,7 +85,7 @@ public class Map
         return temp;
     }
 
-    public void placeBuilding(BuildingInstance buildingInstance, int x, int y, int width, int height) //[FIXME] Convention error: not throwing valid exception, not checking for already placed stuff
+    public void placeBuilding(Placeable content, int x, int y, int width, int height) //[FIXME] Convention error: not throwing valid exception, not checking for already placed stuff
     {
         if(InBounds(x,y) && InBounds(x+width-1, y+height-1))
         {
@@ -93,7 +93,7 @@ public class Map
             ArrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y+height-1);
             for (Coordinate coord : validCoordinates)
             {
-                searchCellByCoordinates(coord.getX(), coord.getY()).setBuildingInstance(buildingInstance);
+                searchCellByCoordinates(coord.getX(), coord.getY()).setContent(content);
             }
         }
 
