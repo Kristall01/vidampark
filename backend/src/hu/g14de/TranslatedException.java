@@ -6,19 +6,21 @@ public class TranslatedException extends RuntimeException
 {
 
 	private final String msgID;
+	private Object[] args;
 	
-	public TranslatedException(String msgID)
+	public TranslatedException(String msgID, Object... args)
 	{
-		Utils.checkNull(msgID);
+		Utils.checkNull(msgID, args);
 		
+		this.args = args;
 		this.msgID = msgID;
 	}
 	
-	public String translate(Lang lang, Object... args)
+	public String translate(Lang lang)
 	{
-		Utils.checkNull(lang, args);
+		Utils.checkNull(lang, this.args);
 		
-		return lang.translate(this.msgID, args);
+		return lang.translate(this.msgID, this.args);
 	}
 	
 }
