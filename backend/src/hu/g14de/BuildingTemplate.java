@@ -5,12 +5,12 @@ public class BuildingTemplate
     private String name;
     private long buildCost;
     private long buildTime;
-    private int xSpace;
-    private int ySpace;
+    private int width;
+    private int height;
 
     public BuildingInstance createInstance()
     {
-        BuildingInstance b = new BuildingInstance();
+        BuildingInstance b = new BuildingInstance(height,width);
         return b;
     }
 }
