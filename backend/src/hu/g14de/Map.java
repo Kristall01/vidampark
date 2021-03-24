@@ -72,10 +72,30 @@ public class Map
         else return false;
     }
 
-
-
-    public void placeBuilding(BuildingInstance buildingInstance, int x, int y, int width, int height)
+    private arrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY) //[FIXME] 0/negative numbers?
     {
-        if()
+        arrayList<Coordinate>  temp = new ArrayList<Coordinate>();
+        for(int i = startX; i <= endX; i++)
+        {
+            for(int j = startY; j <= endY; j--)
+            {
+                temp.add(new Coordinate(i,j));
+            }
+        }
+        return temp;
+    }
+
+    public void placeBuilding(BuildingInstance buildingInstance, int x, int y, int width, int height) //[FIXME] Convention error: not throwing valid exception
+    {
+        if(InBounds(x,y) && InBounds(x+width-1, y+height-1))
+        {
+            //Valid building placement
+            arrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y-height+1);
+            for (Coordinate coord : validCoordinates)
+            {
+                searchCellByCoordinates(coord.getX(), coord.getY()).setBuildingInstance(buildingInstance);
+            }
+        }
+
     }
 }
