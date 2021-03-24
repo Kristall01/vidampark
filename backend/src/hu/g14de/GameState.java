@@ -2,7 +2,7 @@ package hu.g14de;
 
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Set;
+import java.util.ArrayList;
 
 import hu.g14de.usermanager.User;
 
@@ -52,25 +52,26 @@ public class GameState
 
     /**
      * Constructor with strictly new game
-     * @param user
-     * @param name
+     * @param user reference to user
+     * @param name map name given by player
      */
     public GameState(User user, String name)
     {
         this.user = user;
         this.name = name;
         this.id = nextId++;
+        started = false;
+        startTime = System.currentTimeMillis();
+
         balance = new Balance();
         this.map = new Map(25,25,this);
         buildingCatalog = new BuildingCatalog();
         guests = new ArrayList<Guest>();
         scheduler = new Scheduler();
-        started = false;
-        startTime = System.currentTimeMillis();
     }
 
 //Getters
-    public String getId()
+    public int getId()
     {
         return this.id;
     }
@@ -127,7 +128,7 @@ public class GameState
      */
     public void startPark()
     {
-
+        started = true;
     }
 
 }
