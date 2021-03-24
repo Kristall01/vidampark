@@ -32,8 +32,14 @@ public class Map
         return this.ySize;
     }
     //Setters
+
+    public void setGamestateReference(GameState gamestateReference)
+    {
+        this.gamestateReference = gamestateReference;
+    }
+
     //Methods
-    public Cell getCellByID(int x, int y)
+    public Cell getCellByID(int x, int y) //[FIXME] Convention error: not throwing valid exception
     {
         if(InBounds(x,y))
         {
@@ -60,13 +66,16 @@ public class Map
         return x >= 0 &&x < xSize && y >= 0 && y < ySize;
     }
 
-    public boolean addCell(Cell cell)
+    public boolean addCell(Cell cell) //[FIXME] Convention error: not throwing valid exception
     {
         if (InBounds(cell.getX(), cell.getY())) {this.cellmatrix.add(cell); return true;}
         else return false;
     }
 
-    public void setGamestateReference(GameState gamestateReference) {
-        this.gamestateReference = gamestateReference;
+
+
+    public void placeBuilding(BuildingInstance buildingInstance, int x, int y, int width, int height)
+    {
+        if()
     }
 }
