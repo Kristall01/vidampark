@@ -87,7 +87,7 @@ public class Map
 
     public void placeBuilding(BuildingInstance buildingInstance, int x, int y, int width, int height) //[FIXME] Convention error: not throwing valid exception
     {
-        if(InBounds(x,y) && InBounds(x+width-1, y+height-1))
+        if(InBounds(x,y) && InBounds(x+width-1, y-height+1))
         {
             //Valid building placement
             arrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y-height+1);
