@@ -7,10 +7,10 @@ public class BuildingInstance implements  Placeable
 
     private int height;
     private int width;
-    private String content; //[FIXME] Ambigous: may be changed for enum or whatever
+    private String content; //[FIXME] Ambiguous: may be changed for enum or whatever
 
     @Override
-    public arrayList<Cell> cellsOccuppied() //[FIXME]
+    public ArrayList<Cell> cellsOccuppied() //[FIXME]
     {
         return null;
     }

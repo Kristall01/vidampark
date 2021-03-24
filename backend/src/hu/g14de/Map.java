@@ -72,9 +72,9 @@ public class Map
         else return false;
     }
 
-    private arrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY) //[FIXME] 0/negative numbers?
+    private ArrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY) //[FIXME] 0/negative numbers?
     {
-        arrayList<Coordinate>  temp = new ArrayList<Coordinate>();
+        ArrayList<Coordinate>  temp = new ArrayList<Coordinate>();
         for(int i = startX; i <= endX; i++)
         {
             for(int j = startY; j <= endY; j--)
@@ -90,7 +90,7 @@ public class Map
         if(InBounds(x,y) && InBounds(x+width-1, y-height+1))
         {
             //Valid building placement
-            arrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y-height+1);
+            ArrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y-height+1);
             for (Coordinate coord : validCoordinates)
             {
                 searchCellByCoordinates(coord.getX(), coord.getY()).setBuildingInstance(buildingInstance);

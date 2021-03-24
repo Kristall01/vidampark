@@ -4,6 +4,6 @@ import java.util.Collection;
 
 public interface Placeable
 {
-    public abstract arrayList<Cell> cellsOccuppied();
+    public abstract ArrayList<Cell> cellsOccuppied();
 
 }
