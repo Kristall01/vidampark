@@ -63,7 +63,7 @@ public class Map
 
     private boolean InBounds(int x,int y)
     {
-        return x >= 0 &&x < xSize && y >= 0 && y < ySize;
+        return x >= 0 && x < xSize && y >= 0 && y < ySize;
     }
 
     public boolean addCell(Cell cell) //[FIXME] Convention error: not throwing valid exception
@@ -85,14 +85,13 @@ public class Map
         return temp;
     }
 
-    public void placeBuilding(BuildingInstance buildingInstance, int x, int y, int width, int height) //[FIXME] Convention error: not throwing valid exception
+    public void placeBuilding(BuildingInstance buildingInstance, int x, int y, int width, int height) //[FIXME] Convention error: not throwing valid exception, not checking for already placed stuff
     {
-        if(InBounds(x,y) && InBounds(x+width-1, y-height+1))
+        if(InBounds(x,y) && InBounds(x+width-1, y+height-1))
         {
             //Valid building placement
-            ArrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y-height+1);
-            for (Coordinate coord : validCoordinates)
-            {
+            ArrayList<Coordinate> validCoordinates = generateBuildingCoords(x,y,x+width-1, y+height-1);
+            for (Coordinate coord : validCoordinates) {
                 searchCellByCoordinates(coord.getX(), coord.getY()).setBuildingInstance(buildingInstance);
             }
         }
