@@ -3,7 +3,7 @@ package hu.g14de;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.ArrayList;
-
+import static hu.g14de.Utils.checkNull;
 import hu.g14de.usermanager.User;
 
 public class GameState
@@ -11,12 +11,12 @@ public class GameState
     /**
      * Reference to User
      */
-    private User user;
+    private final User user;
     private static int nextId = 0;
     /**
      * Unique ID
      */
-    private int id;
+    private final int id;
     /**
      * Player given name
      */
@@ -28,7 +28,7 @@ public class GameState
     /**
      * The actual map
      */
-    private Map map;
+    private final Map map;
     /**
      * Buildings
      */
@@ -48,7 +48,7 @@ public class GameState
     /**
      * Timestamp Creation Date
      */
-    private long startTime;
+    private final long startTime;
 
     /**
      * Constructor with strictly new game
@@ -57,8 +57,10 @@ public class GameState
      */
     public GameState(User user, String name)
     {
+        checkNull(user);
+
         this.user = user;
-        this.name = name;
+        this.setName(name);
         this.id = nextId++;
         started = false;
         startTime = System.currentTimeMillis();
@@ -110,6 +112,11 @@ public class GameState
     public void setName(String name)
     {
         //Checks...
+        if(name.length() > 16)
+            throw new TranslatedException(error.gamestate.invalid-name, " túl hosszú.");
+        else if(name.length() < 3)
+            throw new TranslatedException(error.gamestate.invalid-name, " túl rövid.");
+
         this.name = name;
     }
 
