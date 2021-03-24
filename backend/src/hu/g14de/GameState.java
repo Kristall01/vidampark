@@ -42,9 +42,10 @@ public class GameState
      */
     private long startTime;
 
+    //Constructor with strictly new game
     public GameState()
     {
-
+        this.map = new Map(25,25,this);
     }
 
 //Getters
