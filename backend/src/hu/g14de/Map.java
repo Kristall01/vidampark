@@ -66,14 +66,16 @@ public class Map
         return x >= 0 && x < xSize && y >= 0 && y < ySize;
     }
 
-    public boolean addCell(Cell cell) //[FIXME] Convention error: not throwing valid exception
+    public boolean addCell(Cell cell)
     {
         if (InBounds(cell.getX(), cell.getY())) {this.cellmatrix.add(cell); return true;}
-        else throw new TranslatedException("error.map.invalid-ID", x, y);
+        else throw new TranslatedException("error.map.invalid-ID", cell.getX(), cell.getY());
     }
 
-    private ArrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY) //[FIXME] 0/negative numbers?
+    private ArrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY) //[FIXME] where is coordinates checked for validity
     {
+        if(startX < 0 || startY < 0 || endX < 0 ||endY < 0)
+                throw new TranslatedException("error.map.negative-coordinate");
         ArrayList<Coordinate>  temp = new ArrayList<Coordinate>();
         for(int i = startX; i <= endX; i++)
         {
