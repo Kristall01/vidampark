@@ -21,7 +21,7 @@ public class User implements JsonPrintable
 		}
 		if(password.length() < 8)
 		{
-			throw new InvalidPasswordException();
+			throw new InvalidPasswordException(8);
 		}
 		
 		this.manager = manager;
@@ -62,9 +62,9 @@ public class User implements JsonPrintable
 	public static class InvalidPasswordException extends TranslatedException
 	{
 		
-		public InvalidPasswordException()
+		public InvalidPasswordException(int minLength)
 		{
-			super("error.user.invalid-password.too-short");
+			super("error.user.invalid-password.too-short", minLength);
 		}
 		
 	}

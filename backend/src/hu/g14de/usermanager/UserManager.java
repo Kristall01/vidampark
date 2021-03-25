@@ -2,12 +2,19 @@ package hu.g14de.usermanager;
 
 import hu.g14de.Utils;
 import hu.g14de.TranslatedException;
+import hu.g14de.VidamparkApp;
+
 import java.util.HashMap;
 
 public class UserManager
 {
 
 	private final HashMap<String, User> usermap = new HashMap<>();
+	private final VidamparkApp vidamparkApp;
+	
+	public UserManager(VidamparkApp vidamparkApp) {
+		this.vidamparkApp = vidamparkApp;
+	}
 	
 	/**
 	 * Creates a new user and stores it.
@@ -39,6 +46,13 @@ public class UserManager
 		return this.usermap.getOrDefault(email, null);
 	}
 	
+	public static class InvalidCredentialsException extends TranslatedException {
+		
+		public InvalidCredentialsException() {
+			super("error.usermanager.invalid-credentials");
+		}
+	}
+	
 	public static class EmailTakenException extends TranslatedException
 	{
 		
@@ -48,5 +62,8 @@ public class UserManager
 		}
 		
 	}
-
+	
+	public VidamparkApp getVidamparkApp() {
+		return vidamparkApp;
+	}
 }
