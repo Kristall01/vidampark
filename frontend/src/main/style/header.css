@@ -1,0 +1,25 @@
+header {
+	align-content: center;
+	align-items: center;
+	user-select: none;
+	justify-content: space-between;
+}
+
+header .left {
+	display: flex;
+}
+
+header .right {
+	display: flex;
+	align-content: center;
+	align-items: center;
+}
+
+header >*  > * {
+	display: flex;
+	align-content: center;
+	align-items: center;
+	height: 100%;
+	margin: 0 20px;
+}
+
