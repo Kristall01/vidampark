@@ -32,6 +32,7 @@ public class SignalInAuthSessionid implements SignalIn
 			if(!u.matchPassword(credentialsObject.get("password").getAsString())) {
 				throw new UserManager.InvalidCredentialsException();
 			}
+			c.setUser(u);
 			c.sendSignal(new SignalOutAuthSessionok());
 			c.setSignalInDomain(c.getServer().getGameDomain());
 		}

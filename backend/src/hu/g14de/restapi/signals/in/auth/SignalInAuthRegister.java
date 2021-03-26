@@ -8,6 +8,7 @@ import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthRegistererror;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthRegisterok;
+import hu.g14de.usermanager.User;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -28,12 +29,13 @@ public class SignalInAuthRegister implements SignalIn {
 			if(!password2.equals(password)) {
 				throw new TranslatedException("error.restapi.signalin.signalinauthregister.password-mismatch");
 			}
-			c.getServer().getApp().getUserManager().createUser(email, password);
+			User u = c.getServer().getApp().getUserManager().createUser(email, password);
 			
 			JsonObject token = new JsonObject();
 			token.addProperty("email", email);
 			token.addProperty("password", password);
 			
+			c.setUser(u);
 			c.sendSignal(new SignalOutAuthRegisterok(Base64.getEncoder().encodeToString(Utils.toJson(token).getBytes(StandardCharsets.UTF_8))));
 			c.setSignalInDomain(c.getServer().getGameDomain());
 		}

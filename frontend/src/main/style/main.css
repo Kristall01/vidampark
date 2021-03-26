@@ -1,3 +1,7 @@
+:root {
+	--cellsize: 50px;
+}
+
 #gamespace {
 	display: flex;
 	border: 1px solid black;

@@ -2,26 +2,13 @@
 <html>
 <body>
 	átirányítás folyamatban...
-	<script>
-		if(localStorage.getItem("credentials")) {
-			let ws = new WebSocket("ws://89.132.161.193:8080");
-			ws.addEventListener("message", msg => {
-				msg = JSON.parse(msg.data);
-				if(msg.type == "sessionok") {
-					location = "/main";
-				}
-				else if(msg.type == "sessionerror") {
-					localStorage.removeItem("credentials");
-					location = "/login";
-				}
-			});
-			ws.addEventListener("open", () => {
-				ws.send(JSON.stringify({type: "sessionid", data: {"sessionid": localStorage.getItem("credentials")}}));
-			})
-		}
-		else {
-			location = "/login";
-		}
+	<script src="/auth.js"></script>
+	<script type="module">
+		import auth from "/auth.js";
+		(async () => {
+			let r = await auth();
+			location = r.result ? "/main" : "/login";
+		})();
 	</script>
 </body>
 </html>

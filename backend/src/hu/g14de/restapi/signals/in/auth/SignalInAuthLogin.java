@@ -37,6 +37,7 @@ public class SignalInAuthLogin implements SignalIn
 			token.addProperty("email", email);
 			token.addProperty("password", password);
 			c.sendSignal(new SignalOutAuthLoginok(Base64.getEncoder().encodeToString(Utils.toJson(token).getBytes(StandardCharsets.UTF_8))));
+			c.setUser(u);
 			c.setSignalInDomain(c.getServer().getGameDomain());
 		}
 		catch(TranslatedException ex)

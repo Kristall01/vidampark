@@ -9,7 +9,7 @@ public class SignalOutGameMapsize extends SignalOut {
 	private int width, height;
 	
 	public SignalOutGameMapsize(int width, int height) {
-		super("mapsoze");
+		super("mapsize");
 		this.width = width;
 		this.height = height;
 	}

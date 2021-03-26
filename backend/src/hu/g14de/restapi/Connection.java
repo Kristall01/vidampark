@@ -32,14 +32,25 @@ public class Connection  {
 	{
 		try {
 			JsonObject ob = Utils.fromJson(message).getAsJsonObject();
-			SignalIn in = inDomain.getSignal(ob.get("type").getAsString());
-			in.execute(this, ob.get("data"));
+			String type = ob.get("type").getAsString();
+			SignalIn in = inDomain.getSignal(type);
+			if(in != null) {
+				in.execute(this, ob.get("data"));
+			}
+			else {
+				sendSignal(new SignalOutConnectioncrash("unknown signal "+type+" in domain "+inDomain.getName()));
+				close();
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			sendSignal(new SignalOutConnectioncrash(e.toString()));
 			close();
 		}
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public void sendLogMessage(String message) {

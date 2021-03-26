@@ -16,8 +16,8 @@ public class ConnectionServer {
 	
 	private final Javalin javalin;
 	private final VidamparkApp app;
-	private SignalDomain authDomain = new SignalDomain();
-	private SignalDomain gameDomain = new SignalDomain();
+	private SignalDomain authDomain = new SignalDomain("auth");
+	private SignalDomain gameDomain = new SignalDomain("game");
 	
 	public ConnectionServer(VidamparkApp app, int port) {
 		this.app = app;

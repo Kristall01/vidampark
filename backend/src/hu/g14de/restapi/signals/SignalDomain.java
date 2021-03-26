@@ -7,6 +7,11 @@ public class SignalDomain
 {
 	
 	private final Map<String, SignalIn> signalMap = new HashMap<>();
+	private String name;
+	
+	public SignalDomain(String name) {
+		this.name = name;
+	}
 	
 	public void add(String name, SignalIn c)
 	{
@@ -18,4 +23,7 @@ public class SignalDomain
 		return this.signalMap.get(type);
 	}
 	
+	public String getName() {
+		return name;
+	}
 }

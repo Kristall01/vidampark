@@ -66,7 +66,7 @@ public class GameState
         startTime = System.currentTimeMillis();
 
         balance = new Balance(this, 5000);
-        this.map = new Map(25,25,this);
+        this.map = new Map(10,10,this);
         buildingCatalog = new BuildingCatalog();
         guests = new ArrayList<Guest>();
         scheduler = new Scheduler();
