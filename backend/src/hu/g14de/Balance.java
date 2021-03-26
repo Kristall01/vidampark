@@ -8,7 +8,7 @@ public class Balance
     private final GameState gameState;
     private BigInteger money;
 
-    Balance(GameState gameState, BigInteger money)
+    public Balance(GameState gameState, BigInteger money)
     {
         checkNull(gameState,money);
         if(money.compareTo(new BigInteger("0")) == -1)
@@ -18,7 +18,7 @@ public class Balance
         this.money = money;
     }
 
-    Balance(GameState gameState, int money)
+    public Balance(GameState gameState, int money)
     {
         checkNull(gameState);
         if(money < 0)

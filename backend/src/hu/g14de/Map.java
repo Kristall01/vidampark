@@ -1,22 +1,26 @@
 package hu.g14de;
 import java.util.ArrayList;
-import java.util.Collection;
+import static hu.g14de.Utils.checkNull;
 
 public class Map
 {
-    //Constructor
-    public Map (int boundX, int boundY, GameState gameState)
-    {
-        this.xSize = boundX;
-        this.ySize = boundY;
-        this.cellmatrix = new ArrayList<>();
-        this.gamestateReference = gameState;
-    }
     //Variables
     private GameState gamestateReference;
     private ArrayList<Cell> cellmatrix;
     private int xSize;
     private int ySize;
+
+    //Constructor
+    public Map (int boundX, int boundY, GameState gameState)
+    {
+        checkNull(gameState);
+
+        this.xSize = boundX;
+        this.ySize = boundY;
+        this.cellmatrix = new ArrayList<>();
+        this.gamestateReference = gameState;
+    }
+
     //Getters
     public GameState getGamestateReference()
     {
@@ -31,8 +35,8 @@ public class Map
     {
         return this.ySize;
     }
-    //Setters
 
+    //Setters
     public void setGamestateReference(GameState gamestateReference)
     {
         this.gamestateReference = gamestateReference;

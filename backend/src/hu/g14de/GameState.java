@@ -57,7 +57,7 @@ public class GameState
      */
     public GameState(User user, String name)
     {
-        checkNull(user);
+        checkNull(user, name);
 
         this.user = user;
         this.setName(name);
