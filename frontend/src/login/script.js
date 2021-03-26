@@ -38,6 +38,10 @@ class Authpanel {
 				this.showLoginMessage("login OK");
 				this.toggleLoginSpin();
 				localStorage.setItem("credentials", data.sessionid);
+				(async () => {
+					await Apilib.sleep(1000);
+					location = "/main";
+				})();
 				break;
 			}
 			case "loginerror": {
@@ -54,6 +58,10 @@ class Authpanel {
 				this.showRegisterMessage("regisztráció OK");
 				this.toggleRegisterSpin();
 				localStorage.setItem("credentials", data.sessionid);
+				(async () => {
+					await Apilib.sleep(1000);
+					location = "/main";
+				})();
 				break;
 			}
 		}

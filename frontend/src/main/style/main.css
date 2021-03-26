@@ -19,8 +19,8 @@ main {
 	flex: 1;
 	justify-content: center;
 	align-items: center;
-	background-image: url('/grass.png');
+	background-image: url('https://www.smartcitiesworld.net/AcuCustom/Sitename/DAM/019/Theme_park_AdobeStock_222547272_1.jpg');
 	background-repeat: repeat;
-	background-size: 100px;
+	background-size: cover;
 	overflow: auto;
 }
