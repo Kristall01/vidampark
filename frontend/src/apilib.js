@@ -11,18 +11,27 @@ const codeMessages = {
  * @param {FormData} params
  * @returns {Response}
  */
-function fetchRawResource(path, params, config) {
-	//config = config || {timeout = 1000, validResults = [200]};
+/*function fetchRawResource(path, params, config) {
+	config = config || {timeout = 1000, validResults = [200]};
 
 	if(params !== undefined && !(params instanceof FormData)) {
 		let builder = new FormData();
-		Object.keys(params).forEach(key => {
-			builder.set(key, params[key]);
-		});
+		if(params instanceof HTMLFormElement) {
+			params.querySelectorAll("input").forEach(inputElement => {
+				if(inputElement.name) {
+					builder.set(inputElement.name, inputElement.value);
+				}
+			});
+		}
+		else {
+			Object.keys(params).forEach(key => {
+				builder.set(key, params[key]);
+			});
+		}
 		params = builder;
 	}
 
-	return new Promise(async (resolve, reject) => {
+	return new Promise(async (resolveFn, reject) => {
 
 		function rejectError(logElement) {
 			if(logElement)
@@ -32,9 +41,16 @@ function fetchRawResource(path, params, config) {
 
 		let done = false;
 
+		function resolve(data) {
+			if(!done) {
+				done = true;
+				resolveFn(data);
+			}
+		}
+
 		let timeoutTask = undefined;
 		try {
-			let options = {method: "POST", credentials: "same-origin", redirect: "error"};
+			let options = {method: "GET", credentials: "same-origin", redirect: "error"};
 			if(params)
 				options.body = params;
 			let request = fetch(path, options);
@@ -58,7 +74,7 @@ function fetchRawResource(path, params, config) {
 			rejectError(ex);
 		}
 	});
-}
+}*/
 
 /**
  * @param {string} path 
@@ -88,4 +104,5 @@ function sleep(time) {
 	});
 }
 
-export {fetchRawResource, fetchTextResource, fetchJsonResource, fetchForm, sleep};
+export {sleep};
+//export {fetchRawResource, fetchTextResource, fetchJsonResource, fetchForm, sleep};
