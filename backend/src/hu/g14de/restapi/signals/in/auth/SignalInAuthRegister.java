@@ -35,6 +35,7 @@ public class SignalInAuthRegister implements SignalIn {
 			token.addProperty("password", password);
 			
 			c.sendSignal(new SignalOutAuthRegisterok(Base64.getEncoder().encodeToString(Utils.toJson(token).getBytes(StandardCharsets.UTF_8))));
+			c.setSignalInDomain(c.getServer().getGameDomain());
 		}
 		catch (TranslatedException ex) {
 			String reason = ex.translate(c.getServer().getApp().getUserManager().getVidamparkApp().getLang());

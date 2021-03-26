@@ -1,5 +1,6 @@
 package hu.g14de.usermanager;
 
+import hu.g14de.GameState;
 import hu.g14de.JsonPrintable;
 import hu.g14de.Utils;
 import hu.g14de.TranslatedException;
@@ -10,6 +11,7 @@ public class User implements JsonPrintable
 	private String emailAddress;
 	private String password;
 	private final transient UserManager manager;
+	private GameState state;
 	
 	public User(UserManager manager, String emailAddress, String password) throws InvalidEmailAddressException, InvalidPasswordException
 	{
@@ -27,6 +29,11 @@ public class User implements JsonPrintable
 		this.manager = manager;
 		this.emailAddress = emailAddress;
 		this.password = password;
+		this.state = new GameState(this, "default");
+	}
+	
+	public GameState getState() {
+		return state;
 	}
 	
 	public UserManager getManager()

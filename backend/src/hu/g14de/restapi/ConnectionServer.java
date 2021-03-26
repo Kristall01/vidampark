@@ -5,6 +5,7 @@ import hu.g14de.restapi.signals.SignalDomain;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthLogin;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
+import hu.g14de.restapi.signals.in.game.SignalInGameInit;
 import io.javalin.Javalin;
 import io.javalin.websocket.WsCloseContext;
 import io.javalin.websocket.WsConnectContext;
@@ -24,6 +25,8 @@ public class ConnectionServer {
 		authDomain.add("login", new SignalInAuthLogin());
 		authDomain.add("sessionid", new SignalInAuthSessionid());
 		authDomain.add("register", new SignalInAuthRegister());
+		
+		gameDomain.add("init", new SignalInGameInit());
 		
 		javalin = Javalin.create(config -> {
 			config.showJavalinBanner = false;
@@ -63,4 +66,9 @@ public class ConnectionServer {
 	public SignalDomain getAuthDomain() {
 		return authDomain;
 	}
+	
+	public SignalDomain getGameDomain() {
+		return gameDomain;
+	}
+	
 }

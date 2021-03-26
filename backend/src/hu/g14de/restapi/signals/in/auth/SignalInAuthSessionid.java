@@ -33,6 +33,7 @@ public class SignalInAuthSessionid implements SignalIn
 				throw new UserManager.InvalidCredentialsException();
 			}
 			c.sendSignal(new SignalOutAuthSessionok());
+			c.setSignalInDomain(c.getServer().getGameDomain());
 		}
 		catch (TranslatedException ex) {
 			c.sendSignal(new SignalOutAuthSessionerror());
