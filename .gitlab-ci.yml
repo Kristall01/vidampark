@@ -12,7 +12,6 @@ build:
         - mkdir -p src/main/java
         - mv sources/* src/main/java
         - gradle init build
-        - ls -R
     artifacts:
         paths:
             - backend/build/libs/backend.jar

@@ -1,7 +1,7 @@
 package hu.g14de;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public class BuildingInstance implements  Placeable
 {
@@ -10,7 +10,7 @@ public class BuildingInstance implements  Placeable
     private int width;
     private String content; //[FIXME] Ambiguous: may be changed for enum or whatever
 
-    private ArrayList<Cell> occuppiedCells;
+    private List<Cell> occupiedCells;
 
 
     //Constructor
@@ -18,18 +18,18 @@ public class BuildingInstance implements  Placeable
     {
         this.height = h;
         this.width = w;
-        occuppiedCells = new ArrayList<Cell>();
+        occupiedCells = new ArrayList<Cell>();
     }
 
 
     public void addCellToList(Cell cell)
     {
-        occuppiedCells.add(cell);
+        occupiedCells.add(cell);
     }
 
     @Override
-    public ArrayList<Cell> cellsOccuppied()
+    public List<Cell> cellsOccupied()
     {
-        return occuppiedCells;
+        return occupiedCells;
     }
 }

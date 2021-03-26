@@ -1,10 +1,9 @@
 package hu.g14de;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 public interface Placeable
 {
-    ArrayList<Cell> cellsOccuppied();
+    List<Cell> cellsOccupied();
 
 }
