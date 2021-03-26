@@ -3,6 +3,8 @@ package hu.g14de.restapi;
 import hu.g14de.VidamparkApp;
 import hu.g14de.restapi.signals.SignalDomain;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthLogin;
+import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
+import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import io.javalin.Javalin;
 import io.javalin.websocket.WsCloseContext;
 import io.javalin.websocket.WsConnectContext;
@@ -20,7 +22,8 @@ public class ConnectionServer {
 		this.app = app;
 		
 		authDomain.add("login", new SignalInAuthLogin());
-		authDomain.add("sessionid", new SignalInAuthLogin());
+		authDomain.add("sessionid", new SignalInAuthSessionid());
+		authDomain.add("register", new SignalInAuthRegister());
 		
 		javalin = Javalin.create(config -> {
 			config.showJavalinBanner = false;

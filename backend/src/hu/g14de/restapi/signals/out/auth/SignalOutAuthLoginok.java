@@ -4,8 +4,11 @@ import hu.g14de.restapi.signals.SignalOut;
 
 public class SignalOutAuthLoginok extends SignalOut {
 	
-	public SignalOutAuthLoginok() {
+	private String sessionid;
+	
+	public SignalOutAuthLoginok(String sessionID) {
 		super("loginok");
+		this.sessionid = sessionID;
 	}
 	
 }
