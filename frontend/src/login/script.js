@@ -6,6 +6,9 @@ class Authpanel {
 	 * @param {HTMLElement} rootElement 
 	 */
 	constructor(rootElement) {
+		this.ws = new WebSocket("ws://89.132.161.193:8080");
+		this.ws.addEventListener("message", (msgEvent) => this.msgEvent(JSON.parse(msgEvent.data)));
+
 		this.rootElement = rootElement;
 
 		this.loginViewButton = rootElement.querySelector(".login-mode");
@@ -27,38 +30,69 @@ class Authpanel {
 		return this.rootElement.querySelector(selector);
 	}
 
+	msgEvent(e) {
+		let type = e.type;
+		let data = e.data;
+		switch(type) {
+			case "loginok": {
+				this.showLoginMessage("login OK");
+				this.toggleLoginSpin();
+				localStorage.setItem("credentials", data.sessionid);
+				break;
+			}
+			case "loginerror": {
+				this.showLoginMessage(data.message);
+				this.toggleLoginSpin();
+				break;
+			}
+			case "registererror": {
+				this.showRegisterMessage(data.message);
+				this.toggleRegisterSpin();
+				break;
+			}
+			case "registerok": {
+				this.showRegisterMessage("regisztráció OK");
+				this.toggleRegisterSpin();
+				localStorage.setItem("credentials", data.sessionid);
+				break;
+			}
+		}
+	}
+
 	/**
 	 * @returns {Array<HTMLElement>}
 	 */
-	 selectAll(selector) {
+	selectAll(selector) {
 		return this.rootElement.querySelectorAll(selector);
+	}
+
+	getFormData(formelement) {
+		let builder = {};
+		formelement.querySelectorAll("input").forEach(inputElement => {
+			if(inputElement.name) {
+				builder[inputElement.name] = inputElement.value;
+			}
+		});
+		return builder;
 	}
 
 	login(e) {
 		e.preventDefault();
 		(async () => {
-			this.select(".login-btn").classList.add("d-none");
-			this.select(".login-spinner").classList.remove("d-none");
+			this.toggleLoginSpin();
 			this.showLoginMessage(null);
-			await Apilib.sleep(1000);
-			this.showLoginMessage("Hibás felbasználónév / jelszó");
-
-			this.select(".login-btn").classList.remove("d-none");
-			this.select(".login-spinner").classList.add("d-none");
+			this.ws.send(JSON.stringify({type: "login", data: this.getFormData(this.select(".login-form"))}));
+			//let res = await Apilib.fetchRawResource("/api/register", this.select(".login-form"));
+			//console.log(res);
 		})();
 	}
 
 	register(e) {
 		e.preventDefault();
 		(async () => {
-			this.select(".register-btn").classList.add("d-none");
-			this.select(".register-spinner").classList.remove("d-none");
-			this.showLoginMessage(null);
-			await Apilib.sleep(1000);
-			this.showRegisterMessage("Ez a név már foglalt.");
-
-			this.select(".register-btn").classList.remove("d-none");
-			this.select(".register-spinner").classList.add("d-none");
+			this.showRegisterMessage(null);
+			this.ws.send(JSON.stringify({type: "register", data: this.getFormData(this.select(".register-form"))}));
+			this.toggleRegisterSpin();
 		})();
 	}
 
@@ -98,6 +132,17 @@ class Authpanel {
 			msgElement.classList.remove("invisible");
 			msgElement.innerText = msg;
 		}
+	}
+
+	toggleRegisterSpin() {
+		let a = this.select(".register-btn");
+		a.classList.toggle("d-none");
+		this.select(".register-spinner").classList.toggle("d-none");
+	}
+
+	toggleLoginSpin() {
+		this.select(".login-btn").classList.toggle("d-none");
+		this.select(".login-spinner").classList.toggle("d-none");
 	}
 
 
