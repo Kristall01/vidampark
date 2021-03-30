@@ -1,12 +1,10 @@
 stages:
     - build
-#    - deploy
+    - deploy
 
 build:
     stage: build
     image: gradle:jdk11
-    services:
-        - node:latest
     script:
         - cd backend
         - mkdir sources
@@ -14,12 +12,21 @@ build:
         - mkdir -p src/main/java
         - mv sources/* src/main/java
         - gradle init build
+    artifacts:
+        paths:
+            - backend/build/libs/backend.jar
+
+deploy:
+    stage: deploy
+    image: node:latest
+    script:
         - npm install -g heroku
         - heroku plugins:install heroku-cli-deploy
         - heroku deploy:jar backend/build/libs/backend.jar --app g14-vidampark
     artifacts:
         paths:
             - backend/build/libs/backend.jar
+
 
 #deploy:
 #    stage: deploy
