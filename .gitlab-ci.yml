@@ -21,8 +21,8 @@ deploy:
     image: openjdk:11
     script:
         - apt install -y curl
-        - curl -sL https://deb.nodesource.com/setup_9.x | bash -
-        - apt install -y nodejs \
+        - curl -sL https://deb.nodesource.com/setup_14.x | bash -
+        - apt install -y nodejs
         - curl -L https://www.npmjs.com/install.sh | sh
         - npm install -g heroku
         - heroku plugins:install heroku-cli-deploy
