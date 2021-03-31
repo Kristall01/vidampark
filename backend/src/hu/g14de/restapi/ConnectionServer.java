@@ -32,6 +32,10 @@ public class ConnectionServer {
 			config.showJavalinBanner = false;
 		});
 		
+		javalin.get("/", ctx -> {
+			ctx.result("Hello world!");
+		});
+		
 		javalin.ws("/", c -> {
 			c.onMessage(this::handleWsMessage);
 			c.onClose(this::handleWsClose);

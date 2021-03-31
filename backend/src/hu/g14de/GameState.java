@@ -107,8 +107,12 @@ public class GameState
     {
         return this.startTime;
     }
-
-//Setters
+	
+	public User getUser() {
+		return user;
+	}
+	
+	//Setters
     public void setName(String name)
     {
         if(name.length() > 16 || name.length() < 3)

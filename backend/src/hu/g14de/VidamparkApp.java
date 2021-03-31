@@ -22,7 +22,18 @@ public class VidamparkApp {
 		}
 		lang = Lang.readLangFile(new File(langPath));
 		userManager = new UserManager(this);
-		connectionServer = new ConnectionServer(this, 8080);
+		String portText = System.getenv("PORT");
+		int port = 8080;
+		if(portText != null) {
+			try {
+				port = Integer.parseInt(portText);
+				System.out.println("using alternative port "+portText);
+			}
+			catch (NumberFormatException ex) {
+				System.out.println("invalid port number '"+portText+"'");
+			}
+		}
+		connectionServer = new ConnectionServer(this, port);
 		//restApiManager = new RestApiServer(this, 8080);
 	}
 	
