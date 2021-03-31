@@ -1,6 +1,6 @@
 stages:
     - build
-#    - deploy
+    - deploy
 
 build:
     stage: build
@@ -14,15 +14,19 @@ build:
         - gradle init build
     artifacts:
         paths:
-            - backend/build/libs/backend.jar
+            - $CI_PROJECT_DIR/backend/build/libs/backend.jar
 
-#deploy:
-#    stage: deploy
-#    script:
-#        - mkdir public
-#        - mv frontend/src/* public
-#    artifacts:
-#        paths:
-#            - public
-#    only:
-#        - master
+deploy:
+    stage: deploy
+    image: openjdk:11
+    script:
+        - apt install -y curl
+        - curl -sL https://deb.nodesource.com/setup_14.x | bash -
+        - apt install -y nodejs
+        - curl -L https://www.npmjs.com/install.sh | sh
+        - npm install -g heroku
+        - heroku plugins:install heroku-cli-deploy
+        - heroku deploy:jar $CI_PROJECT_DIR/backend/build/libs/backend.jar --jdk 11 --app g14-vidampark
+    artifacts:
+        paths:
+            - $CI_PROJECT_DIR/backend/build/libs/backend.jar
