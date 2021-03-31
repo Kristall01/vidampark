@@ -3,6 +3,7 @@ import auth from "/auth.js";
 export default class Game {
 
 	constructor() {
+		this.money = 5000;
 		(async () => {
 			let res = await auth();
 			this.ws = res.ws;
@@ -37,10 +38,10 @@ export default class Game {
 				this.setCell(data.x, data.y, data.status);
 				break;
 			}
-			case "connectioncrash": {
+/*			case "connectioncrash": {
 				alert("connection crashed");
 				break;
-			}
+			}*/
 		}
 	}
 
@@ -58,7 +59,7 @@ export default class Game {
 		for (let y = 0; y < height; y++) {
 			buffer += "<tr>";
 			for (let x = 0; x < width; x++) {
-				buffer += `<td id="cell-${x}-${y}"></td>`;
+				buffer += `<td x="${x}" y="${y}" id="cell-${x}-${y}"></td>`;
 			}
 			buffer += "</tr>"
 		}
@@ -66,6 +67,9 @@ export default class Game {
 		document.querySelectorAll("td").forEach(e => {
 			e.addEventListener("click", ev => {
 				ev.target.classList.add("road");
+				this.money -= 200;
+				this.setBalance(this.money - 200);
+				//this.sendPacket("placeroad", {x: ev.target.getAttribute("x"), y: ev.target.getAttribute("y")})
 			})
 		});
 	}
