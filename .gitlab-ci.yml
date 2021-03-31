@@ -26,7 +26,7 @@ deploy:
         - curl -L https://www.npmjs.com/install.sh | sh
         - npm install -g heroku
         - heroku plugins:install heroku-cli-deploy
-        - heroku deploy:jar $CI_PROJECT_DIR/backend/build/libs/backend.jar --app g14-vidampark
+        - heroku deploy:jar $CI_PROJECT_DIR/backend/build/libs/backend.jar --jdk 11 --app g14-vidampark
     artifacts:
         paths:
             - $CI_PROJECT_DIR/backend/build/libs/backend.jar
