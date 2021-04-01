@@ -1,4 +1,5 @@
 import * as Apilib from "/apilib.js"
+import {getAddress} from "/auth.js"
 
 class Authpanel {
 
@@ -6,7 +7,7 @@ class Authpanel {
 	 * @param {HTMLElement} rootElement 
 	 */
 	constructor(rootElement) {
-		this.ws = new WebSocket("ws://89.132.161.193:8080");
+		this.ws = new WebSocket(getAddress());
 		this.ws.addEventListener("message", (msgEvent) => this.msgEvent(JSON.parse(msgEvent.data)));
 
 		this.rootElement = rootElement;

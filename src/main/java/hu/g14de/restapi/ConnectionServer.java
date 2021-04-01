@@ -7,6 +7,7 @@ import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import hu.g14de.restapi.signals.in.game.SignalInGameInit;
 import io.javalin.Javalin;
+import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsCloseContext;
 import io.javalin.websocket.WsConnectContext;
 import io.javalin.websocket.WsErrorContext;
@@ -30,10 +31,7 @@ public class ConnectionServer {
 		
 		javalin = Javalin.create(config -> {
 			config.showJavalinBanner = false;
-		});
-		
-		javalin.get("/", ctx -> {
-			ctx.result("Hello world!");
+			config.addStaticFiles("/", "frontend", Location.EXTERNAL);
 		});
 		
 		javalin.ws("/", c -> {

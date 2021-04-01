@@ -1,6 +1,7 @@
-node_modules/
-/backend/demo_login
-jsconfig.json
-.idea/
-*.iml
-/backend/out
+.gradle
+.idea
+gradle/
+build/
+gradlew
+gradlew.bat
+settings.gradle

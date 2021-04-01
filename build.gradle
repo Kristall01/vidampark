@@ -22,7 +22,10 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
-    from('src/main/java') {
-		include '*.cfg'
-	}
+    from('src/main/frontend') {
+        into 'frontend'
+    }
+    from('src/main/resources') {
+        include '*'
+    }
 }
