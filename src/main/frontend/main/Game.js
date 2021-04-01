@@ -1,9 +1,10 @@
 import {auth} from "/auth.js";
+import UI from "./UI.js";
 
 export default class Game {
 
 	constructor() {
-		this.money = 5000;
+		this.ui = new UI(this);
 		(async () => {
 			let res = await auth();
 			this.ws = res.ws;
@@ -24,7 +25,6 @@ export default class Game {
 		msg = JSON.parse(msg.data);
 		let type = msg.type;
 		let data = msg.data;
-		console.log(msg);
 		switch(type) {
 			case "balance": {
 				this.setBalance(data.balance);
@@ -38,19 +38,11 @@ export default class Game {
 				this.setCell(data.x, data.y, data.status);
 				break;
 			}
-/*			case "connectioncrash": {
-				alert("connection crashed");
-				break;
-			}*/
 		}
 	}
 
 	sendPacket(type, data) {
 		this.ws.send(JSON.stringify({type: type, data: data}));
-	}
-
-	setBalance(balance) {
-		document.getElementById("balance").innerText = balance;
 	}
 
 	drawMap(width, height) {
@@ -66,22 +58,9 @@ export default class Game {
 		table.querySelector("tbody").innerHTML = buffer;
 		document.querySelectorAll("td").forEach(e => {
 			e.addEventListener("click", ev => {
-				ev.target.classList.add("road");
-				this.money -= 200;
-				this.setBalance(this.money - 200);
-				//this.sendPacket("placeroad", {x: ev.target.getAttribute("x"), y: ev.target.getAttribute("y")})
+				this.sendPacket("placeroad", {x: ev.target.getAttribute("x"), y: ev.target.getAttribute("y")})
 			})
 		});
-	}
-
-	setCell(x,y,status) {
-		let e = document.getElementById(`cell-${x}-${y}`);
-		if(status) {
-			e.classList.add("road");
-		}
-		else {
-			e.classList.remove("road");
-		}
 	}
 
 }

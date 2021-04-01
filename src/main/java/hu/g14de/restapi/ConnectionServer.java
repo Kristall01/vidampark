@@ -6,6 +6,7 @@ import hu.g14de.restapi.signals.in.auth.SignalInAuthLogin;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import hu.g14de.restapi.signals.in.game.SignalInGameInit;
+import hu.g14de.restapi.signals.in.game.SignalInGamePlaceroad;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsCloseContext;
@@ -28,6 +29,7 @@ public class ConnectionServer {
 		authDomain.add("register", new SignalInAuthRegister());
 		
 		gameDomain.add("init", new SignalInGameInit());
+		gameDomain.add("placeroad", new SignalInGamePlaceroad());
 		
 		javalin = Javalin.create(config -> {
 			config.showJavalinBanner = false;
