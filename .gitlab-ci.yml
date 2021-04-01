@@ -6,15 +6,10 @@ build:
     stage: build
     image: gradle:jdk11
     script:
-        - cd backend
-        - mkdir sources
-        - mv src/* sources
-        - mkdir -p src/main/java
-        - mv sources/* src/main/java
-        - gradle init build
+        - gradle build
     artifacts:
         paths:
-            - $CI_PROJECT_DIR/backend/build/libs/backend.jar
+            - $CI_PROJECT_DIR/backend/build/libs/vidamparkapp.jar
     only:
         - deploy
 
@@ -28,6 +23,6 @@ deploy:
         - curl -L https://www.npmjs.com/install.sh | sh
         - npm install -g heroku
         - heroku plugins:install heroku-cli-deploy
-        - heroku deploy:jar $CI_PROJECT_DIR/backend/build/libs/backend.jar --jdk 11 --app g14-vidampark
+        - heroku deploy:jar $CI_PROJECT_DIR/build/libs/vidamparkapp.jar --jdk 11 --app g14-vidampark
     only:
         - deploy
