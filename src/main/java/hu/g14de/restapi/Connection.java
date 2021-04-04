@@ -47,8 +47,7 @@ public class Connection  {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			sendSignal(new SignalOutConnectioncrash(e.toString()));
-			close();
+			crash(e.toString());
 		}
 	}
 	
@@ -69,10 +68,24 @@ public class Connection  {
 	}
 	
 	public void sendSignal(SignalOut o) {
-		JsonObject ob = new JsonObject();
-		ob.addProperty("type", o.type());
-		ob.add("data", Utils.gson().toJsonTree(o));
-		context.send(Utils.toJson(ob));
+		try {
+			JsonObject ob = new JsonObject();
+			ob.addProperty("type", o.type());
+			ob.add("data", Utils.gson().toJsonTree(o.serializedData()));
+			context.send(Utils.toJson(ob));
+		}
+		catch (Exception ex) {
+			if(o instanceof SignalOutConnectioncrash) {
+				return;
+			}
+			ex.printStackTrace();
+			crash("failed to send signal. "+ex);
+		}
+	}
+	
+	public void crash(String message) {
+		sendSignal(new SignalOutConnectioncrash(message));
+		close();
 	}
 	
 	public void setSignalInDomain(SignalDomain domain) {

@@ -15,4 +15,8 @@ public class SignalOut
 		return this.type;
 	}
 	
+	public Object serializedData() {
+		return this;
+	}
+	
 }

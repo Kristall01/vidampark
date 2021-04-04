@@ -2,6 +2,8 @@ package hu.g14de;
 
 import java.util.ArrayList;
 import static hu.g14de.Utils.checkNull;
+
+import com.google.gson.JsonObject;
 import hu.g14de.usermanager.User;
 
 public class GameState
@@ -114,6 +116,14 @@ public class GameState
 	
 	public void deactivate() {
     	this.active = false;
+	}
+	
+	public JsonObject getAsListEntry() {
+    	JsonObject o = new JsonObject();
+    	o.addProperty("id", getId());
+    	o.addProperty("name", getName());
+    	o.addProperty("createtime", startTime);
+    	return o;
 	}
 
 }

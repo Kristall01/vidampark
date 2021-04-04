@@ -1,17 +1,20 @@
 package hu.g14de.restapi.signals.out.select;
 
+import hu.g14de.GameState;
 import hu.g14de.restapi.signals.SignalOut;
 
 public class SignalOutSelectAdd extends SignalOut {
+
+	private GameState state;
 	
-	private int id;
-	private String name;
-	private long createTime;
-	
-	public SignalOutSelectAdd(int id, String name, long createTime) {
+	public SignalOutSelectAdd(GameState state) {
 		super("add");
-		this.id = id;
-		this.name = name;
-		this.createTime = createTime;
+		this.state = state;
 	}
+	
+	@Override
+	public Object serializedData() {
+		return state.getAsListEntry();
+	}
+	
 }
