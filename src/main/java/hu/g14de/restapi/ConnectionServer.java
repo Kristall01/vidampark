@@ -7,6 +7,8 @@ import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import hu.g14de.restapi.signals.in.game.SignalInGameInit;
 import hu.g14de.restapi.signals.in.game.SignalInGamePlaceroad;
+import hu.g14de.restapi.signals.in.select.SignalInSelectCreate;
+import hu.g14de.restapi.signals.in.select.SignalInSelectSelect;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsCloseContext;
@@ -20,6 +22,8 @@ public class ConnectionServer {
 	private final VidamparkApp app;
 	private SignalDomain authDomain = new SignalDomain("auth");
 	private SignalDomain gameDomain = new SignalDomain("game");
+	private SignalDomain selectDomain = new SignalDomain("select");
+	private SignalDomain commonDomain = new SignalDomain("common");
 	
 	public ConnectionServer(VidamparkApp app, int port) {
 		this.app = app;
@@ -30,6 +34,9 @@ public class ConnectionServer {
 		
 		gameDomain.add("init", new SignalInGameInit());
 		gameDomain.add("placeroad", new SignalInGamePlaceroad());
+		
+		selectDomain.add("create", new SignalInSelectCreate());
+		selectDomain.add("select", new SignalInSelectSelect());
 		
 		javalin = Javalin.create(config -> {
 			config.showJavalinBanner = false;
@@ -75,4 +82,11 @@ public class ConnectionServer {
 		return gameDomain;
 	}
 	
+	public SignalDomain getCommonDomain() {
+		return commonDomain;
+	}
+	
+	public SignalDomain getSelectDomain() {
+		return selectDomain;
+	}
 }

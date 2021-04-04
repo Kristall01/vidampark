@@ -1,4 +1,4 @@
-package hu.g14de.restapi.signals.out;
+package hu.g14de.restapi.signals.out.common;
 
 import hu.g14de.restapi.signals.SignalOut;
 

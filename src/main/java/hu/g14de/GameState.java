@@ -1,7 +1,5 @@
 package hu.g14de;
 
-import java.math.BigInteger;
-import java.util.Collection;
 import java.util.ArrayList;
 import static hu.g14de.Utils.checkNull;
 import hu.g14de.usermanager.User;
@@ -12,7 +10,6 @@ public class GameState
      * Reference to User
      */
     private final User user;
-    private static int nextId = 0;
     /**
      * Unique ID
      */
@@ -30,10 +27,6 @@ public class GameState
      */
     private final Map map;
     /**
-     * Buildings
-     */
-    private BuildingCatalog buildingCatalog;
-    /**
      * Guests who are actually visiting the park
      */
     private ArrayList<Guest> guests;
@@ -49,25 +42,25 @@ public class GameState
      * Timestamp Creation Date
      */
     private final long startTime;
+    private boolean active = false;
 
     /**
      * Constructor with strictly new game
      * @param user reference to user
      * @param name map name given by player
      */
-    public GameState(User user, String name)
+    public GameState(User user, String name, int ID)
     {
         checkNull(user, name);
 
         this.user = user;
         this.setName(name);
-        this.id = nextId++;
+        this.id = ID;
         started = false;
         startTime = System.currentTimeMillis();
 
         balance = new Balance(this, 5000);
         this.map = new Map(10,10,this);
-        buildingCatalog = new BuildingCatalog();
         guests = new ArrayList<Guest>();
         scheduler = new Scheduler();
     }
@@ -93,11 +86,6 @@ public class GameState
         return this.map;
     }
 
-    public BuildingCatalog getBuildingCatalog()
-    {
-        return this.buildingCatalog;
-    }
-
     public Scheduler getScheduler()
     {
         return this.scheduler;
@@ -116,27 +104,16 @@ public class GameState
     public void setName(String name)
     {
         if(name.length() > 16 || name.length() < 3)
-            throw new TranslatedException("error.gamestate.invalid-name");
-
+            throw new TranslatedException("error.gamestate.invalid-name", name);
         this.name = name;
     }
-
-//Methods
-
-    /**
-     * Catches Ticks
-     */
-    public void notifyTick()
-    {
-
-    }
-
-    /**
-     * Opens park
-     */
-    public void startPark()
-    {
-        started = true;
-    }
+    
+    public void activate() {
+    	this.active = true;
+	}
+	
+	public void deactivate() {
+    	this.active = false;
+	}
 
 }

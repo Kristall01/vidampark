@@ -4,12 +4,11 @@ import hu.g14de.Utils;
 import hu.g14de.i18n.messages.Message;
 
 import java.util.HashMap;
-import hu.g14de.JsonPrintable;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
-public class Lang implements JsonPrintable
+public class Lang
 {
 	
 	private final HashMap<String, Message> messageMap = new HashMap<>();

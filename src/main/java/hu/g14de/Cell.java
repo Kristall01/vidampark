@@ -4,34 +4,36 @@ import static hu.g14de.Utils.checkNull;
 public class Cell
 {
     //Variables
-    private int x;
-    private int y;
-
-    private Map mapReference;
-    private Placeable content;
+    private final Map map;
+	private final Coordinate cords;
+	private Placeable content;
 
     //Constructor
-    public Cell(Map mapReference, int x, int y, Placeable content)
+    public Cell(Map mapReference, Coordinate cords, Placeable content)
     {
-        checkNull(mapReference, content);
+        checkNull(mapReference, cords, content);
 
-        this.mapReference = mapReference;
-        this.x = x;
-        this.y = y;
+        this.map = mapReference;
+        this.cords = cords;
         this.content = content;
     }
-
-    //Getters
-    public int getX () {return this.x;}
-    public int getY () {return this.y;}
-
-    public Map getMapReference () {return this.mapReference;}
-    public Placeable getContent()
+	
+	public Coordinate getCoordinate() {
+		return this.cords;
+	}
+	
+	public Map getMap() {
+		return this.map;
+	}
+	
+	public Placeable getContent()
     {
-        return content;
+        return this.content;
     }
     //Setters
 
-    public void setContent(Placeable content) { this.content = content; }
+    public boolean hasContent() {
+    	return content != null;
+	}
 
 }

@@ -12,10 +12,10 @@ public class SignalInGameInit implements SignalIn {
 	
 	@Override
 	public void execute(Connection c, JsonElement e) {
-		GameState g = c.getUser().getState();
+		/*GameState g = c.getUser().getState();
 		c.sendSignal(new SignalOutGameBalance(g.getBalance().getMoney()));
 		Map m = g.getMap();
-		c.sendSignal(new SignalOutGameMapsize(m.getxSize(), m.getySize()));
+		c.sendSignal(new SignalOutGameMapsize(m.getxSize(), m.getySize()));*/
 	}
 	
 }

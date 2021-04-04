@@ -8,6 +8,7 @@ import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthSessionerror;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthSessionok;
+import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
 import hu.g14de.usermanager.User;
 import hu.g14de.usermanager.UserManager;
 
@@ -34,7 +35,8 @@ public class SignalInAuthSessionid implements SignalIn
 			}
 			c.setUser(u);
 			c.sendSignal(new SignalOutAuthSessionok());
-			c.setSignalInDomain(c.getServer().getGameDomain());
+			c.setSignalInDomain(c.getServer().getSelectDomain());
+			c.sendSignal(new SignalOutCommonSetscene("select"));
 		}
 		catch (TranslatedException ex) {
 			c.sendSignal(new SignalOutAuthSessionerror());

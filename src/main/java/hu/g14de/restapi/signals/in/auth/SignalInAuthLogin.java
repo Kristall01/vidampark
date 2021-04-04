@@ -9,6 +9,7 @@ import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthLoginerror;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthLoginok;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthRegisterok;
+import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
 import hu.g14de.usermanager.User;
 import hu.g14de.usermanager.UserManager;
 
@@ -38,7 +39,8 @@ public class SignalInAuthLogin implements SignalIn
 			token.addProperty("password", password);
 			c.sendSignal(new SignalOutAuthLoginok(Base64.getEncoder().encodeToString(Utils.toJson(token).getBytes(StandardCharsets.UTF_8))));
 			c.setUser(u);
-			c.setSignalInDomain(c.getServer().getGameDomain());
+			c.setSignalInDomain(c.getServer().getSelectDomain());
+			c.sendSignal(new SignalOutCommonSetscene("select"));
 		}
 		catch(TranslatedException ex)
 		{

@@ -11,21 +11,18 @@ public class Balance
     public Balance(GameState gameState, BigInteger money)
     {
         checkNull(gameState,money);
-        if(money.compareTo(new BigInteger("0")) == -1)
-            throw new NegativeMoneyException();
-
+        
+        if(money.compareTo(new BigInteger("0")) < 0) {
+        	throw new IllegalArgumentException("negative money");
+		}
+        
         this.gameState = gameState;
         this.money = money;
     }
 
     public Balance(GameState gameState, int money)
     {
-        checkNull(gameState);
-        if(money < 0)
-            throw new NegativeMoneyException();
-
-        this.gameState = gameState;
-        this.money = new BigInteger(Integer.toString(money));
+    	this(gameState, BigInteger.valueOf(money));
     }
 
     public BigInteger getMoney()
@@ -38,34 +35,20 @@ public class Balance
         return gameState;
     }
 
-    public void setMoney(BigInteger amount)
-    {
-        this.money = amount;
-    }
-
     public void addMoney(BigInteger amount)
     {
         this.money = this.money.add(amount);
     }
 
-    public boolean removeMoney(BigInteger amount)
+    public void removeMoney(BigInteger amount) throws NegativeMoneyException
     {
         if(this.money.compareTo(amount) < 0)
         {
-            return false;
+        	throw new NegativeMoneyException();
         }
-        else
-        {
-            this.money = this.money.subtract(amount);
-            return true;
-        }
+		this.money = this.money.subtract(amount);
     }
+    
+    public static class NegativeMoneyException extends Exception {}
 
-    public static class NegativeMoneyException extends TranslatedException
-    {
-        public NegativeMoneyException()
-        {
-            super("error.balance.negative-money");
-        }
-    }
 }

@@ -5,8 +5,8 @@ import hu.g14de.Utils;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.SignalDomain;
 import hu.g14de.restapi.signals.SignalOut;
-import hu.g14de.restapi.signals.out.SignalOutConnectioncrash;
-import hu.g14de.restapi.signals.out.SignalOutLog;
+import hu.g14de.restapi.signals.out.common.SignalOutConnectioncrash;
+import hu.g14de.restapi.signals.out.common.SignalCommonOutLog;
 import hu.g14de.usermanager.User;
 import io.javalin.websocket.WsContext;
 
@@ -33,7 +33,10 @@ public class Connection  {
 		try {
 			JsonObject ob = Utils.fromJson(message).getAsJsonObject();
 			String type = ob.get("type").getAsString();
-			SignalIn in = inDomain.getSignal(type);
+			SignalIn in = server.getCommonDomain().getSignal(type);
+			if(in == null) {
+				in = inDomain.getSignal(type);
+			}
 			if(in != null) {
 				in.execute(this, ob.get("data"));
 			}
@@ -54,7 +57,7 @@ public class Connection  {
 	}
 	
 	public void sendLogMessage(String message) {
-		sendSignal(new SignalOutLog(message));
+		sendSignal(new SignalCommonOutLog(message));
 	}
 	
 	public void close() {

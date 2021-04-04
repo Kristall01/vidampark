@@ -1,27 +1,32 @@
 package hu.g14de;
 
+import com.google.gson.JsonObject;
 import hu.g14de.i18n.Lang;
 import hu.g14de.restapi.ConnectionServer;
 import hu.g14de.usermanager.UserManager;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.CodeSource;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class VidamparkApp {
 	
-	//private RestApiServer restApiManager;
 	private Lang lang;
 	private UserManager userManager;
 	private ConnectionServer connectionServer;
+	private JsonObject config;
 	
 	public VidamparkApp() throws IOException {
 		File langFile = new File("lang.cfg");
 		File baseDir = new File(System.getProperty("user.dir"));
 		copyFile(baseDir, "lang.cfg");
+		copyFile(baseDir, "config.json");
 		String langPath = "lang.cfg";
+		config = (JsonObject) Utils.fromJson(Files.readString(new File(baseDir, "config.json").toPath(), StandardCharsets.UTF_8));
 		
 		File frontend = new File("frontend");
 		if(!frontend.isDirectory()) {
@@ -46,10 +51,6 @@ public class VidamparkApp {
 					}
 				}
 			}
-			else {
-				//Fail...
-			}
-			
 		}
 		
 		lang = Lang.readLangFile(new File(langPath));
@@ -69,19 +70,6 @@ public class VidamparkApp {
 		//restApiManager = new RestApiServer(this, 8080);
 	}
 	
-	private void copyFile(File baseDir, String fileName) throws IOException {
-		File target = new File(baseDir, fileName);
-		if(!target.isFile()) {
-			InputStream in = getClass().getClassLoader().getResourceAsStream(fileName);
-			if(in != null) {
-				FileOutputStream out = new FileOutputStream(target);
-				in.transferTo(out);
-				in.close();
-				out.close();
-			}
-		}
-	}
-	
 	public ConnectionServer getConnectionServer() {
 		return connectionServer;
 	}
@@ -94,4 +82,20 @@ public class VidamparkApp {
 		return userManager;
 	}
 	
+	public JsonObject getConfig() {
+		return config;
+	}
+	
+	private void copyFile(File baseDir, String fileName) throws IOException {
+		File target = new File(baseDir, fileName);
+		if(!target.isFile()) {
+			InputStream in = getClass().getClassLoader().getResourceAsStream(fileName);
+			if(in != null) {
+				FileOutputStream out = new FileOutputStream(target);
+				in.transferTo(out);
+				in.close();
+				out.close();
+			}
+		}
+	}
 }
