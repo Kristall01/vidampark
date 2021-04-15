@@ -3,9 +3,9 @@ package hu.g14de.i18n;
 import hu.g14de.Utils;
 import hu.g14de.i18n.messages.Message;
 
-import java.util.HashMap;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class Lang
@@ -44,7 +44,7 @@ public class Lang
 	public String translate(String msgID, Object... args)
 	{
 		//nem kell null check, a getMessage() elvégzi (redundáns nullCheck elkerülése)
-		
+		sharedBuilder.setLength(0);
 		Message m = getMessage(msgID);
 		if(m == null)
 			return msgID;

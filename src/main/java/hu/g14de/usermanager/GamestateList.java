@@ -32,7 +32,7 @@ public class GamestateList {
 	public GameState createGamestate() {
 		int id = ++nextID;
 		SimpleBuildingCatalog fakeCatalog = new SimpleBuildingCatalog();
-		GameState s = new GameState(this.user, "unnamed", id, fakeCatalog);
+		GameState s = new GameState(this.user, "save #"+id, id, fakeCatalog);
 		map.put(id, s);
 		return s;
 	}

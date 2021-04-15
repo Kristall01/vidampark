@@ -20,6 +20,26 @@ export default class App extends React.Component {
 		}
 	}
 
+	handleSignal(type, data) {
+		switch(type) {
+			case "setscene": {
+				this.switchScreen(data.scene, {});
+				return;
+			}
+			case "log": {
+				window.alert(data.msg);
+				return;
+			}
+			case "connectioncrash": {
+				window.alert("connection crashed");
+				return;
+			}
+			default: {
+				this.state.signal.emit(type, data);
+			}
+		}
+	}
+
 	componentDidMount() {
 		let emiter = new SignalEmiter();
 		this.setState(Object.assign(this.state, {signal: emiter}));
@@ -35,12 +55,7 @@ export default class App extends React.Component {
 				})
 				c.addEventListener("signal", e => {
 					e = e.detail;
-					if(e.type == "setscene") {
-						this.switchScreen(e.data.scene, {});
-					}	
-					else {
-						this.state.signal.emit(e);
-					}
+					this.handleSignal(e.type, e.data);
 				});
 				c.addEventListener("close", () => {
 					this.setLoadingPhase("connection lost", false);

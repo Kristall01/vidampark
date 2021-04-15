@@ -54,13 +54,12 @@ class Authpage extends Component {
 			o[key] = data.get(key);
 		}
 
-		setTimeout(() => {this.props.signal.send(this.state.state, o)}, 1000);
-		this.updateState("errorlabel", null);
 		this.updateState("submit", false);
+		this.updateState("errorlabel", null);
+		this.props.signal.send(this.state.state, o);
 	}
 
 	handleSignal(type, data) {
-		console.log(type,data);
 		this.updateState("submit", true);
 		if(type == "autherror") {
 			this.updateState("errorlabel", data.message);

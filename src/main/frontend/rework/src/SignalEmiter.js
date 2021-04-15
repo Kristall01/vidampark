@@ -12,8 +12,8 @@ class SignalEmiter {
 		this.handeSignalSend(type, data);
 	}
 
-	emit(signal) {
-		this.handler(signal.type, signal.data);
+	emit(type, data) {
+		this.handler(type, data);
 	}
 
 }

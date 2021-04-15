@@ -1,13 +1,14 @@
 package hu.g14de.restapi;
 
 import com.google.gson.JsonObject;
+import hu.g14de.TranslatedException;
 import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
 import hu.g14de.gamestate.GameState;
 import hu.g14de.restapi.signals.SignalDomain;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.SignalOut;
-import hu.g14de.restapi.signals.out.common.SignalCommonOutLog;
+import hu.g14de.restapi.signals.out.common.SignalOutCommonLog;
 import hu.g14de.restapi.signals.out.common.SignalOutConnectioncrash;
 import hu.g14de.usermanager.User;
 import io.javalin.websocket.WsContext;
@@ -50,6 +51,10 @@ public class Connection  {
 			}
 			in.execute(this, ob.get("data"));
 		}
+		catch(TranslatedException ex) {
+			String msg = ex.translate(getApp().getLang());
+			sendSignal(new SignalOutCommonLog(msg));
+		}
 		catch (Exception e) {
 			e.printStackTrace();
 			crash(e.toString());
@@ -61,7 +66,7 @@ public class Connection  {
 	}
 	
 	public void sendLogMessage(String message) {
-		sendSignal(new SignalCommonOutLog(message));
+		sendSignal(new SignalOutCommonLog(message));
 	}
 	
 	public void close() {
