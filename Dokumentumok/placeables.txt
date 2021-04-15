@@ -1,0 +1,17 @@
+Rollercoaster
+Céllövölde
+Óriáskerék
+Körhinta
+Dodgem
+Terminator
+Viking ship
+Bouncy castle
+
+Hamburger
+Vattacukor
+Étterem
+Hot-dog
+
+Road
+Tree
+Grass
