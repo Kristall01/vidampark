@@ -2,13 +2,12 @@ package hu.g14de.restapi.signals.out.auth;
 
 import hu.g14de.restapi.signals.SignalOut;
 
-public class SignalOutAuthRegistererror extends SignalOut {
+public class SignalOutAuthError extends SignalOut {
 	
 	private String message;
 	
-	public SignalOutAuthRegistererror(String message) {
-		super("registererror");
+	public SignalOutAuthError(String message) {
+		super("autherror");
 		this.message = message;
 	}
-	
 }

@@ -6,7 +6,7 @@ import hu.g14de.TranslatedException;
 import hu.g14de.Utils;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
-import hu.g14de.restapi.signals.out.auth.SignalOutAuthRegistererror;
+import hu.g14de.restapi.signals.out.auth.SignalOutAuthError;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthRegisterok;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
 import hu.g14de.usermanager.User;
@@ -42,7 +42,7 @@ public class SignalInAuthRegister implements SignalIn {
 		}
 		catch (TranslatedException ex) {
 			String reason = ex.translate(c.getServer().getApp().getUserManager().getApp().getLang());
-			c.sendSignal(new SignalOutAuthRegistererror(reason));
+			c.sendSignal(new SignalOutAuthError(reason));
 		}
 	}
 	

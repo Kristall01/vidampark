@@ -1,14 +1,19 @@
 class SignalEmiter {
 
-	constructor() {
-	}
-
 	subscribe(handler) {
 		this.handler = handler;
 	}
 
-	emit(type, data) {
-		this.handler(type, data);
+	subscribeSend(handler) {
+		this.handeSignalSend = handler;
+	}
+
+	send(type, data) {
+		this.handeSignalSend(type, data);
+	}
+
+	emit(signal) {
+		this.handler(signal.type, signal.data);
 	}
 
 }

@@ -1,12 +1,11 @@
 import "./Authpage.css"
 import React, { Component, createRef } from "react"
-import { render } from "@testing-library/react";
 
 const phases = {
 	"login": {
 		comp: () =>
 			<>
-				<input name="username" className="section" type="text" placeholder="felhasználónév"></input>
+				<input name="email" className="section" type="text" placeholder="email cím"></input>
 				<input name="password" className="section" type="password" placeholder="jelszó"></input>
 			</>,
 		title: "bejelentkezés"
@@ -14,7 +13,7 @@ const phases = {
 	"register": {
 		comp: () =>
 			<>
-				<input name="username" className="section" type="text" placeholder="felhasználónév"></input>
+				<input name="email" className="section" type="text" placeholder="email cím"></input>
 				<input name="password" className="section" type="password" placeholder="jelszó"></input>
 				<input name="password2" className="section" type="password" placeholder="jelszó újra"></input>
 			</>,
@@ -34,7 +33,6 @@ class Authpage extends Component {
 		}
 
 		this.formReference = createRef();
-
 	}
 
 	switchPanel(panel) {
@@ -56,12 +54,21 @@ class Authpage extends Component {
 			o[key] = data.get(key);
 		}
 
+		setTimeout(() => {this.props.signal.send(this.state.state, o)}, 1000);
+		this.updateState("errorlabel", null);
 		this.updateState("submit", false);
+	}
 
-		setTimeout(() => {
-			this.updateState("submit", true);
-		}, 1000)
-		console.log(JSON.stringify(o));
+	handleSignal(type, data) {
+		console.log(type,data);
+		this.updateState("submit", true);
+		if(type == "autherror") {
+			this.updateState("errorlabel", data.message);
+		}
+	}
+
+	componentDidMount() {
+		this.props.signal.subscribe((type, data) => this.handleSignal(type, data));
 	}
 
 	render() {
@@ -88,7 +95,7 @@ class Authpage extends Component {
 					</div>
 					<div className="mainPart">
 						<h1 className="section centered">{phases[this.state.state].title}</h1>
-						<form ref={this.formReference} onSubmit={() => this.handleSubmit.apply(this,arguments)}>
+						<form ref={this.formReference} onSubmit={e => this.handleSubmit(e)}>
 							{phases[this.state.state].comp()}
 							{errorlabel}
 							<input disabled={!this.state.submit} type="submit" className="section"></input>
