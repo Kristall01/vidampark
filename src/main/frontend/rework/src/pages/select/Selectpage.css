@@ -1,0 +1,59 @@
+.select-page .header {
+	background-color: black;
+	width: 100%;
+	height: 50px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	box-sizing: border-box;
+	padding: 0 10px;
+}
+
+.select-page .header > * {
+	margin-left: 10px;
+}
+
+.select-page .new-game {
+	width: 150px;
+	height: 150px;
+	border: 3px dashed gray;
+	border-radius: 25px;
+	position: relative;
+}
+
+.select-page .new-game .cross {
+	background-color: darkgray;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+}
+
+.select-page .new-game .crossX {
+	width: 5px;
+	height: 70px;
+}
+
+.select-page .new-game .crossY {
+	width: 70px;
+	height: 5px;
+}
+
+.select-page .content {
+	box-sizing: border-box;
+	padding: 0 10px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.select-page {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.select-page .gamestate-component {
+	margin: 50px;
+}

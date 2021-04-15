@@ -1,0 +1,33 @@
+.loading-component {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-size: 24px;
+	user-select: none;
+}
+
+.loading-component .loading {
+	margin-bottom: 10px;
+}
+
+.loading-component .spinner {
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	box-sizing: border-box;
+	border: 5px solid lightgray;
+	border-top-color: black;
+	animation: spin .5s linear infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

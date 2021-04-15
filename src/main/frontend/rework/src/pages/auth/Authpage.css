@@ -1,0 +1,69 @@
+.auth-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+
+.auth-page * {
+	box-sizing: border-box;
+}
+
+.auth-page .card {
+	width: 400px;
+	border: 1px solid black;
+}
+
+.auth-page .section {
+	margin: 20px 0;
+}
+
+.auth-page .centered {
+	text-align: center;
+}
+
+.auth-page .switchPart {
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+}
+
+.auth-page .switchPart .active {
+	border-bottom-width: 0;
+}
+
+.auth-page .switchPart .active:hover {
+	cursor: unset;
+}
+
+.auth-page .switchPart * {
+	width: 50%;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	border-bottom-width: 0px;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.auth-page .switchPart *:hover {
+	cursor: pointer;
+}
+
+.auth-page .switchPart *:last-child {
+	border-right-width: 0;
+}
+
+.auth-page .mainPart {
+	border-top-width: 0;
+	padding: 0 20px;
+}
+
+.auth-page form > * {
+	display: block;
+	height: 40px;
+	width: 100%;
+}

@@ -1,0 +1,38 @@
+.button {
+	background: #9147ff;
+	color: white;
+	user-select: none;
+	border-radius: 4px;
+	font-size: 24px;
+	display: inline-block;
+}
+
+.button.wide {
+	display: block;
+}
+
+.button:hover {
+	cursor: pointer;
+}
+
+.button.disabled {
+	background: gray;
+    opacity: 0.5;
+}
+
+.button .dark {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	padding: 5px 10px;
+	box-sizing: border-box;
+	border-radius: 4px;
+}
+
+.button:hover .dark {
+	background: rgba(0,0,0,0.2);
+}
+
+.button.disabled:hover {
+	cursor: not-allowed;
+}
