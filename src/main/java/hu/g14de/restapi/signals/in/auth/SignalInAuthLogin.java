@@ -8,7 +8,6 @@ import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthLoginerror;
 import hu.g14de.restapi.signals.out.auth.SignalOutAuthLoginok;
-import hu.g14de.restapi.signals.out.auth.SignalOutAuthRegisterok;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
 import hu.g14de.usermanager.User;
 import hu.g14de.usermanager.UserManager;
@@ -44,7 +43,7 @@ public class SignalInAuthLogin implements SignalIn
 		}
 		catch(TranslatedException ex)
 		{
-			String reason = ex.translate(c.getServer().getApp().getUserManager().getVidamparkApp().getLang());
+			String reason = ex.translate(c.getServer().getApp().getUserManager().getApp().getLang());
 			c.sendSignal(new SignalOutAuthLoginerror(reason));
 		}
 	}

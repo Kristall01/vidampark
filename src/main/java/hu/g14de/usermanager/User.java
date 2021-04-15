@@ -1,9 +1,8 @@
 package hu.g14de.usermanager;
 
-import hu.g14de.GameState;
-import hu.g14de.GamestateList;
-import hu.g14de.Utils;
 import hu.g14de.TranslatedException;
+import hu.g14de.Utils;
+import hu.g14de.VidamparkApp;
 
 public class User
 {
@@ -34,6 +33,10 @@ public class User
 	
 	public GamestateList getList() {
 		return list;
+	}
+	
+	public VidamparkApp getApp() {
+		return manager.getApp();
 	}
 	
 	public UserManager getManager()

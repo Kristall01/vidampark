@@ -1,5 +1,16 @@
 {
 	"startBalance": 5000,
 	"ticketPrice": 50,
-	"roadPrice": 50
+	"buildings": [
+		{
+			"name": "road",
+			"buildCost": 50,
+			"buildTime": 10
+		},
+		{
+			"name": "hotdog",
+			"buildCost": 100,
+			"buildTime": 20
+		}
+	]
 }

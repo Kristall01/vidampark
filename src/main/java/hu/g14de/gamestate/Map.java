@@ -1,4 +1,4 @@
-package hu.g14de;
+package hu.g14de.gamestate;
 
 import static hu.g14de.Utils.checkNull;
 

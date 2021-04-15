@@ -13,7 +13,6 @@ import hu.g14de.usermanager.User;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.List;
 
 public class SignalInAuthRegister implements SignalIn {
 	
@@ -42,7 +41,7 @@ public class SignalInAuthRegister implements SignalIn {
 			c.sendSignal(new SignalOutCommonSetscene("select"));
 		}
 		catch (TranslatedException ex) {
-			String reason = ex.translate(c.getServer().getApp().getUserManager().getVidamparkApp().getLang());
+			String reason = ex.translate(c.getServer().getApp().getUserManager().getApp().getLang());
 			c.sendSignal(new SignalOutAuthRegistererror(reason));
 		}
 	}

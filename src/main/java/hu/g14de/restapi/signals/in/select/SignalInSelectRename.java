@@ -2,7 +2,7 @@ package hu.g14de.restapi.signals.in.select;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import hu.g14de.GameState;
+import hu.g14de.gamestate.GameState;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.out.select.SignalOutSelectRename;

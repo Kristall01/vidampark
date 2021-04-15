@@ -1,4 +1,6 @@
-package hu.g14de;
+package hu.g14de.unused;
+
+import hu.g14de.gamestate.GameState;
 
 import java.util.Random;
 

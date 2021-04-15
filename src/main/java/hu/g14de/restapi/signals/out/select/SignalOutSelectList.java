@@ -1,8 +1,8 @@
 package hu.g14de.restapi.signals.out.select;
 
 import com.google.gson.JsonObject;
-import hu.g14de.GameState;
-import hu.g14de.GamestateList;
+import hu.g14de.gamestate.GameState;
+import hu.g14de.usermanager.GamestateList;
 import hu.g14de.restapi.signals.SignalOut;
 
 import java.util.List;

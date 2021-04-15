@@ -6,7 +6,9 @@ import hu.g14de.restapi.signals.in.auth.SignalInAuthLogin;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import hu.g14de.restapi.signals.in.game.SignalInGameInit;
-import hu.g14de.restapi.signals.in.game.SignalInGamePlaceroad;
+import hu.g14de.restapi.signals.in.game.SignalInGameLeave;
+import hu.g14de.restapi.signals.in.game.SignalInGamePlaceBuilding;
+import hu.g14de.restapi.signals.in.game.SignalInGameStartpark;
 import hu.g14de.restapi.signals.in.select.SignalInSelectCreate;
 import hu.g14de.restapi.signals.in.select.SignalInSelectList;
 import hu.g14de.restapi.signals.in.select.SignalInSelectRename;
@@ -35,7 +37,9 @@ public class ConnectionServer {
 		authDomain.add("register", new SignalInAuthRegister());
 		
 		gameDomain.add("init", new SignalInGameInit());
-		gameDomain.add("placeroad", new SignalInGamePlaceroad());
+		gameDomain.add("placebuilding", new SignalInGamePlaceBuilding());
+		gameDomain.add("startpark", new SignalInGameStartpark());
+		gameDomain.add("leave", new SignalInGameLeave());
 		
 		selectDomain.add("create", new SignalInSelectCreate());
 		selectDomain.add("select", new SignalInSelectSelect());
@@ -56,7 +60,6 @@ public class ConnectionServer {
 		
 		javalin.start(port);
 	}
-	
 	
 	private void handleWsConnect(WsConnectContext connectEvent) {
 		connectEvent.attribute("connection", new Connection(this, connectEvent));

@@ -1,10 +1,12 @@
 import {auth} from "/auth.js";
 import UI from "./UI.js";
+import Window from "/window/window.js";
 
 export default class Game {
 
 	constructor() {
 		this.ui = new UI(this);
+		this.catalogWindow = new Window({title: "épület katalógus"});
 		(async () => {
 			let res = await auth();
 			this.ws = res.ws;
@@ -16,9 +18,13 @@ export default class Game {
 			this.ws.addEventListener("message", e => this.handleMsg(e));
 			let unimplemented = () => alert("ez a funkctió még nem elérhető.");
 			document.getElementById("openpark-btn").addEventListener("click", unimplemented);
-			document.getElementById("catalog-btn").addEventListener("click", unimplemented);
+			document.getElementById("catalog-btn").addEventListener("click", e => {
+				document.querySelector("main").appendChild(this.catalogWindow.element);
+				this.catalogWindow.show();
+			});
 			this.sendPacket("init", {});
 		})();
+		
 	}
 
 	handleMsg(msg) {
@@ -27,7 +33,7 @@ export default class Game {
 		let data = msg.data;
 		switch(type) {
 			case "balance": {
-				this.setBalance(data.balance);
+				//this.setBalance(data.balance);
 				break;
 			}
 			case "mapsize": {

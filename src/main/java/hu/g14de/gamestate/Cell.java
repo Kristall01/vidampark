@@ -1,28 +1,35 @@
-package hu.g14de;
+package hu.g14de.gamestate;
+import hu.g14de.Placeable;
+import hu.g14de.VidamparkApp;
+
 import static hu.g14de.Utils.checkNull;
 
 public class Cell
 {
     //Variables
-    private final Map map;
+    private final IMap map;
 	private final Coordinate cords;
 	private Placeable content;
 
     //Constructor
-    public Cell(Map mapReference, Coordinate cords, Placeable content)
+    public Cell(IMap mapReference, Coordinate cords, Placeable content)
     {
-        checkNull(mapReference, cords, content);
+        checkNull(mapReference, cords);
 
         this.map = mapReference;
         this.cords = cords;
         this.content = content;
     }
+    
+    public VidamparkApp getApp() {
+    	return map.getApp();
+	}
 	
 	public Coordinate getCoordinate() {
 		return this.cords;
 	}
 	
-	public Map getMap() {
+	public IMap getMap() {
 		return this.map;
 	}
 	
@@ -30,10 +37,13 @@ public class Cell
     {
         return this.content;
     }
-    //Setters
 
     public boolean hasContent() {
     	return content != null;
+	}
+	
+	public void setContent(Placeable p) {
+    	this.content = p;
 	}
 
 }

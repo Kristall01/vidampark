@@ -22,9 +22,9 @@ jar {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
-    from('src/main/frontend') {
+/*    from('src/main/frontend') {
         into 'frontend'
-    }
+    }*/
     from('src/main/resources') {
         include '*'
     }

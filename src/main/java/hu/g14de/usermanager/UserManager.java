@@ -63,7 +63,7 @@ public class UserManager
 		
 	}
 	
-	public VidamparkApp getVidamparkApp() {
+	public VidamparkApp getApp() {
 		return vidamparkApp;
 	}
 }

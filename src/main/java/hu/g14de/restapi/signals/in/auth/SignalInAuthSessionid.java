@@ -22,7 +22,7 @@ public class SignalInAuthSessionid implements SignalIn
 	public void execute(Connection c, JsonElement e)
 	{
 		try {
-			String sessionIDRaw = e.getAsJsonObject().get("sessionid").getAsString();
+			String sessionIDRaw = e.getAsString();
 			String decoded = new String(Base64.getDecoder().decode(sessionIDRaw), StandardCharsets.UTF_8);
 			JsonObject credentialsObject = Utils.fromJson(decoded).getAsJsonObject();
 			
