@@ -34,6 +34,10 @@ export default class App extends React.Component {
 				window.alert("connection crashed");
 				return;
 			}
+			case "logout": {
+				this.switchScreen("auth");
+				return;
+			}
 			default: {
 				this.state.signal.emit(type, data);
 			}

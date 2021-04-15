@@ -5,6 +5,7 @@ import hu.g14de.restapi.signals.SignalDomain;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthLogin;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
+import hu.g14de.restapi.signals.in.common.SignalInCommonLogout;
 import hu.g14de.restapi.signals.in.game.SignalInGameInit;
 import hu.g14de.restapi.signals.in.game.SignalInGameLeave;
 import hu.g14de.restapi.signals.in.game.SignalInGamePlaceBuilding;
@@ -31,6 +32,8 @@ public class ConnectionServer {
 	
 	public ConnectionServer(VidamparkApp app, int port) {
 		this.app = app;
+		
+		commonDomain.add("logout", new SignalInCommonLogout());
 		
 		authDomain.add("login", new SignalInAuthLogin());
 		authDomain.add("sessionid", new SignalInAuthSessionid());

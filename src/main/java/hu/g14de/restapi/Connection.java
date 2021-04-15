@@ -78,6 +78,10 @@ public class Connection  {
 		return user;
 	}
 	
+	public boolean isAuthenticated() {
+		return getUser() != null;
+	}
+	
 	public void sendSignal(SignalOut o) {
 		try {
 			JsonObject ob = new JsonObject();

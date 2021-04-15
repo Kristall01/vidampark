@@ -63,7 +63,7 @@ class Selectpage extends Component {
 		<div className="select-page">
 			<div className="header">
 				<Button onClick={() => this.createState()}>új játék</Button>
-				<Button>kijelentkezés</Button>
+				<Button onClick={() => this.props.signal.send("logout", {})}>kijelentkezés</Button>
 			</div>
 			<div className="content">
 				{states}
