@@ -44,7 +44,13 @@ public class GamestateList {
 	public GameState getGamestate(int ID) {
 		return map.get(ID);
 	}
-	
-	public static class GamestateNotFoundException extends Exception {}
+
+    public void remove(int id) {
+		Utils.checkNull(map.get(id));
+		GameState state = this.map.remove(id);
+		state.destructor();
+    }
+
+    public static class GamestateNotFoundException extends Exception {}
 	
 }

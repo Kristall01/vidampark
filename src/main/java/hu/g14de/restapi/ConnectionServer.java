@@ -7,10 +7,7 @@ import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import hu.g14de.restapi.signals.in.common.SignalInCommonLogout;
 import hu.g14de.restapi.signals.in.game.*;
-import hu.g14de.restapi.signals.in.select.SignalInSelectCreate;
-import hu.g14de.restapi.signals.in.select.SignalInSelectList;
-import hu.g14de.restapi.signals.in.select.SignalInSelectRename;
-import hu.g14de.restapi.signals.in.select.SignalInSelectSelect;
+import hu.g14de.restapi.signals.in.select.*;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsCloseContext;
@@ -46,6 +43,7 @@ public class ConnectionServer {
 		selectDomain.add("select", new SignalInSelectSelect());
 		selectDomain.add("list", new SignalInSelectList());
 		selectDomain.add("rename", new SignalInSelectRename());
+		selectDomain.add("delete", new SignalInSelectDelete());
 		
 		javalin = Javalin.create(config -> {
 			config.showJavalinBanner = false;

@@ -6,6 +6,7 @@ import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalOut;
+import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
 import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
 import hu.g14de.usermanager.User;
 
@@ -43,6 +44,15 @@ public class GameState
 		}
 		this.map = new IMap(this,10,10);
 		this.scheduler = null;
+	}
+
+	public void destructor()
+	{
+		broadcastSignal(new SignalOutCommonSetscene("select"));
+		observers.clear();
+		if(isStarted()) {
+			scheduler.stop();
+		}
 	}
 	
 	public VidamparkApp getApp() {

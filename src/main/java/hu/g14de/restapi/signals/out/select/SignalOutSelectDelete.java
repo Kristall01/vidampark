@@ -2,12 +2,12 @@ package hu.g14de.restapi.signals.out.select;
 
 import hu.g14de.restapi.signals.SignalOut;
 
-public class SignalOutSelectRemove extends SignalOut {
+public class SignalOutSelectDelete extends SignalOut {
 	
 	private int ID;
 	
-	public SignalOutSelectRemove(int ID) {
-		super("remove");
+	public SignalOutSelectDelete(int ID) {
+		super("delete");
 		this.ID = ID;
 	}
 	

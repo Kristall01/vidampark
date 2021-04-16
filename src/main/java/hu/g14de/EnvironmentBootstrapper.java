@@ -18,6 +18,7 @@ public class EnvironmentBootstrapper {
 	}
 	
 	public void setupFrontend() throws IOException {
+		new File(copyBase, "frontend").mkdirs();
 		CodeSource src = getClass().getProtectionDomain().getCodeSource();
 		if (src != null) {
 			URL jar = src.getLocation();

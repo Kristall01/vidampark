@@ -27,6 +27,11 @@ class Selectpage extends Component {
 			case "rename": {
 				this.state.states[data.ID].name = data.newname;
 				this.setState(Object.assign(this.state, {}))
+				break;
+			}
+			case "delete": {
+				this.deleteState(data);
+				break;
 			}
 		}
 	}
@@ -39,10 +44,29 @@ class Selectpage extends Component {
 		this.props.signal.send("select", id);
 	}
 
+	deleteGamestate(id) {
+		this.props.signal.send("delete", id);
+	}
+
 	addState(s) {
 		let stateList = this.state.states;
 		stateList[s.id] = s;
 		this.setState(Object.assign(this.state, {}));
+	}
+
+	deleteState(obj) {
+		let oldStates = this.state.states;
+		let newStates = {};
+		Object.keys(oldStates).forEach(id => {
+			let element = oldStates[id];
+			console.log(id,obj.ID);
+			if(id != obj.ID) {
+				newStates[id] = element;
+			}
+		});
+
+		this.state.states = newStates;
+		this.setState(Object.assign(this.state, {}))
 	}
 
 	componentDidMount() {
@@ -60,7 +84,15 @@ class Selectpage extends Component {
 		let states = [];
 		Object.keys(this.state.states).forEach(key => {
 			let e = this.state.states[key];
-			states.push(<Gamestate select={this.selectGamestate.bind(this)} rename={(id, name) => this.renameGamestate(id, name)} key={index++} data={e}></Gamestate>);
+			states.push(
+				<Gamestate 
+					remove={(id) => this.deleteGamestate(id)}
+					select={this.selectGamestate.bind(this)} 
+					rename={(id, name) => this.renameGamestate(id, name)}
+					key={index++} 
+					data={e}>
+				</Gamestate>
+				);
 		});
 
 		return (

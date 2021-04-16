@@ -2,7 +2,7 @@ import "./Gamestate.css"
 
 import Button from "ui/button/Button"
 
-const Gamestate = ({data, rename, select}) => {
+const Gamestate = ({data, rename, select, remove}) => {
 
 	const renameFn = () => {
 		let newname = window.prompt("új név:");
@@ -15,6 +15,13 @@ const Gamestate = ({data, rename, select}) => {
 		select(data.id);
 	}
 
+	const deleteGame = () => {
+		let confirm = window.confirm("Biztosan törölni akarod?");
+		if(!confirm)
+			return;
+		remove(data.id);
+	}
+
 	return (
 		<>
 			<div className="gamestate-component">
@@ -24,8 +31,9 @@ const Gamestate = ({data, rename, select}) => {
 						{null /*props.startTime ? ("kezdés ideje: " + props.startTime) : null*/}
 					</div>
 					<div className="button-line">
-						<Button onClick={selectGame}>indítás</Button>
-						<Button onClick={renameFn}>átnevezés</Button>
+						<Button onClick={deleteGame}>🗑️</Button>
+						<Button onClick={renameFn}>🖊 Átnevezés</Button>
+						<Button onClick={selectGame}>▶ Játék</Button>
 					</div>
 				</div>
 			</div>
