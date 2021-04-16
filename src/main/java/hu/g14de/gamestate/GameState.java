@@ -24,6 +24,7 @@ public class GameState
 	private LinkedList<Connection> observers = new LinkedList<>();
 	private Scheduler scheduler;
 	private IBuildingCatalog catalog;
+	private boolean paused;
 
 	public GameState(User user, String name, int ID, IBuildingCatalog catalog)
 	{
@@ -127,6 +128,12 @@ public class GameState
 		scheduler = new Scheduler(this);
 		scheduler.start();
 		broadcastSignal(new SignalOutGameStartpark());
+	}
+	
+	public void pause() {
+		if(this.paused) {
+		
+		}
 	}
 	
 }

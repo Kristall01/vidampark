@@ -10,7 +10,9 @@ export default class Cell extends Component {
 
     render() {
         return (
-            <div className="Cell" onClick={ e => console.log(this.props.coords) }></div>
+            <div className="Cell" onClick={ e => console.log(this.props.coords) }>
+				<div className="inner"></div>
+			</div>
         );
     }
 }

@@ -50,42 +50,76 @@ public class IMap {
 		return grid[width*y+x];
 	}
 	
+	private boolean isRoad(int x, int y) {
+		Cell c = getCellAt(x,y);
+		return c != null && c.hasContent() && c.getContent().getTemplate().isRoad();
+	}
+	
+	private boolean hasRoadConnection(int x, int y, int width, int height) {
+		if(isRoad(x-1, y-1)) {
+			return true;
+		}
+		int iX, iY;
+		iX = x;
+		iY = y-1;
+		for(;iX < x+width; ++iX) {
+			if(isRoad(iX, iY)) {
+				return true;
+			}
+		}
+		for(; iY < y+height; ++iY) {
+			if(isRoad(iX, iY)) {
+				return true;
+			}
+		}
+		iX = x-1;
+		iY = y;
+		for(; iY < y+height; ++iY) {
+			if(isRoad(iX, iY)) {
+				return true;
+			}
+		}
+		for(;iX < x+width; ++iX) {
+			if(isRoad(iX, iY)) {
+				return true;
+			}
+		}
+		if(isRoad(x+width, y+height)) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void placeBuilding(final int x, final int y, final IBuildingTemplate template) throws OutOfMapCoordinateException {
-		Cell center = getCellAt(x,y);
-		if(center == null) {
-			throw new OutOfMapCoordinateException(x,y);
-		}
-		if(center.hasContent()) {
-			throw new CellAlreadyOccupiedException();
-		}
-		if(template.needsRoadConnection()) {
-			boolean hasRoad = false;
-			for(int iX = x-1; iX <= x+1; ++iX) {
-				for(int iY = y-1; iY <= y+1; ++iY) {
-					Cell c = getCellAt(iX, iY);
-					if(c == null) {
-						continue;
-					}
-					if(!c.hasContent()) {
-						continue;
-					}
-					if(c.getContent().getTemplate().isRoad()) {
-						hasRoad = true;
-					}
+		for(int xIndex = x; xIndex < x+template.width(); ++xIndex) {
+			for (int yIndex = 0; yIndex < y+ template.height(); yIndex++) {
+				Cell currentCell = getCellAt(xIndex, yIndex);
+				if(currentCell == null) {
+					throw new OutOfMapCoordinateException(xIndex,yIndex);
+				}
+				if(currentCell.hasContent()) {
+					throw new CellAlreadyOccupiedException();
 				}
 			}
-			if(!hasRoad) {
-				throw new BuildingNeedsRoadException();
-			}
+		}
+		
+		Cell tlCell = getCellAt(x,y);
+		
+		if(template.needsRoadConnection() && !hasRoadConnection(x, y, template.width(), template.height())) {
+			throw new BuildingNeedsRoadException();
 		}
 		int buildtime = 0;
 		Placeable p = template.createInstance();
-		center.setContent(p);
-		if(getGamestate().isStarted()) {
+		for(int iX = x; iX < x+ template.width(); ++iX) {
+			for (int iY = y; iY < y+ template.height(); ++iY) {
+				getCellAt(iX, iY).setContent(p);
+			}
+		}
+		/*if(getGamestate().isStarted()) {
 			buildtime = template.getBuildTime();
 			buildingProgress.add(p);
-		}
-		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(center));
+		}*/
+		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(tlCell));
 	}
 	
 	public void receiveTick() {

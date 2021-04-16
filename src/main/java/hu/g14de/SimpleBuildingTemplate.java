@@ -4,11 +4,10 @@ public class SimpleBuildingTemplate implements IBuildingTemplate {
 
 	private boolean needRoad;
 	private String type;
-	private int cost;
-	private int time;
+	private int cost, time, width, height;
 	private boolean road;
 	
-	public SimpleBuildingTemplate(boolean needRoad, String type, int cost, int time, boolean road) {
+	public SimpleBuildingTemplate(boolean needRoad, String type, int cost, int time, int width, int height, boolean road) {
 		Utils.checkNull(type);
 		
 		this.needRoad = needRoad;
@@ -46,5 +45,15 @@ public class SimpleBuildingTemplate implements IBuildingTemplate {
 	@Override
 	public Placeable createInstance() {
 		return new SimplePlaceable(this);
+	}
+	
+	@Override
+	public int width() {
+		return width;
+	}
+	
+	@Override
+	public int height() {
+		return height;
 	}
 }

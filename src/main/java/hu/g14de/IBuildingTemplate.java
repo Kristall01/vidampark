@@ -8,5 +8,7 @@ public interface IBuildingTemplate {
 	int getBuildTime();
 	boolean isRoad();
 	Placeable createInstance();
+	int width();
+	int height();
 	
 }

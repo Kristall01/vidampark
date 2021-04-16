@@ -6,10 +6,7 @@ import hu.g14de.restapi.signals.in.auth.SignalInAuthLogin;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthRegister;
 import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import hu.g14de.restapi.signals.in.common.SignalInCommonLogout;
-import hu.g14de.restapi.signals.in.game.SignalInGameInit;
-import hu.g14de.restapi.signals.in.game.SignalInGameLeave;
-import hu.g14de.restapi.signals.in.game.SignalInGamePlaceBuilding;
-import hu.g14de.restapi.signals.in.game.SignalInGameStartpark;
+import hu.g14de.restapi.signals.in.game.*;
 import hu.g14de.restapi.signals.in.select.SignalInSelectCreate;
 import hu.g14de.restapi.signals.in.select.SignalInSelectList;
 import hu.g14de.restapi.signals.in.select.SignalInSelectRename;
@@ -43,6 +40,7 @@ public class ConnectionServer {
 		gameDomain.add("placebuilding", new SignalInGamePlaceBuilding());
 		gameDomain.add("startpark", new SignalInGameStartpark());
 		gameDomain.add("leave", new SignalInGameLeave());
+		gameDomain.add("menu", new SignalInGameMenu());
 		
 		selectDomain.add("create", new SignalInSelectCreate());
 		selectDomain.add("select", new SignalInSelectSelect());

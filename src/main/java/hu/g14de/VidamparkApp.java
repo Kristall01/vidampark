@@ -45,8 +45,10 @@ public class VidamparkApp {
 			String name = o.get("name").getAsString();
 			int cost = o.get("buildCost").getAsInt();
 			int time = o.get("buildTime").getAsInt();
+			int width = o.get("width").getAsInt();
+			int height = o.get("height").getAsInt();
 			boolean isRoad = name.equals("road");
-			SimpleBuildingTemplate template = new SimpleBuildingTemplate(!isRoad, name, cost, time, isRoad);
+			SimpleBuildingTemplate template = new SimpleBuildingTemplate(!isRoad, name, cost, time, width, height, isRoad);
 			catalog.register(name, template);
 		}
 		return catalog;

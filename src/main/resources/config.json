@@ -5,12 +5,16 @@
 		{
 			"name": "road",
 			"buildCost": 50,
-			"buildTime": 10
+			"buildTime": 10,
+			"width": 1,
+			"height": 2
 		},
 		{
 			"name": "hotdog",
 			"buildCost": 100,
-			"buildTime": 20
+			"buildTime": 20,
+			"width": 3,
+			"height": 3
 		}
 	]
 }

@@ -67,7 +67,7 @@ export default class Gamepage extends Component {
                         <button disabled={disabledButton} className="openParkButton" onClick={() => this.props.signal.send("startpark", {})}>🚪Open Park</button>
                         <button className="pauseButton" onClick={ () => console.log("Building Catalog") }>🏢 Building Catalog</button>
                         <button className="pauseButton" onClick={ () => console.log("Pause") }>⏸ Pause</button>
-                        <button className="pauseButton" onClick={ () => console.log("Menu") }>Menu</button>
+                        <button className="pauseButton" onClick={ () => this.props.signal.send("menu", {}) }>Menu</button>
 						<button className="pauseButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
                     </div>
                 </div>
