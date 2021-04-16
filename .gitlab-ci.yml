@@ -7,6 +7,7 @@ build:
     image: gradle:jdk11
     script:
         - gradle build
+        - ls build/libs
     artifacts:
         paths:
             - $CI_PROJECT_DIR/backend/build/libs/vidamparkapp.jar
