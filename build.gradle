@@ -1,33 +1,26 @@
-apply plugin: 'java'
-apply plugin: 'application'
+stages:
+    - build
+    - deploy
 
-sourceCompatibility = 11
-targetCompatibility = 11
+build:
+    stage: build
+    image: gradle:jdk11
+    script:
+        - gradle build
+    artifacts:
+        paths:
+            - $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar
 
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'io.javalin:javalin:3.13.0'
-    implementation 'org.slf4j:slf4j-simple:1.7.30'
-}
-
-jar {
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-
-    manifest {
-        attributes 'Main-Class': 'Main'
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-/*    from('src/main/frontend') {
-        into 'frontend'
-    }*/
-    from('src/main/resources') {
-        include '*'
-    }
-}
+deploy:
+    stage: deploy
+    image: openjdk:11
+    script:
+        - apt install -y curl
+        - curl -sL https://deb.nodesource.com/setup_14.x | bash -
+        - apt install -y nodejs
+        - curl -L https://www.npmjs.com/install.sh | sh
+        - npm install -g heroku
+        - heroku plugins:install heroku-cli-deploy
+        - heroku deploy:jar $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar --jdk 11 --app g14-vidampark
+    when:  
+        manual
