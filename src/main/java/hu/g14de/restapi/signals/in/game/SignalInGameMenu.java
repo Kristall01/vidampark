@@ -9,7 +9,6 @@ public class SignalInGameMenu implements SignalIn {
 	
 	@Override
 	public void execute(Connection c, JsonElement e) {
-		c.getObservedGamestate().getBalance().
 		c.sendSignal(new SignalOutGameHelloworld());
 	}
 	
