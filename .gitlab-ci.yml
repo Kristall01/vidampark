@@ -10,8 +10,6 @@ build:
     artifacts:
         paths:
             - $CI_PROJECT_DIR/backend/build/libs/vidamparkapp.jar
-    only:
-        - deploy
 
 deploy:
     stage: deploy
@@ -24,5 +22,5 @@ deploy:
         - npm install -g heroku
         - heroku plugins:install heroku-cli-deploy
         - heroku deploy:jar $CI_PROJECT_DIR/build/libs/vidamparkapp.jar --jdk 11 --app g14-vidampark
-    only:
-        - deploy
+    when:
+        manual
