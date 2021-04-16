@@ -3,8 +3,8 @@ import Cell from "./Cell/Cell";
 import "./Map.css";
 
 export default class Map extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         let map = [];
         for(let i = 0; i < this.getHeight(); ++i) 
@@ -25,13 +25,13 @@ export default class Map extends Component {
     getWidth() 
     {
         //return this.props.sizeWidth;
-        return 30;
+        return this.props.width;
     }
 
     getHeight() 
     {
         //return this.props.sizeHeight;
-        return 10;
+        return this.props.height;
     }
 
     generateMap() 

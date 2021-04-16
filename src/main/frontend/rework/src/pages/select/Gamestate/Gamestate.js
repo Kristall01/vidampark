@@ -2,7 +2,7 @@ import "./Gamestate.css"
 
 import Button from "ui/button/Button"
 
-const Gamestate = ({data, rename}) => {
+const Gamestate = ({data, rename, select}) => {
 
 	const renameFn = () => {
 		let newname = window.prompt("új név:");
@@ -10,6 +10,10 @@ const Gamestate = ({data, rename}) => {
 			return;
 		rename(data.id, newname);
 	};
+
+	const selectGame = () => {
+		select(data.id);
+	}
 
 	return (
 		<>
@@ -20,7 +24,7 @@ const Gamestate = ({data, rename}) => {
 						{null /*props.startTime ? ("kezdés ideje: " + props.startTime) : null*/}
 					</div>
 					<div className="button-line">
-						<Button>indítás</Button>
+						<Button onClick={selectGame}>indítás</Button>
 						<Button onClick={renameFn}>átnevezés</Button>
 					</div>
 				</div>

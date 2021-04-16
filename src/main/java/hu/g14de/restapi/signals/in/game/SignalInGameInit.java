@@ -8,6 +8,7 @@ import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.out.game.SignalOutGameBalance;
 import hu.g14de.restapi.signals.out.game.SignalOutGameMapsize;
+import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
 import hu.g14de.restapi.signals.out.game.SignalOutGameUpdatecell;
 
 public class SignalInGameInit implements SignalIn {
@@ -18,6 +19,9 @@ public class SignalInGameInit implements SignalIn {
 		c.sendSignal(new SignalOutGameBalance(g.getBalance().getMoney()));
 		IMap m = g.getMap();
 		c.sendSignal(new SignalOutGameMapsize(m.width(), m.height()));
+		if(c.getObservedGamestate().isStarted()) {
+			c.sendSignal(new SignalOutGameStartpark());
+		}
 		for (int x = 0; x < m.width(); x++) {
 			for (int y = 0; y < m.height(); y++) {
 				Cell cell = m.getCellAt(x,y);

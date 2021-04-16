@@ -35,6 +35,10 @@ class Selectpage extends Component {
 		this.props.signal.send("rename", {id: id, name: newName});
 	}
 
+	selectGamestate(id) {
+		this.props.signal.send("select", id);
+	}
+
 	addState(s) {
 		let stateList = this.state.states;
 		stateList[s.id] = s;
@@ -56,7 +60,7 @@ class Selectpage extends Component {
 		let states = [];
 		Object.keys(this.state.states).forEach(key => {
 			let e = this.state.states[key];
-			states.push(<Gamestate rename={(id, name) => this.renameGamestate(id, name)} key={index++} data={e}></Gamestate>);
+			states.push(<Gamestate select={this.selectGamestate.bind(this)} rename={(id, name) => this.renameGamestate(id, name)} key={index++} data={e}></Gamestate>);
 		});
 
 		return (

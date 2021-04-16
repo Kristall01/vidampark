@@ -13,4 +13,8 @@ public class SignalOutGameBalance extends SignalOut {
 		this.balance = balance.toString();
 	}
 	
+	@Override
+	public Object serializedData() {
+		return balance;
+	}
 }

@@ -86,25 +86,6 @@ export default class App extends React.Component {
 		}));
 	}
 
-	/*setScreen(screenType, data) {
-		this.setState(Object.assign(this.state, {
-			screen: screenType,
-			screenData: data
-		}))
-	}
-
-	updateScreenData(key, value) {
-		let o = {};
-		o[key] = value;
-		this.setState(Object.assign(this.state, Object.assign(this.state.screenData, o)));
-	}
-
-	updateState(key, value) {
-		let o = {};
-		o[key] = value;
-		this.setState(Object.assign(this.state, o));
-	}*/
-
 	render() {
 		switch(this.state.screen) {
 			case "loading":

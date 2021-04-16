@@ -13,6 +13,7 @@ public class SignalInSelectSelect implements SignalIn {
 		GameState state = c.getUser().getList().getGamestate(e.getAsInt());
 		if(state == null) {
 			c.crash("gamestate not found by ID");
+			return;
 		}
 		c.setObservedGamestate(state);
 		c.setSignalInDomain(c.getServer().getGameDomain());
