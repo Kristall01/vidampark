@@ -10,11 +10,14 @@ export default class Gamepage extends Component {
         super(props);
 
 		this.state = {
+			initiated: false,
 			money: '?',
 			mapSize: null,
 			started: false,
 			catalogHidden: true,
-			catalog: []
+			catalog: [],
+			buildings: [],
+			targetBuilding: null
 		};
     }
 
@@ -50,6 +53,25 @@ export default class Gamepage extends Component {
 				this.updateState("catalog", data);
 				break;
 			}
+			case "initiated": {
+				this.updateState('initiated', true);
+			}
+			case "updatecell": {
+				if(data.type) {
+					let b = this.state.buildings;
+					b.push(data);
+					this.updateState("buildings", b);
+				}
+				else {
+					let copy = [];
+					this.state.buildings.forEach(building => {
+						if(building.x != data.x && building.y != data.y) {
+							copy.push(building);
+						}
+					});
+					this.updateState("buildings", copy);
+				}
+			}
 			default: {
 
 			}
@@ -64,18 +86,49 @@ export default class Gamepage extends Component {
 		this.updateState('catalogHidden', !opened);
 	}
 
+	manualSignal() {/*
+		let type = window.prompt("type");
+		if(!type) {
+			return;
+		}
+		let data = window.prompt("data");
+		if(!data) {
+			return;
+		}
+		this.props.signal.send(type, JSON.parse(data));*/
+		this.props.signal.send("placebuilding", {x: 0, y: 0, type: "road"});
+	}
+
+	setTargetBuilding(type) {
+		this.updateState('targetBuilding', type);
+		console.log("ok?");
+	}
+
+	handleCellClick(x,y) {
+		if(this.state.targetBuilding) {
+			this.props.signal.send("placebuilding", {
+				x: x,
+				y: y,
+				type: this.state.targetBuilding
+			});
+		}
+	}
+
 	render() {
+		if(!this.state.initiated) {
+			return <></>;
+		}
 		let map = null;
 		if(this.state.mapSize) {
 			let {width, height} = this.state.mapSize;
-			map = <Map width={width} height={height}></Map>
+			map = <Map handleCellClick={this.handleCellClick.bind(this)} buildings={this.state.buildings} width={width} height={height}></Map>
 		}
 
 		let disabledButton = this.state.started ? "TRUE" : null;
 
         return (
             <div className="Gamepage">
-				<Catalog catalogData={this.state.catalog} closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
+				<Catalog setBuildTarget={this.setTargetBuilding.bind(this)} catalogData={this.state.catalog} closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
                 <div className="header">
                     <div className="money">Money: ${this.getMoney()} </div>
                     <div className="buttons">
@@ -84,6 +137,7 @@ export default class Gamepage extends Component {
                         <button className="pauseButton" onClick={ () => console.log("Pause") }>⏸ Pause</button>
                         <button className="pauseButton" onClick={ () => this.props.signal.send("menu", {}) }>Menu</button>
 						<button className="pauseButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
+						<button onClick={this.manualSignal.bind(this)}>manual signal</button>
                     </div>
                 </div>
                 <div className="main">

@@ -1,6 +1,7 @@
 package hu.g14de;
 
 import com.google.gson.JsonObject;
+import hu.g14de.gamestate.Cell;
 
 public class JsonBuildingTemplate implements IBuildingTemplate {
 	
@@ -41,8 +42,8 @@ public class JsonBuildingTemplate implements IBuildingTemplate {
 	}
 	
 	@Override
-	public Placeable createInstance() {
-		return new SimplePlaceable(this);
+	public Placeable createInstance(Cell cell) {
+		return new SimplePlaceable(this, cell);
 	}
 	
 	@Override

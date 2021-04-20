@@ -16,3 +16,8 @@
 .Cell .inner:hover {
 	border: 4px solid rgb(12, 133, 1);
 }
+
+.Cell .cellimage {
+	position: absolute;
+	z-index: 1;
+}

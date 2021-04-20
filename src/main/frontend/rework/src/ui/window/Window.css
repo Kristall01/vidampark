@@ -6,7 +6,7 @@
 	border-style: solid;
 	border-width: 2px;
 	background-color: white;
-	z-index: 1;
+	z-index: 100;
 }
 
 .window-component.hidden {

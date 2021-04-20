@@ -13,4 +13,8 @@ public class SignalOutCommonLog extends SignalOut
 		msg = text;
 	}
 	
+	@Override
+	public Object serializedData() {
+		return msg;
+	}
 }

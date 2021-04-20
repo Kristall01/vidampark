@@ -7,35 +7,29 @@ import hu.g14de.restapi.signals.SignalOut;
 
 public class SignalOutGameUpdatecell extends SignalOut {
 	
-	private int x,y, buildtime;
-	private String type;
 	private Cell cell;
 	
 	public SignalOutGameUpdatecell(Cell cell) {
 		super("updatecell");
 		
 		this.cell = cell;
-		
-		this.x = cell.getCoordinate().getX();
-		this.y = cell.getCoordinate().getY();
-		this.type = cell.getContent().getTemplate().type();
-		this.buildtime = cell.getContent().getTemplate().getBuildTime();
 	}
 	
 	@Override
 	public Object serializedData() {
 		JsonObject o = new JsonObject();
-		o.addProperty("x", x);
-		o.addProperty("y", y);
-		IBuildingTemplate template = cell.getContent().getTemplate();
-		if(type == null) {
-			o.add("type", null);
+		o.addProperty("x", cell.getCoordinate().getX());
+		o.addProperty("y", cell.getCoordinate().getY());
+		if(cell.hasContent()) {
+			IBuildingTemplate template = cell.getContent().getTemplate();
+			o.addProperty("type", template.type());
 			o.addProperty("height", template.height());
 			o.addProperty("width", template.width());
+			o.addProperty("mapIcon", template.mapIcon());
 		}
-		else if(buildtime != 0) {
+		/*else if(buildtime != 0) {
 			o.addProperty("buildtime", buildtime);
-		}
+		}*/
 		return o;
 	}
 }

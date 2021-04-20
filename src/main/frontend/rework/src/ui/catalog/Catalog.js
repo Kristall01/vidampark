@@ -3,11 +3,16 @@ import Building from "ui/building/Building"
 
 import "./Catalog.css"
 
-const Catalog = ({catalogData, closeWindow, hidden}) => {
+const Catalog = ({setBuildTarget, catalogData, closeWindow, hidden}) => {
 
 	let i = 0;
 	let data = catalogData.map(record => {
-		return <Building key={++i} {...record}></Building>;
+		return <Building buyHandler={
+			() => {
+				setBuildTarget(record.type);
+				closeWindow();
+			}
+		} key={++i} {...record}></Building>;
 	});
 
 	return (

@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import "./Cell.css";
 
-export default class Cell extends Component {
-
-    render() {
-        return (
-            <div className="Cell" onClick={ e => console.log(this.props.coords) }>
-				<div className="inner"></div>
-			</div>
-        );
-    }
+const Cell = ({onClick, content}) => {
+	let img = null;
+	if(content) {
+		let {width, height, mapIcon} = content;
+		let style = {
+			width: `${width}00%`,
+			height: `${height}00%`
+		};
+		img = <img className="cellimage" style={style} src={"/buildings/map/"+mapIcon}></img>;
+	}
+ 	return (
+		<div onClick={onClick} className="Cell">
+			<div className="inner"></div>
+			{img}
+		</div>
+	);
 }
+
+export default Cell;

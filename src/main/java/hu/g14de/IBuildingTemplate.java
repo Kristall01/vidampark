@@ -1,5 +1,7 @@
 package hu.g14de;
 
+import hu.g14de.gamestate.Cell;
+
 public interface IBuildingTemplate {
 	
 	boolean needsRoadConnection();
@@ -8,7 +10,7 @@ public interface IBuildingTemplate {
 	int getBuildCost();
 	int getBuildTime();
 	boolean isRoad();
-	Placeable createInstance();
+	Placeable createInstance(Cell at);
 	int width();
 	int height();
 	String mapIcon();

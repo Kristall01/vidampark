@@ -2,7 +2,7 @@ import "./Building.css";
 
 import Button from "ui/button/Button"
 
-const Building = ({buildCost, nickname, buildTime, shopIcon}) =>
+const Building = ({buyHandler, buildCost, nickname, buildTime, shopIcon}) =>
 
 <div className="building-component">
 	<div className="building-inner">
@@ -23,7 +23,7 @@ const Building = ({buildCost, nickname, buildTime, shopIcon}) =>
 			</div>
 		</div>
 		<div className="button">
-			<Button bgcolor="blue">vásárlás</Button>
+			<Button onClick={buyHandler} bgcolor="blue">vásárlás</Button>
 		</div>
 	</div>
 </div>

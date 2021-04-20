@@ -28,7 +28,7 @@ export default class App extends React.Component {
 				return;
 			}
 			case "log": {
-				window.alert(data.msg);
+				window.alert(data);
 				return;
 			}
 			case "connectioncrash": {

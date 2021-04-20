@@ -6,14 +6,16 @@ import hu.g14de.TranslatedException;
 import hu.g14de.VidamparkApp;
 import hu.g14de.restapi.signals.out.game.SignalOutGameUpdatecell;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class IMap {
 	
 	private final int width, height;
 	private final GameState gamestate;
 	private final Cell[] grid;
-	private final LinkedList<Object> buildingProgress = new LinkedList<>();
+	private final ArrayList<Placeable> buildings = new ArrayList<>();
 	
 	public IMap(GameState gamestate, int width, int height) {
 		this.gamestate = gamestate;
@@ -21,8 +23,8 @@ public class IMap {
 		this.width = width;
 		this.grid = new Cell[width*height];
 		for(int i = 0; i < this.grid.length; ++i) {
-			int x = i / width;
-			int y = i % width;
+			int x = i % width;
+			int y = i / width;
 			this.grid[i] = new Cell(this, new Coordinate(x,y), null);
 		}
 	}
@@ -92,7 +94,7 @@ public class IMap {
 	
 	public void placeBuilding(final int x, final int y, final IBuildingTemplate template) throws OutOfMapCoordinateException {
 		for(int xIndex = x; xIndex < x+template.width(); ++xIndex) {
-			for (int yIndex = 0; yIndex < y+ template.height(); yIndex++) {
+			for (int yIndex = y; yIndex < y+ template.height(); ++yIndex) {
 				Cell currentCell = getCellAt(xIndex, yIndex);
 				if(currentCell == null) {
 					throw new OutOfMapCoordinateException(xIndex,yIndex);
@@ -109,7 +111,7 @@ public class IMap {
 			throw new BuildingNeedsRoadException();
 		}
 		int buildtime = 0;
-		Placeable p = template.createInstance();
+		Placeable p = template.createInstance(tlCell);
 		for(int iX = x; iX < x+ template.width(); ++iX) {
 			for (int iY = y; iY < y+ template.height(); ++iY) {
 				getCellAt(iX, iY).setContent(p);
@@ -119,7 +121,12 @@ public class IMap {
 			buildtime = template.getBuildTime();
 			buildingProgress.add(p);
 		}*/
+		buildings.add(p);
 		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(tlCell));
+	}
+	
+	public Collection<Placeable> getBuildings() {
+		return List.copyOf(buildings);
 	}
 	
 	public void receiveTick() {

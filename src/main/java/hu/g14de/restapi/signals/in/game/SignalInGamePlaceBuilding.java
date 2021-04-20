@@ -8,7 +8,7 @@ import hu.g14de.gamestate.Balance;
 import hu.g14de.gamestate.IMap;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
-import hu.g14de.restapi.signals.out.game.SignalOutGameLog;
+import hu.g14de.restapi.signals.out.common.SignalOutCommonLog;
 
 import java.math.BigInteger;
 
@@ -29,10 +29,10 @@ public class SignalInGamePlaceBuilding implements SignalIn {
 			c.getObservedGamestate().getBalance().removeMoney(BigInteger.valueOf(temp.getBuildCost()));
 		}
 		catch(Balance.NegativeMoneyException ex) {
-			c.sendSignal(new SignalOutGameLog(c.getApp().getLang().translate("error.balance.too-few-money")));
+			c.sendSignal(new SignalOutCommonLog(c.getApp().getLang().translate("error.balance.too-few-money")));
 		}
 		catch (TranslatedException ex) {
-			c.sendSignal(new SignalOutGameLog(ex.translate(c.getApp().getLang())));
+			c.sendSignal(new SignalOutCommonLog(ex.translate(c.getApp().getLang())));
 		}
 		catch (IMap.OutOfMapCoordinateException ex) {
 			c.crash("invalid coordinate ("+ex.x+", "+ex.y+")");
