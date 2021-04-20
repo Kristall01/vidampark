@@ -6,6 +6,7 @@ import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalOut;
+import hu.g14de.restapi.signals.out.common.SignalOutCommonLog;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
 import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
 import hu.g14de.usermanager.User;
@@ -138,6 +139,7 @@ public class GameState
 		scheduler = new Scheduler(this);
 		scheduler.start();
 		broadcastSignal(new SignalOutGameStartpark());
+		broadcastSignal(new SignalOutCommonLog("Hello world!"));
 	}
 	
 	public void pause() {

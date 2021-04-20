@@ -4,6 +4,7 @@ import hu.g14de.SimpleBuildingCatalog;
 import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
 import hu.g14de.gamestate.GameState;
+import hu.g14de.gamestate.IBuildingCatalog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +32,8 @@ public class GamestateList {
 	
 	public GameState createGamestate() {
 		int id = ++nextID;
-		SimpleBuildingCatalog fakeCatalog = new SimpleBuildingCatalog();
-		GameState s = new GameState(this.user, "save #"+id, id, fakeCatalog);
+		IBuildingCatalog fakeCatalog = getApp().getCatalog();
+		GameState s = new GameState(this.user, "save #"+id, id, new SimpleBuildingCatalog(fakeCatalog));
 		map.put(id, s);
 		return s;
 	}

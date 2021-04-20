@@ -13,7 +13,8 @@ export default class Gamepage extends Component {
 			money: '?',
 			mapSize: null,
 			started: false,
-			catalogHidden: true
+			catalogHidden: true,
+			catalog: []
 		};
     }
 
@@ -43,6 +44,14 @@ export default class Gamepage extends Component {
 			}
 			case "startpark": {
 				this.updateState("started", true);
+				break;
+			}
+			case "catalog": {
+				this.updateState("catalog", data);
+				break;
+			}
+			default: {
+
 			}
 		}
 	}
@@ -52,8 +61,7 @@ export default class Gamepage extends Component {
     }
 
 	openCatalog(opened) {
-		this.state.catalogHidden = !opened;
-		this.setState(Object.assign(this.state, {}));
+		this.updateState('catalogHidden', !opened);
 	}
 
 	render() {
@@ -67,12 +75,12 @@ export default class Gamepage extends Component {
 
         return (
             <div className="Gamepage">
-				<Catalog closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
+				<Catalog catalogData={this.state.catalog} closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
                 <div className="header">
                     <div className="money">Money: ${this.getMoney()} </div>
                     <div className="buttons">
                         <button disabled={disabledButton} className="openParkButton" onClick={() => this.props.signal.send("startpark", {})}>🚪Open Park</button>
-                        <button className="pauseButton" onClick={ () => console.log("Building Catalog")} onClick={this.openCatalog.bind(this)}>🏢 Building Catalog</button>
+                        <button className="pauseButton" onClick={this.openCatalog.bind(this)}>🏢 Building Catalog</button>
                         <button className="pauseButton" onClick={ () => console.log("Pause") }>⏸ Pause</button>
                         <button className="pauseButton" onClick={ () => this.props.signal.send("menu", {}) }>Menu</button>
 						<button className="pauseButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>

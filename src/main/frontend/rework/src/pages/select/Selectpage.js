@@ -13,6 +13,12 @@ class Selectpage extends Component {
 		};
 	}
 
+	updateState(key, value) {
+		let o = {};
+		o[key] = value;
+		this.setState(Object.assign(this.state, o));
+	}
+
 	handleSignal(type, data) {
 		switch(type) {
 			case "add": {
@@ -20,18 +26,23 @@ class Selectpage extends Component {
 				break;
 			}
 			case "list": {
-				this.setState(Object.assign(this.state, {states: []}))
+				this.updateState("states", []);
 				data.forEach(e => this.addState(e));
 				break;
 			}
 			case "rename": {
-				this.state.states[data.ID].name = data.newname;
-				this.setState(Object.assign(this.state, {}))
+				this.updateState()
+				let states = this.state.states;
+				states[data.ID].name = data.newname;
+				this.updateState('states', states);
 				break;
 			}
 			case "delete": {
 				this.deleteState(data);
 				break;
+			}
+			default: {
+
 			}
 		}
 	}
@@ -59,14 +70,11 @@ class Selectpage extends Component {
 		let newStates = {};
 		Object.keys(oldStates).forEach(id => {
 			let element = oldStates[id];
-			console.log(id,obj.ID);
 			if(id != obj.ID) {
 				newStates[id] = element;
 			}
 		});
-
-		this.state.states = newStates;
-		this.setState(Object.assign(this.state, {}))
+		this.updateState('states', newStates);
 	}
 
 	componentDidMount() {

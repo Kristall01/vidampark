@@ -31,9 +31,18 @@ const Gamestate = ({data, rename, select, remove}) => {
 						{null /*props.startTime ? ("kezdés ideje: " + props.startTime) : null*/}
 					</div>
 					<div className="button-line">
-						<Button onClick={deleteGame}>🗑️</Button>
-						<Button onClick={renameFn}>🖊 Átnevezés</Button>
-						<Button onClick={selectGame}>▶ Játék</Button>
+						<Button onClick={deleteGame}>
+							<i className="fas fa-trash-alt"></i>
+							<span>Törlés</span>
+						</Button>
+						<Button onClick={renameFn}>
+							<i className="fas fa-pencil-alt"></i>
+							<span>Átnevezés</span>
+						</Button>
+						<Button onClick={selectGame}>
+							<i className="fas fa-play"></i>
+							<span>játék</span>
+						</Button>
 					</div>
 				</div>
 			</div>

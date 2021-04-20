@@ -6,10 +6,7 @@ import hu.g14de.gamestate.GameState;
 import hu.g14de.gamestate.IMap;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
-import hu.g14de.restapi.signals.out.game.SignalOutGameBalance;
-import hu.g14de.restapi.signals.out.game.SignalOutGameMapsize;
-import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
-import hu.g14de.restapi.signals.out.game.SignalOutGameUpdatecell;
+import hu.g14de.restapi.signals.out.game.*;
 
 public class SignalInGameInit implements SignalIn {
 	
@@ -22,6 +19,7 @@ public class SignalInGameInit implements SignalIn {
 		if(c.getObservedGamestate().isStarted()) {
 			c.sendSignal(new SignalOutGameStartpark());
 		}
+		c.sendSignal(new SignalOutGameCatalog(c.getObservedGamestate().getCatalog().getAvailableTemplates()));
 		for (int x = 0; x < m.width(); x++) {
 			for (int y = 0; y < m.height(); y++) {
 				Cell cell = m.getCellAt(x,y);

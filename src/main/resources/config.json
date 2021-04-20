@@ -3,18 +3,24 @@
 	"ticketPrice": 50,
 	"buildings": [
 		{
-			"name": "road",
+			"type": "road",
+			"nickname": "út",
 			"buildCost": 50,
 			"buildTime": 10,
 			"width": 1,
-			"height": 2
+			"height": 2,
+			"shopIcon": "road.svg",
+			"mapIcon": "road.svg"
 		},
 		{
-			"name": "hotdog",
+			"type": "hotdog",
+			"nickname": "hotdog árus",
 			"buildCost": 100,
 			"buildTime": 20,
 			"width": 3,
-			"height": 3
+			"height": 3,
+			"shopIcon": "hotdog.svg",
+			"mapIcon": "hotdog.svg"
 		}
 	]
 }

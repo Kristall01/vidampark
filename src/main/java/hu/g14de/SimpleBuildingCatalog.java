@@ -11,13 +11,25 @@ public class SimpleBuildingCatalog implements IBuildingCatalog {
 	
 	private final HashMap<String, IBuildingTemplate> templateMap;
 	
+	public SimpleBuildingCatalog(Map<String, ? extends IBuildingTemplate> templateMap) {
+		this.templateMap = new HashMap<>(templateMap);
+	}
+	
+	public SimpleBuildingCatalog(IBuildingCatalog fakeCatalog) {
+		if(fakeCatalog instanceof SimpleBuildingCatalog) {
+			templateMap = new HashMap<>(((SimpleBuildingCatalog)fakeCatalog).templateMap);
+		}
+		else {
+			templateMap = new HashMap<>();
+			for (IBuildingTemplate template : fakeCatalog.getAvailableTemplates()) {
+				register(template.type(), template);
+			}
+		}
+	}
+	
 	@Override
 	public IBuildingTemplate getTemplateByID(String ID) {
 		return templateMap.get(ID);
-	}
-	
-	public SimpleBuildingCatalog(Map<String, ? extends IBuildingTemplate> templateMap) {
-		this.templateMap = new HashMap<>(templateMap);
 	}
 	
 	public SimpleBuildingCatalog(SimpleBuildingCatalog copySource) {

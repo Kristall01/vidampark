@@ -41,15 +41,8 @@ public class VidamparkApp {
 		SimpleBuildingCatalog catalog = new SimpleBuildingCatalog();
 		JsonArray templates = e.getAsJsonArray();
 		for(int i = 0; i < templates.size(); ++i) {
-			JsonObject o = (JsonObject) templates.get(i);
-			String name = o.get("name").getAsString();
-			int cost = o.get("buildCost").getAsInt();
-			int time = o.get("buildTime").getAsInt();
-			int width = o.get("width").getAsInt();
-			int height = o.get("height").getAsInt();
-			boolean isRoad = name.equals("road");
-			SimpleBuildingTemplate template = new SimpleBuildingTemplate(!isRoad, name, cost, time, width, height, isRoad);
-			catalog.register(name, template);
+			JsonBuildingTemplate template = new JsonBuildingTemplate(((JsonObject) templates.get(i)));
+			catalog.register(template.type(), template);
 		}
 		return catalog;
 	}

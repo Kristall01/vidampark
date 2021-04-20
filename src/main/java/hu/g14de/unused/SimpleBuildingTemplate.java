@@ -1,13 +1,13 @@
-package hu.g14de;
+package hu.g14de.unused;
 
-public class SimpleBuildingTemplate implements IBuildingTemplate {
+public class SimpleBuildingTemplate  {
 
-	private boolean needRoad;
-	private String type;
+	/*private boolean needRoad;
+	private String type, nickname;
 	private int cost, time, width, height;
-	private boolean road;
+	private transient boolean road;
 	
-	public SimpleBuildingTemplate(boolean needRoad, String type, int cost, int time, int width, int height, boolean road) {
+	public SimpleBuildingTemplate(boolean needRoad, String type, String nickname, String mapIcon, String shopIcon,int cost, int time, int width, int height, boolean road) {
 		Utils.checkNull(type);
 		
 		this.needRoad = needRoad;
@@ -15,6 +15,7 @@ public class SimpleBuildingTemplate implements IBuildingTemplate {
 		this.cost = cost;
 		this.time = time;
 		this.road = road;
+		this.nickname = nickname;
 	}
 	
 	@Override
@@ -25,6 +26,11 @@ public class SimpleBuildingTemplate implements IBuildingTemplate {
 	@Override
 	public String type() {
 		return type;
+	}
+	
+	@Override
+	public String getNickname() {
+		return nickname;
 	}
 	
 	@Override
@@ -56,4 +62,15 @@ public class SimpleBuildingTemplate implements IBuildingTemplate {
 	public int height() {
 		return height;
 	}
+	
+	@Override
+	public String mapIcon() {
+		return null;
+	}
+	
+	@Override
+	public String shopIcon() {
+		return null;
+	}
+	 */
 }

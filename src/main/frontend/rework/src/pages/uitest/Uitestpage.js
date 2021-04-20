@@ -1,5 +1,7 @@
 import Window from "ui/window/Window"
 
-export default () =>
+const Uitestpage = () =>
 
 <Window>asd</Window>
+
+export default Uitestpage;

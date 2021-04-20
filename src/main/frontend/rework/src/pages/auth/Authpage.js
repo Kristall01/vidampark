@@ -26,7 +26,6 @@ class Authpage extends Component {
 	constructor(props) {
 		super(props);
 
-		let {signal} = props;
 		this.state = {
 			state: "login",
 			submit: true
@@ -61,7 +60,7 @@ class Authpage extends Component {
 
 	handleSignal(type, data) {
 		this.updateState("submit", true);
-		if(type == "autherror") {
+		if(type === "autherror") {
 			this.updateState("errorlabel", data.message);
 		}
 	}

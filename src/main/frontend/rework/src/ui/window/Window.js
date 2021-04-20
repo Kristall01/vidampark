@@ -3,10 +3,6 @@ import "./Window.css"
 
 export default class Window extends Component {
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		let {hidden, width, height, x, y, centered, title} = this.props;
 		let classList = ["window-component"];
