@@ -10,6 +10,8 @@ build:
     artifacts:
         paths:
             - $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar
+    when:  
+        manual
 
 deploy:
     stage: deploy
