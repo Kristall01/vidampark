@@ -9,11 +9,12 @@ public class SimplePlaceable implements Placeable {
 	
 	public SimplePlaceable(IBuildingTemplate template, Cell cell) {
 		this.template = template;
+		this.cell = cell;
 	}
 	
 	@Override
 	public Cell getCell() {
-		return null;
+		return cell;
 	}
 	
 	@Override
