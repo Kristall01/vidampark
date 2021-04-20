@@ -28,7 +28,7 @@ public class GameState
 	private IBuildingCatalog catalog;
 	private boolean paused;
 
-	public GameState(User user, String name, int ID, IBuildingCatalog catalog)
+	public GameState(User user, String name, int ID, int width, int height, IBuildingCatalog catalog)
 	{
 		checkNull(user, name, catalog);
 		this.setName(name);
@@ -43,7 +43,7 @@ public class GameState
 		catch (Balance.NegativeMoneyException e) {
 			//impossible here
 		}
-		this.map = new IMap(this,10,10);
+		this.map = new IMap(this,width,height);
 		this.scheduler = null;
 	}
 

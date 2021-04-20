@@ -19,7 +19,7 @@ public class GamestateList {
 		Utils.checkNull(user);
 		
 		this.user = user;
-		this.map = new HashMap<Integer, GameState>();
+		this.map = new HashMap<>();
 	}
 	
 	public VidamparkApp getApp() {
@@ -33,7 +33,11 @@ public class GamestateList {
 	public GameState createGamestate() {
 		int id = ++nextID;
 		IBuildingCatalog fakeCatalog = getApp().getCatalog();
-		GameState s = new GameState(this.user, "save #"+id, id, new SimpleBuildingCatalog(fakeCatalog));
+		
+		int width = getApp().getConfig().get("mapWidth").getAsInt();
+		int height = getApp().getConfig().get("mapHeight").getAsInt();
+		
+		GameState s = new GameState(this.user, "save #"+id, id, width, height, new SimpleBuildingCatalog(fakeCatalog));
 		map.put(id, s);
 		return s;
 	}

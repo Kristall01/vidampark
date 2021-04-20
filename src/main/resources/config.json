@@ -1,4 +1,6 @@
 {
+	"mapWidth": 15,
+	"mapHeight": 10,
 	"startBalance": 5000,
 	"ticketPrice": 50,
 	"buildings": [
