@@ -34,7 +34,7 @@ export default class Map extends Component {
         return this.props.height;
     }
 
-    generateMap() 
+    render() 
     {
         let map = [];
         for(let i = 0; i < this.getHeight(); ++i) 
@@ -49,7 +49,4 @@ export default class Map extends Component {
         return <div className="Map">{map}</div>;
     }
 
-    render() {
-        return this.generateMap();
-    }
 }
