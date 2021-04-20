@@ -58,9 +58,6 @@ public class IMap {
 	}
 	
 	private boolean hasRoadConnection(int x, int y, int width, int height) {
-		if(isRoad(x-1, y-1)) {
-			return true;
-		}
 		int iX, iY;
 		iX = x;
 		iY = y-1;
@@ -69,6 +66,7 @@ public class IMap {
 				return true;
 			}
 		}
+		++iY;
 		for(; iY < y+height; ++iY) {
 			if(isRoad(iX, iY)) {
 				return true;
@@ -81,13 +79,11 @@ public class IMap {
 				return true;
 			}
 		}
+		++iX;
 		for(;iX < x+width; ++iX) {
 			if(isRoad(iX, iY)) {
 				return true;
 			}
-		}
-		if(isRoad(x+width, y+height)) {
-			return true;
 		}
 		return false;
 	}
@@ -148,11 +144,12 @@ public class IMap {
 		
 	}
 	
-	public static class OutOfMapCoordinateException extends Exception {
+	public static class OutOfMapCoordinateException extends TranslatedException {
 
 		public final int x,y;
 		
 		public OutOfMapCoordinateException(int x, int y) {
+			super("error.map.out-of-map-coordinate");
 			this.x = x;
 			this.y = y;
 		}

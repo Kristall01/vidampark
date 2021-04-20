@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import hu.g14de.IBuildingTemplate;
 import hu.g14de.TranslatedException;
 import hu.g14de.gamestate.Balance;
-import hu.g14de.gamestate.IMap;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalIn;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonLog;
@@ -33,9 +32,6 @@ public class SignalInGamePlaceBuilding implements SignalIn {
 		}
 		catch (TranslatedException ex) {
 			c.sendSignal(new SignalOutCommonLog(ex.translate(c.getApp().getLang())));
-		}
-		catch (IMap.OutOfMapCoordinateException ex) {
-			c.crash("invalid coordinate ("+ex.x+", "+ex.y+")");
 		}
 	}
 	
