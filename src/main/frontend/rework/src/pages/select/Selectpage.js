@@ -2,6 +2,7 @@ import "./Selectpage.css"
 import Gamestate from "./Gamestate/Gamestate"
 import Button from "ui/button/Button"
 import { Component } from "react"
+import NewGameForm from "ui/newgameform/NewGameForm"
 
 class Selectpage extends Component {
 
@@ -9,7 +10,8 @@ class Selectpage extends Component {
 		super(props);
 
 		this.state = {
-			states: {}
+			states: {},
+			newGameFormHidden: true,
 		};
 	}
 
@@ -86,6 +88,10 @@ class Selectpage extends Component {
 		this.props.signal.send("create", {});
 	}
 
+	openNewGameForm(bool) {
+		this.updateState('newGameFormHidden', !bool);
+	}
+
 	render() {
 		let index = 0;
 
@@ -106,9 +112,10 @@ class Selectpage extends Component {
 		return (
 		<div className="select-page">
 			<div className="header">
-				<Button onClick={() => this.createState()}>új játék</Button>
+				<Button onClick={() => this.openNewGameForm(true)}>új játék</Button>
 				<Button onClick={() => this.props.signal.send("logout", {})}>kijelentkezés</Button>
 			</div>
+			<NewGameForm hidden={this.state.newGameFormHidden} closeWindow={() => this.openNewGameForm(false)} okWindow={() => this.createState()}></NewGameForm>
 			<div className="content">
 				{states}
 			</div>

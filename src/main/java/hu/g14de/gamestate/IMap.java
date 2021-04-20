@@ -47,7 +47,7 @@ public class IMap {
 	}
 	
 	public Cell getCellAt(int x, int y) {
-		if(x < 0 || y < 0 || x >= width() || y >= height())
+		if(x < 0 || y < 0 || x >= this.width() || y >= this.height())
 			return null;
 		return grid[width*y+x];
 	}
@@ -58,9 +58,7 @@ public class IMap {
 	}
 	
 	private boolean hasRoadConnection(int x, int y, int width, int height) {
-		if(isRoad(x-1, y-1)) {
-			return true;
-		}
+
 		int iX, iY;
 		iX = x;
 		iY = y-1;
@@ -86,15 +84,13 @@ public class IMap {
 				return true;
 			}
 		}
-		if(isRoad(x+width, y+height)) {
-			return true;
-		}
+
 		return false;
 	}
 	
-	public void placeBuilding(final int x, final int y, final IBuildingTemplate template) throws OutOfMapCoordinateException {
+	public void placeBuilding(final int x, final int y, final IBuildingTemplate template) throws OutOfMapCoordinateException, CellAlreadyOccupiedException {
 		for(int xIndex = x; xIndex < x+template.width(); ++xIndex) {
-			for (int yIndex = y; yIndex < y+ template.height(); ++yIndex) {
+			for (int yIndex = y; yIndex < y+template.height(); ++yIndex) {
 				Cell currentCell = getCellAt(xIndex, yIndex);
 				if(currentCell == null) {
 					throw new OutOfMapCoordinateException(xIndex,yIndex);

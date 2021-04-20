@@ -24,6 +24,7 @@
 	user-select: none;
 	font-size: 24px;
 	flex-shrink: 0;
+	border-bottom: 2px solid black;
 }
 
 .window-component.centered {
