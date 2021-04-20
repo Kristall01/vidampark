@@ -50,6 +50,7 @@ public class ConnectionServer {
 			config.addStaticFiles("/", "frontend", Location.EXTERNAL);
 		});
 		
+		
 		javalin.ws("/", c -> {
 			c.onMessage(this::handleWsMessage);
 			c.onClose(this::handleWsClose);
@@ -61,6 +62,7 @@ public class ConnectionServer {
 	}
 	
 	private void handleWsConnect(WsConnectContext connectEvent) {
+		connectEvent.session.setIdleTimeout(3600000);
 		connectEvent.attribute("connection", new Connection(this, connectEvent));
 	}
 	
