@@ -2,7 +2,7 @@ import "./Button.css"
 
 const Button = props => {
 	let {wide, disabled, bgcolor, color, onClick, ...others} = props;
-	let className = "button";
+	let className = "button-component";
 
 	let addedProps = {...others};
 	if(wide) {

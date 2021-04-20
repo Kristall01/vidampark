@@ -1,4 +1,4 @@
-.button {
+.button-component {
 	background: #9147ff;
 	color: white;
 	user-select: none;
@@ -7,20 +7,20 @@
 	display: inline-block;
 }
 
-.button.wide {
+.button-component.wide {
 	display: block;
 }
 
-.button:hover {
+.button-component:hover {
 	cursor: pointer;
 }
 
-.button.disabled {
+.button-component.disabled {
 	background: gray;
     opacity: 0.5;
 }
 
-.button .dark {
+.button-component .dark {
 	width: 100%;
 	height: 100%;
 	text-align: center;
@@ -29,10 +29,10 @@
 	border-radius: 4px;
 }
 
-.button:hover .dark {
+.button-component:hover .dark {
 	background: rgba(0,0,0,0.2);
 }
 
-.button.disabled:hover {
+.button-component.disabled:hover {
 	cursor: not-allowed;
 }

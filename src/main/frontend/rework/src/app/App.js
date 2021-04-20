@@ -6,6 +6,7 @@ import SignalEmiter from "SignalEmiter"
 import Authpage from "pages/auth/Authpage";
 import Selectpage from "pages/select/Selectpage";
 import Gamepage from "pages/game/Gamepage"
+import Uitestpage from "pages/uitest/Uitestpage"
 
 export default class App extends React.Component {
 
@@ -47,26 +48,27 @@ export default class App extends React.Component {
 	componentDidMount() {
 		let emiter = new SignalEmiter();
 		this.setState(Object.assign(this.state, {signal: emiter}));
-
-		setTimeout(() => {
-			let connection = new Connection("ws://127.0.0.1:8080", c => {
-				c.addEventListener("connect", () => {
-					this.switchScreen("auth", {});
-					//this.setLoadingPhase("loading...", true);
+		if(this.state.screen === "loading") {
+			setTimeout(() => {
+				let connection = new Connection("ws://127.0.0.1:8080", c => {
+					c.addEventListener("connect", () => {
+						this.switchScreen("auth", {});
+						//this.setLoadingPhase("loading...", true);
+					});
+					c.addEventListener("error", ex => {
+						this.setLoadingPhase("connection failed", false);
+					})
+					c.addEventListener("signal", e => {
+						e = e.detail;
+						this.handleSignal(e.type, e.data);
+					});
+					c.addEventListener("close", () => {
+						this.setLoadingPhase("connection lost", false);
+					});
+					emiter.subscribeSend((type,data) => c.sendSignal(type,data));
 				});
-				c.addEventListener("error", ex => {
-					this.setLoadingPhase("connection failed", false);
-				})
-				c.addEventListener("signal", e => {
-					e = e.detail;
-					this.handleSignal(e.type, e.data);
-				});
-				c.addEventListener("close", () => {
-					this.setLoadingPhase("connection lost", false);
-				});
-				emiter.subscribeSend((type,data) => c.sendSignal(type,data));
-			});
-		}, 1000);
+			}, 1000);
+		}
 	}
 
 	switchScreen(screenName, data) {
@@ -94,9 +96,10 @@ export default class App extends React.Component {
 				return <Authpage data={this.state.screenData} signal={this.state.signal}></Authpage>
 			case "select":
 				return <Selectpage data={this.state.screenData} signal={this.state.signal}></Selectpage>
-			case "game": {
+			case "game":
 				return <Gamepage data={this.state.screenData} signal={this.state.signal}></Gamepage>
-			}
+			case "uitest":
+				return <Uitestpage data={this.state.screenData} signal={this.state.signal}></Uitestpage>
 			default:
 				return <>404</>
 		}

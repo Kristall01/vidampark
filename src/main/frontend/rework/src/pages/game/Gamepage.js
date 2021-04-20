@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Map from './Map/Map';
 import "./Gamepage.css";
-//import Window from './Window/window';
+import Catalog from "ui/catalog/Catalog"
 
 export default class Gamepage extends Component {
 
@@ -12,7 +12,8 @@ export default class Gamepage extends Component {
 		this.state = {
 			money: '?',
 			mapSize: null,
-			started: false
+			started: false,
+			catalogHidden: true
 		};
     }
 
@@ -50,6 +51,11 @@ export default class Gamepage extends Component {
         return this.state.money;
     }
 
+	openCatalog(opened) {
+		this.state.catalogHidden = !opened;
+		this.setState(Object.assign(this.state, {}));
+	}
+
 	render() {
 		let map = null;
 		if(this.state.mapSize) {
@@ -61,11 +67,12 @@ export default class Gamepage extends Component {
 
         return (
             <div className="Gamepage">
+				<Catalog closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
                 <div className="header">
                     <div className="money">Money: ${this.getMoney()} </div>
                     <div className="buttons">
                         <button disabled={disabledButton} className="openParkButton" onClick={() => this.props.signal.send("startpark", {})}>🚪Open Park</button>
-                        <button className="pauseButton" onClick={ () => console.log("Building Catalog") }>🏢 Building Catalog</button>
+                        <button className="pauseButton" onClick={ () => console.log("Building Catalog")} onClick={this.openCatalog.bind(this)}>🏢 Building Catalog</button>
                         <button className="pauseButton" onClick={ () => console.log("Pause") }>⏸ Pause</button>
                         <button className="pauseButton" onClick={ () => this.props.signal.send("menu", {}) }>Menu</button>
 						<button className="pauseButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
