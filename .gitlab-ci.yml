@@ -31,6 +31,8 @@ buildFrontend:
 merge:
     stage: merge
     script:
+        - apt update
+        - apt install -y zip
         - cd $CI_PROJECT_DIR/build/libs/
         - zip -ur g14-digital-entertainment.jar $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip
     when:
