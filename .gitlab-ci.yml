@@ -18,6 +18,8 @@ buildFrontend:
     stage: build
     image: node:latest
     script:
+        - apt update
+        - apt install zip
         - cd src/main/frontend/rework
         - npm install
         - npm run build
