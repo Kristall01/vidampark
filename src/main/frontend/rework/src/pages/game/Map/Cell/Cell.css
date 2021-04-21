@@ -14,7 +14,7 @@
 }
 
 .Cell .inner:hover {
-	border: 4px solid rgb(12, 133, 1);
+	background-color: #66e141;
 }
 
 .Cell .cellimage {

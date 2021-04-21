@@ -18,7 +18,7 @@ export default class Gamepage extends Component {
 			catalog: [],
 			buildings: [],
 			targetBuilding: null,
-			cellSize: 50,
+			cellSize: 35,
 		};
     }
 

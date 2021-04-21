@@ -1,6 +1,6 @@
 {
-	"mapWidth": 15,
-	"mapHeight": 10,
+	"mapWidth": 30,
+	"mapHeight": 20,
 	"startBalance": 5000,
 	"ticketPrice": 50,
 	"buildings": [
@@ -12,7 +12,9 @@
 			"width": 1,
 			"height": 1,
 			"shopIcon": "road.svg",
-			"mapIcon": "road.svg"
+			"mapIcon": "road.svg",
+			"idleCost": 0,
+			"needsRoad": false
 		},
 		{
 			"type": "hotdog",
@@ -22,7 +24,45 @@
 			"width": 2,
 			"height": 2,
 			"shopIcon": "hotdog.svg",
-			"mapIcon": "hotdog.svg"
+			"mapIcon": "hotdog.svg",
+			"idleCost": 10,
+			"needsRoad": true
+		},
+		{
+			"type": "bush",
+			"nickname": "bokor",
+			"buildCost": 5,
+			"buildTime": 20,
+			"width": 1,
+			"height": 1,
+			"shopIcon": "bush.svg",
+			"mapIcon": "bush.svg",
+			"idleCost": 0,
+			"needsRoad": false
+		},
+		{
+			"type": "tree",
+			"nickname": "fa",
+			"buildCost": 10,
+			"buildTime": 20,
+			"width": 1,
+			"height": 2,
+			"shopIcon": "tree.png",
+			"mapIcon": "tree.png",
+			"idleCost": 0,
+			"needsRoad": false
+		},
+		{
+			"type": "grass",
+			"nickname": "fű",
+			"buildCost": 10,
+			"buildTime": 20,
+			"width": 1,
+			"height": 1,
+			"shopIcon": "grass.svg",
+			"mapIcon": "grass.svg",
+			"idleCost": 0,
+			"needsRoad": false
 		}
 	]
 }

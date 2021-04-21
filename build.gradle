@@ -12,6 +12,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'io.javalin:javalin:3.13.0'
     implementation 'org.slf4j:slf4j-simple:1.7.30'
+    implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.7.0'
 }
 
 jar {
