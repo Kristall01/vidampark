@@ -36,7 +36,8 @@ merge:
         - apt update
         - apt install -y zip
         - cd $CI_PROJECT_DIR/build/libs/
-        - zip -ur g14-digital-entertainment.jar $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip
+        - cp $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip frontend.zip
+        - zip -ur g14-digital-entertainment.jar frontend.zip
     artifacts:
         paths:
             - $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar
