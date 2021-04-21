@@ -95,22 +95,8 @@ export default class Gamepage extends Component {
 		this.updateState('catalogHidden', !opened);
 	}
 
-	manualSignal() {/*
-		let type = window.prompt("type");
-		if(!type) {
-			return;
-		}
-		let data = window.prompt("data");
-		if(!data) {
-			return;
-		}
-		this.props.signal.send(type, JSON.parse(data));*/
-		this.props.signal.send("placebuilding", {x: 0, y: 0, type: "road"});
-	}
-
 	setTargetBuilding(type) {
 		this.updateState('targetBuilding', type);
-		console.log("ok?");
 	}
 
 	handleCellClick(x,y) {
@@ -154,7 +140,6 @@ export default class Gamepage extends Component {
 						{catalogBtn}
                         <button className="pauseButton" onClick={ () => this.props.signal.send("menu", {}) }>Menu</button>
 						<button className="pauseButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
-						<button onClick={this.manualSignal.bind(this)}>manual signal</button>
                     </div>
                 </div>
                 <div className="main">
