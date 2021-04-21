@@ -1,0 +1,4 @@
+default: 0
+map placeable: 1
+gamepage header: 10
+window: 100
