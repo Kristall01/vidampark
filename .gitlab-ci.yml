@@ -19,7 +19,7 @@ buildFrontend:
     image: node:latest
     script:
         - apt update
-        - apt install zip
+        - apt install -y zip
         - cd src/main/frontend/rework
         - npm install
         - npm run build
