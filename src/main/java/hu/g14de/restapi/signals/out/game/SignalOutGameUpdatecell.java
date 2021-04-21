@@ -26,6 +26,7 @@ public class SignalOutGameUpdatecell extends SignalOut {
 			o.addProperty("height", template.height());
 			o.addProperty("width", template.width());
 			o.addProperty("mapIcon", template.mapIcon());
+			o.addProperty("nickName", template.getNickname());
 		}
 		/*else if(buildtime != 0) {
 			o.addProperty("buildtime", buildtime);
