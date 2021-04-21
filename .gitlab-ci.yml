@@ -1,8 +1,9 @@
 stages:
     - build
+    - merge
     - deploy
 
-build:
+buildBackend:
     stage: build
     image: gradle:jdk11
     script:
@@ -11,6 +12,26 @@ build:
         paths:
             - $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar
     when:  
+        manual
+
+buildFrontend:
+    stage: build
+    image: node:latest
+    script:
+        - cd src/main/frontend/rework
+        - npm install
+        - npm run build
+        - zip -r frontend.zip build
+    artifacts:
+        paths:
+            - $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip
+
+merge:
+    stage: merge
+    script:
+        - cd $CI_PROJECT_DIR/build/libs/
+        - zip -ur g14-digital-entertainment.jar $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip
+    when:
         manual
 
 deploy:
