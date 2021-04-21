@@ -27,6 +27,8 @@ buildFrontend:
     artifacts:
         paths:
             - $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip
+    when:  
+        manual
 
 merge:
     stage: merge
