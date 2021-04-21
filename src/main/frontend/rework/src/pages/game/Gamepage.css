@@ -8,6 +8,7 @@
 .Gamepage .header {
     background-color: rgb(246, 125, 125);
     height: 50px;
+	z-index: 10;
 }
 
 .Gamepage .main {

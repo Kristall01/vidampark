@@ -47,8 +47,8 @@ export default class Map extends Component {
 			map.push(<div key={++key} className="row">{row}</div>);
 		}
 		let style = {
-			height: (this.getHeight()*50)+"px",
-			width: (this.getWidth()*50)+"px"
+			height: (this.props.renderHeight)+"px",
+			width: (this.props.renderWidth)+"px"
 		};
 		return <div style={style} className="Map">{map}</div>;
 	}
