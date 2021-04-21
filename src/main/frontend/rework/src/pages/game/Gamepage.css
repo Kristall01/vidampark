@@ -5,7 +5,7 @@
     flex-direction: column;
 }
 
-.Gamepage .header {
+.Gamepage header {
     background-color: rgb(246, 125, 125);
     height: 50px;
 	z-index: 10;
@@ -19,25 +19,25 @@
     height: calc(100vh - 50px);
 }
 
-.Gamepage .header, .Gamepage .header .buttons {
+.Gamepage header, .Gamepage header .buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: nowrap;
 }
 
-.Gamepage .header .buttons {
+.Gamepage header .buttons {
     justify-content: flex-end;
 }
 
-.Gamepage .header .money {
+.Gamepage header .money {
     font-size: 30px;
     padding: 5px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     display: flex; flex-direction: column; justify-content: center;
 }
 
-.Gamepage .header button {
+.Gamepage header button {
     width: 100px;
     background-color: burlywood;
 }

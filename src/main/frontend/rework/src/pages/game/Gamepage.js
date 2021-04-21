@@ -132,7 +132,7 @@ export default class Gamepage extends Component {
         return (
             <div className="Gamepage" onWheel={this.zoomEvent.bind(this)}>
 				<Catalog setBuildTarget={this.setTargetBuilding.bind(this)} catalogData={this.state.catalog} closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
-                <div className="header">
+                <header>
                     <div className="money">Money: ${this.getMoney()} </div>
                     <div className="buttons">
                         <button disabled={disabledButton} className="openParkButton" onClick={() => this.props.signal.send("startpark", {})}>🚪Open Park</button>
@@ -141,7 +141,7 @@ export default class Gamepage extends Component {
                         <button className="pauseButton" onClick={ () => this.props.signal.send("menu", {}) }>Menu</button>
 						<button className="pauseButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
                     </div>
-                </div>
+                </header>
                 <div className="main">
                     {map}
                 </div>
