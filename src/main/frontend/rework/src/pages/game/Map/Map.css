@@ -1,15 +1,15 @@
 .Map {
 	display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: auto;
-    border: 2px solid black;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: auto;
+	border: 2px solid black;
 }
 
 .Map .row {
 	display: flex;
-    flex-direction: row;
-    flex-flow: nowrap;
-    justify-content: center;
-    flex: 1;
+	flex-direction: row;
+	flex-flow: nowrap;
+	justify-content: center;
+	flex: 1;
 }

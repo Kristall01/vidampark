@@ -16,9 +16,9 @@ class NewGameForm extends Component {
                         <label>Szélesség</label>
                     </div>
                     <div className="inputs">
-                        <input type="text" value="Név" />
-                        <input type="number" value="10" />
-                        <input type="number" value="20" />
+                        <input type="text" defaultValue="Név" />
+                        <input type="number" defaultValue="10" />
+                        <input type="number" defaultValue="20" />
                     </div>
                     <div className="buttons">
                         <button onClick={okWindow}>Létrehoz</button>
