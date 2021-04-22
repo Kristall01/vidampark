@@ -37,7 +37,7 @@ public class GameState
 		this.catalog = catalog;
 		
 		try {
-			this.balance = new Balance(this, 5000);
+			this.balance = new Balance(this, 500000);
 		}
 		catch (Balance.NegativeMoneyException e) {
 			//impossible here
