@@ -13,7 +13,7 @@ public class JsonBuildingTemplate implements IBuildingTemplate {
 	
 	@Override
 	public boolean needsRoadConnection() {
-		return !o.get("type").getAsString().contentEquals("road");
+		return o.get("needsRoad").getAsBoolean();
 	}
 	
 	@Override
