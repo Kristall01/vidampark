@@ -46,7 +46,7 @@ public class EnvironmentBootstrapper {
 		}
 		copyFile("frontend.zip");
 		ZipFile file = new ZipFile("frontend.zip");
-		file.extractAll(copyBase.getPath());
+		file.extractAll("frontend");
 	}
 	
 	public File copyFile(String fileName) throws IOException {
