@@ -61,7 +61,7 @@ public class GameState
 	}
 	
 	public void addRandomGuest() {
-		
+	
 	}
 	
 	public VidamparkApp getApp() {
