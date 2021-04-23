@@ -20,14 +20,14 @@ frontend:
     script:
         - apt update
         - apt install -y zip
-        - cd src/main/frontend/rework
+        - cd src/main/frontend
         - npm install
         - npm run build
         - cd build
         - zip -r ../frontend.zip *
     artifacts:
         paths:
-            - $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip
+            - $CI_PROJECT_DIR/src/main/frontend/frontend.zip
     when:  
         manual
 
@@ -37,7 +37,7 @@ merge:
         - apt update
         - apt install -y zip
         - cd $CI_PROJECT_DIR/build/libs/
-        - cp $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip frontend.zip
+        - cp $CI_PROJECT_DIR/src/main/frontend/frontend.zip frontend.zip
         - zip -ur g14-digital-entertainment.jar frontend.zip
     artifacts:
         paths:
