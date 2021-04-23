@@ -5,9 +5,11 @@ import hu.g14de.TickCounter;
 import hu.g14de.TranslatedException;
 import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
+import hu.g14de.gamestate.mapelements.game.GameBuilding;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalOut;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
+import hu.g14de.restapi.signals.out.game.SignalOutGameSpawnGuest;
 import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
 import hu.g14de.usermanager.User;
 
@@ -61,7 +63,14 @@ public class GameState
 	}
 	
 	public void addRandomGuest() {
-	
+		GameBuilding game = map.getRandomGame();
+		if(game == null) {
+			return;
+		}
+		Guest guest = new Guest();
+		guests.add(guest);
+		Coordinate entrance = map.getEntrance().getCoordinate();
+		broadcastSignal(new SignalOutGameSpawnGuest(entrance.getX(), entrance.getY()));
 	}
 	
 	public VidamparkApp getApp() {
