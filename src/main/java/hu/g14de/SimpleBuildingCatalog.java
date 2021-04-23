@@ -1,6 +1,7 @@
 package hu.g14de;
 
 import hu.g14de.gamestate.IBuildingCatalog;
+import hu.g14de.gamestate.mapelements.IBuildingTemplate;
 
 import java.util.Collection;
 import java.util.HashMap;

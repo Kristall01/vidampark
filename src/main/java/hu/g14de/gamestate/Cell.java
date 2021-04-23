@@ -1,5 +1,5 @@
 package hu.g14de.gamestate;
-import hu.g14de.Placeable;
+import hu.g14de.gamestate.mapelements.Placeable;
 import hu.g14de.VidamparkApp;
 
 import static hu.g14de.Utils.checkNull;

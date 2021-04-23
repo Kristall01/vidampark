@@ -1,11 +1,10 @@
-package hu.g14de;
+package hu.g14de.gamestate.mapelements;
 
 import com.google.gson.JsonObject;
-import hu.g14de.gamestate.Cell;
 
-public class JsonBuildingTemplate implements IBuildingTemplate {
+public abstract class JsonBuildingTemplate implements IBuildingTemplate {
 	
-	private transient JsonObject o;
+	protected transient JsonObject o;
 	
 	public JsonBuildingTemplate(JsonObject o) {
 		this.o = o;
@@ -41,10 +40,10 @@ public class JsonBuildingTemplate implements IBuildingTemplate {
 		return o.get("type").getAsString().contentEquals("road");
 	}
 	
-	@Override
-	public Placeable createInstance(Cell cell) {
-		return new SimplePlaceable(this, cell);
-	}
+	/*@Override
+	public Placeable createInstance(Cell cell, boolean instantBuild) {
+		return new SimplePlaceable(this, cell, instantBuild);
+	}*/
 	
 	@Override
 	public int width() {
@@ -69,6 +68,11 @@ public class JsonBuildingTemplate implements IBuildingTemplate {
 	@Override
 	public Object serialize() {
 		return o;
+	}
+	
+	@Override
+	public int getIdleCost() {
+		return o.has("idleCost")?o.get("idleCost").getAsInt() : 0;
 	}
 	
 }

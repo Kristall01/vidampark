@@ -7,6 +7,7 @@ import hu.g14de.VidamparkApp;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalOut;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
+import hu.g14de.restapi.signals.out.game.SignalOutGameSpawnGuest;
 import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
 import hu.g14de.usermanager.User;
 
@@ -25,7 +26,6 @@ public class GameState
 	private LinkedList<Connection> observers = new LinkedList<>();
 	private Scheduler scheduler;
 	private IBuildingCatalog catalog;
-	private boolean paused;
 
 	public GameState(User user, String name, int ID, int width, int height, IBuildingCatalog catalog)
 	{
@@ -43,6 +43,8 @@ public class GameState
 			//impossible here
 		}
 		this.map = new IMap(this,width,height);
+		Coordinate entrance = map.getEntrance().getCoordinate();
+		this.map.placeBuilding(entrance.getX(), entrance.getY(), catalog.getTemplateByID("road"));
 		this.scheduler = null;
 	}
 
@@ -122,6 +124,10 @@ public class GameState
 		}
 	}
 	
+	public Scheduler getScheduler() {
+		return scheduler;
+	}
+	
 	public synchronized void receiveTick() {
 		this.balance.addMoney(BigInteger.valueOf(1));
 		this.map.receiveTick();
@@ -131,6 +137,10 @@ public class GameState
 		return scheduler != null;
 	}
 	
+	public void dropGuestAt(Guest g, Cell cell) {
+		//TODO implement
+	}
+	
 	public void startPark() {
 		if(isStarted()) {
 			return;
@@ -138,12 +148,8 @@ public class GameState
 		scheduler = new Scheduler(this);
 		scheduler.start();
 		broadcastSignal(new SignalOutGameStartpark());
-	}
-	
-	public void pause() {
-		if(this.paused) {
-		
-		}
+		Coordinate entrance = map.getEntrance().getCoordinate();
+		broadcastSignal(new SignalOutGameSpawnGuest(entrance.getX(), entrance.getY()));
 	}
 	
 }

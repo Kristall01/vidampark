@@ -4,6 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import hu.g14de.gamestate.IBuildingCatalog;
+import hu.g14de.gamestate.mapelements.IBuildingTemplate;
+import hu.g14de.gamestate.mapelements.basics.PrimitiveTemplate;
+import hu.g14de.gamestate.mapelements.food.JsonFoodTemplate;
+import hu.g14de.gamestate.mapelements.game.JsonGameTemplate;
 import hu.g14de.i18n.Lang;
 import hu.g14de.restapi.ConnectionServer;
 import hu.g14de.usermanager.UserManager;
@@ -40,9 +44,24 @@ public class VidamparkApp {
 	private IBuildingCatalog readCatalog(JsonElement e) {
 		SimpleBuildingCatalog catalog = new SimpleBuildingCatalog();
 		JsonArray templates = e.getAsJsonArray();
+		IBuildingTemplate temp = null;
 		for(int i = 0; i < templates.size(); ++i) {
-			JsonBuildingTemplate template = new JsonBuildingTemplate(((JsonObject) templates.get(i)));
-			catalog.register(template.type(), template);
+			JsonObject o = templates.get(i).getAsJsonObject();
+			switch(o.get("category").getAsString()) {
+				case "food": {
+					temp = new JsonFoodTemplate(o);
+					break;
+				}
+				case "game": {
+					temp = new JsonGameTemplate(o);
+					break;
+				}
+				case "other": {
+					temp = new PrimitiveTemplate(o);
+					break;
+				}
+			}
+			catalog.register(temp.type(), temp);
 		}
 		return catalog;
 	}

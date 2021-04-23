@@ -2,7 +2,7 @@ package hu.g14de.restapi.signals.in.game;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import hu.g14de.IBuildingTemplate;
+import hu.g14de.gamestate.mapelements.IBuildingTemplate;
 import hu.g14de.TranslatedException;
 import hu.g14de.gamestate.Balance;
 import hu.g14de.restapi.Connection;

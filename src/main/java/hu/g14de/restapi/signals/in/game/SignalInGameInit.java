@@ -1,7 +1,7 @@
 package hu.g14de.restapi.signals.in.game;
 
 import com.google.gson.JsonElement;
-import hu.g14de.Placeable;
+import hu.g14de.gamestate.mapelements.Placeable;
 import hu.g14de.gamestate.GameState;
 import hu.g14de.gamestate.IMap;
 import hu.g14de.restapi.Connection;
@@ -21,7 +21,7 @@ public class SignalInGameInit implements SignalIn {
 		}
 		c.sendSignal(new SignalOutGameCatalog(c.getObservedGamestate().getCatalog().getAvailableTemplates()));
 		for (Placeable building : c.getObservedGamestate().getMap().getBuildings()) {
-			c.sendSignal(new SignalOutGameUpdatecell(building.getCell()));
+			c.sendSignal(new SignalOutGameUpdatecell(building.getCell(), 0));
 		}
 		c.sendSignal(new SignalOutGameInitiated());
 	}

@@ -37,7 +37,6 @@ public class ConnectionServer {
 		gameDomain.add("placebuilding", new SignalInGamePlaceBuilding());
 		gameDomain.add("startpark", new SignalInGameStartpark());
 		gameDomain.add("leave", new SignalInGameLeave());
-		gameDomain.add("menu", new SignalInGameMenu());
 		
 		selectDomain.add("create", new SignalInSelectCreate());
 		selectDomain.add("select", new SignalInSelectSelect());
