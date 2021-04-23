@@ -81,32 +81,36 @@ public class IMap {
 		return getRoadConnection(x, y, width, height) != null;
 	}
 	
+	public Collection<Cell> findRoute(Cell from, Cell to) {
+		return null;
+	}
+	
 	public Cell getRoadConnection(int x, int y, int width, int height) {
 		int iX, iY;
 		iX = x;
 		iY = y-1;
 		for(;iX < x+width; ++iX) {
 			if(isRoad(iX, iY)) {
-				getCellAt(iX, iY);
+				return getCellAt(iX, iY);
 			}
 		}
 		++iY;
 		for(; iY < y+height; ++iY) {
 			if(isRoad(iX, iY)) {
-				getCellAt(iX, iY);
+				return getCellAt(iX, iY);
 			}
 		}
 		iX = x-1;
 		iY = y;
 		for(; iY < y+height; ++iY) {
 			if(isRoad(iX, iY)) {
-				getCellAt(iX, iY);
+				return getCellAt(iX, iY);
 			}
 		}
 		++iX;
 		for(;iX < x+width; ++iX) {
 			if(isRoad(iX, iY)) {
-				getCellAt(iX, iY);
+				return getCellAt(iX, iY);
 			}
 		}
 		return null;

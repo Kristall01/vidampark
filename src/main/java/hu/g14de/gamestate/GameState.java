@@ -7,11 +7,11 @@ import hu.g14de.VidamparkApp;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalOut;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
-import hu.g14de.restapi.signals.out.game.SignalOutGameSpawnGuest;
 import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
 import hu.g14de.usermanager.User;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import static hu.g14de.Utils.checkNull;
@@ -26,6 +26,7 @@ public class GameState
 	private LinkedList<Connection> observers = new LinkedList<>();
 	private Scheduler scheduler;
 	private IBuildingCatalog catalog;
+	private ArrayList<Guest> guests = new ArrayList<>();
 
 	public GameState(User user, String name, int ID, int width, int height, IBuildingCatalog catalog)
 	{
@@ -149,7 +150,6 @@ public class GameState
 		scheduler.start();
 		broadcastSignal(new SignalOutGameStartpark());
 		Coordinate entrance = map.getEntrance().getCoordinate();
-		broadcastSignal(new SignalOutGameSpawnGuest(entrance.getX(), entrance.getY()));
 	}
 	
 }
