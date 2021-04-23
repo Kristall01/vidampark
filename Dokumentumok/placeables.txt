@@ -1,17 +1,17 @@
-Rollercoaster
-Céllövölde
-Óriáskerék
-Körhinta
++Rollercoaster
+-Céllövölde
++Óriáskerék
++Körhinta
 Dodgem
 Terminator
 Viking ship
-Bouncy castle
++Bouncing house
 
-Hamburger
++Hamburger
 Vattacukor
-Étterem
-Hot-dog
++Étterem
++Hot-dog
 
-Road
-Tree
-Grass
++Road
++Tree
++Grass

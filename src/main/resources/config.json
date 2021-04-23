@@ -14,8 +14,7 @@
 			"shopIcon": "road.svg",
 			"mapIcon": "road.svg",
 			"idleCost": 0,
-			"needsRoad": false,
-			"category": "other"
+			"needsRoad": false
 		},
 		{
 			"type": "hotdog",
@@ -27,8 +26,31 @@
 			"shopIcon": "hotdog.svg",
 			"mapIcon": "hotdog.svg",
 			"idleCost": 10,
-			"needsRoad": true,
-			"category": "food"
+			"needsRoad": true
+		},
+		{
+			"type": "hamburger",
+			"nickname": "hamburger árus",
+			"buildCost": 100,
+			"buildTime": 20,
+			"width": 2,
+			"height": 2,
+			"shopIcon": "burger.svg",
+			"mapIcon": "burger.svg",
+			"idleCost": 10,
+			"needsRoad": true
+		},
+		{
+			"type": "restaurant",
+			"nickname": "étterem",
+			"buildCost": 200,
+			"buildTime": 50,
+			"width": 3,
+			"height": 3,
+			"shopIcon": "restaurant.svg",
+			"mapIcon": "restaurant.svg",
+			"idleCost": 40,
+			"needsRoad": true
 		},
 		{
 			"type": "bush",
@@ -40,8 +62,7 @@
 			"shopIcon": "bush.svg",
 			"mapIcon": "bush.svg",
 			"idleCost": 0,
-			"needsRoad": false,
-			"category": "other"
+			"needsRoad": false
 		},
 		{
 			"type": "tree",
@@ -53,8 +74,7 @@
 			"shopIcon": "tree.png",
 			"mapIcon": "tree.png",
 			"idleCost": 0,
-			"needsRoad": false,
-			"category": "other"
+			"needsRoad": false
 		},
 		{
 			"type": "grass",
@@ -66,8 +86,43 @@
 			"shopIcon": "grass.svg",
 			"mapIcon": "grass.svg",
 			"idleCost": 0,
-			"needsRoad": false,
-			"category": "other"
+			"needsRoad": false
+		},
+		{
+			"type": "bouncehouse",
+			"nickname": "ugrálóvár",
+			"buildCost": 500,
+			"buildTime": 40,
+			"width": 4,
+			"height": 4,
+			"shopIcon": "bouncehouse.svg",
+			"mapIcon": "bouncehouse.svg",
+			"idleCost": 100,
+			"needsRoad": true
+		},
+		{
+			"type": "carousel",
+			"nickname": "körhinta",
+			"buildCost": 1000,
+			"buildTime": 60,
+			"width": 3,
+			"height": 3,
+			"shopIcon": "carousel.svg",
+			"mapIcon": "carousel.svg",
+			"idleCost": 200,
+			"needsRoad": true
+		},
+		{
+			"type": "rollercoaster",
+			"nickname": "hullámvasút",
+			"buildCost": 2500,
+			"buildTime": 100,
+			"width": 6,
+			"height": 4,
+			"shopIcon": "rollercoaster.svg",
+			"mapIcon": "rollercoaster.svg",
+			"idleCost": 100,
+			"needsRoad": true
 		}
 	]
 }
