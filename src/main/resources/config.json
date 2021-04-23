@@ -14,6 +14,7 @@
 			"shopIcon": "road.svg",
 			"mapIcon": "road.svg",
 			"idleCost": 0,
+			"category": "other",
 			"needsRoad": false
 		},
 		{
@@ -26,6 +27,10 @@
 			"shopIcon": "hotdog.svg",
 			"mapIcon": "hotdog.svg",
 			"idleCost": 10,
+			"category": "food",
+			"maxGuests": 5,
+			"eatTime": 25,
+			"foodBoost": 50,
 			"needsRoad": true
 		},
 		{
@@ -38,6 +43,10 @@
 			"shopIcon": "burger.svg",
 			"mapIcon": "burger.svg",
 			"idleCost": 10,
+			"category": "food",
+			"maxGuests": 4,
+			"eatTime": 35,
+			"foodBoost": 70,
 			"needsRoad": true
 		},
 		{
@@ -50,6 +59,10 @@
 			"shopIcon": "restaurant.svg",
 			"mapIcon": "restaurant.svg",
 			"idleCost": 40,
+			"category": "food",
+			"maxGuests": 30,
+			"eatTime": 300,
+			"foodBoost": 80,
 			"needsRoad": true
 		},
 		{
@@ -62,6 +75,7 @@
 			"shopIcon": "bush.svg",
 			"mapIcon": "bush.svg",
 			"idleCost": 0,
+			"category": "other",
 			"needsRoad": false
 		},
 		{
@@ -74,6 +88,7 @@
 			"shopIcon": "tree.png",
 			"mapIcon": "tree.png",
 			"idleCost": 0,
+			"category": "other",
 			"needsRoad": false
 		},
 		{
@@ -86,6 +101,7 @@
 			"shopIcon": "grass.svg",
 			"mapIcon": "grass.svg",
 			"idleCost": 0,
+			"category": "other",
 			"needsRoad": false
 		},
 		{
@@ -98,6 +114,12 @@
 			"shopIcon": "bouncehouse.svg",
 			"mapIcon": "bouncehouse.svg",
 			"idleCost": 100,
+			"category": "game",
+			"maxPlayers": 10,
+			"playTime": 120,
+			"roundCost": 5,
+			"minPlayers": 1,
+			"moraleBoost": 25,
 			"needsRoad": true
 		},
 		{
@@ -110,6 +132,12 @@
 			"shopIcon": "carousel.svg",
 			"mapIcon": "carousel.svg",
 			"idleCost": 200,
+			"category": "game",
+			"maxPlayers": 9,
+			"playTime": 50,
+			"roundCost": 3,
+			"minPlayers": 3,
+			"moraleBoost": 10,
 			"needsRoad": true
 		},
 		{
@@ -122,6 +150,12 @@
 			"shopIcon": "rollercoaster.svg",
 			"mapIcon": "rollercoaster.svg",
 			"idleCost": 100,
+			"category": "game",
+			"maxPlayers": 16,
+			"playTime": 240,
+			"roundCost": 20,
+			"minPlayers": 8,
+			"moraleBoost": 40,
 			"needsRoad": true
 		}
 	]
