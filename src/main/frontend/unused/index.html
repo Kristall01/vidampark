@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+	átirányítás folyamatban...
+	<script type="module" src="/auth.js"></script>
+    <script type="module">
+		import {auth} from "/auth.js";
+		(async () => {
+			let r = await auth();
+			location = r.result ? "/main" : "/login";
+		})();
+	</script>
+</body>
+</html>

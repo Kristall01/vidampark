@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root {
+	--window-main-color: #9147ff;
+	--min-window-height: 50px;
+	--min-window-width: 100px;
+}
+
+.window {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	box-shadow: 0 2px 10px rgb(0 0 0 / 20%), 0 5px 10px -5px rgb(0 0 0 / 20%);
+	font-family: 'Roboto', sans-serif;
+	position: absolute;
+	min-height: var(--min-window-height);
+	min-width: var(--min-window-width);
+}
+
+.window * {
+	box-sizing: border-box;
+}
+
+.window-header {
+	display: flex;
+	height: 45px;
+	width: 100%;
+	background: var(--window-main-color);
+	justify-content: center;
+	align-items: center;
+	font-size: 24px;
+	color: white;
+	user-select: none;
+	position: relative;
+}
+
+.window-content {
+	width: 100%;
+	flex: 1;
+	overflow: auto;
+	display: flex;
+	border: 5px solid var(--window-main-color);
+	border-top-width: 0;
+	flex-direction: column;
+}
+
+.window.hidden {
+	display: none;
+}
+
+.window .window-header .close-btn {
+	height: 100%;
+	width: 80px;
+	position: absolute;
+	margin-right: 0px;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.window .window-header .close-btn svg {
+	height: 50%;
+}
+
+.window .window-header .close-btn:hover {
+	background-color: red;
+	cursor: pointer;
+}
+
+.window .window-header .close-btn .shape {
+	d: path("M 10 9 L 1 0 L 0 1 L 9 10 L 0 19 L 1 20 L 10 11 L 19 20 L 20 19 L 11 10 L 20 1 L 19 0 Z");
+	fill: white;
+}

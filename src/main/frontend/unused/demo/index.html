@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			width: 100%;
+			height: 100vh;
+			display: flex;
+			margin: 0;
+			flex-direction: column;
+		}
+		#log {
+			display: flex;
+			width: 100%;
+			flex: 1;
+		}
+		#command {
+			height: 50px;
+			display: flex;
+			width: 100%;
+			flex-direction: row;
+		}
+		input[type=text] {
+			height: 100%;
+			display: flex;
+			box-sizing: border-box;
+		}
+
+		form {
+			flex-direction: row;
+			display: flex;
+			margin: 0;
+			width: 100%;
+		}
+
+		#data {
+			display: flex;
+			height: 100%;
+			flex: 1;
+		}
+
+		#send {
+			display: none;
+		}
+
+		.record {
+
+		}
+	</style>
+</head>
+<body>
+	<div id="log"></div>
+	<div id="command">
+		<form action="" id="form">
+			<input type="text" id="type">
+			<input type="text" id="data">
+			<input type="submit" id="send">
+		</form>
+	</div>
+	<script>
+		const get = (query) => document.querySelector(query).value;
+
+		document.querySelector("#form").addEventListener("submit", e => {
+			e.preventDefault();
+
+
+			ws.send(JSON.stringify({type: get("#type"), data: JSON.parse(get("#data"))}));
+			e.target.reset();	
+		});
+		let ws = new WebSocket("ws://127.0.0.1:8080");
+			ws.addEventListener("error", e => {console.log("connection error")});
+			ws.addEventListener("open", () => {
+			ws.addEventListener("message", e => {console.log(JSON.parse(e.data))});
+			ws.addEventListener("close", e => {console.log("connection closed")});
+			window.sendPacket = (type,data) => {ws.send(JSON.stringify({type: type, data: data}))};
+		});
+
+	</script>
+</body>
+</html>
