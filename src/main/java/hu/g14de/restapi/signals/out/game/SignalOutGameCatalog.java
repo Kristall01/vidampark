@@ -1,6 +1,6 @@
 package hu.g14de.restapi.signals.out.game;
 
-import hu.g14de.IBuildingTemplate;
+import hu.g14de.gamestate.mapelements.IBuildingTemplate;
 import hu.g14de.restapi.signals.SignalOut;
 
 import java.util.ArrayList;

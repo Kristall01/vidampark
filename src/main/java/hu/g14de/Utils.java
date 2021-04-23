@@ -7,13 +7,16 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Objects;
+import java.util.Random;
 
 public class Utils {
 	
 	private static Gson gson;
+	private static Random random;
 	
 	static {
 		gson = new Gson();
+		random = new Random();
 	}
 	
 	public static String toJson(Object o) {
@@ -30,6 +33,10 @@ public class Utils {
 	
 	public static JsonElement fromJson(File file) throws IOException {
 		return gson.fromJson(Files.readString(file.toPath()), JsonElement.class);
+	}
+	
+	public static Random getRandom() {
+		return random;
 	}
 	
 	public static void checkNull(Object... args)

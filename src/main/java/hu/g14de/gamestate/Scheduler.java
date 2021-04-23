@@ -43,6 +43,10 @@ public class Scheduler {
 		loopThread = null;
 	}
 	
+	public long getTickGap() {
+		return tickGap;
+	}
+	
 	public synchronized void start() {
 		if(running()) {
 			return;

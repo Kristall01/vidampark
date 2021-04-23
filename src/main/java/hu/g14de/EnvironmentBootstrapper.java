@@ -1,13 +1,11 @@
 package hu.g14de;
 
+import net.lingala.zip4j.ZipFile;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.security.CodeSource;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public class EnvironmentBootstrapper {
 	
@@ -17,7 +15,7 @@ public class EnvironmentBootstrapper {
 		this.copyBase = copyBase;
 	}
 	
-	public void setupFrontend() throws IOException {
+/*	public void setupFrontend() throws IOException {
 		new File(copyBase, "frontend").mkdirs();
 		CodeSource src = getClass().getProtectionDomain().getCodeSource();
 		if (src != null) {
@@ -39,6 +37,16 @@ public class EnvironmentBootstrapper {
 				}
 			}
 		}
+	}*/
+	
+	public void setupFrontend() throws IOException {
+		File frontendDir = new File(copyBase, "frontend");
+		if(frontendDir.exists()) {
+			return;
+		}
+		copyFile("frontend.zip");
+		ZipFile file = new ZipFile("frontend.zip");
+		file.extractAll(copyBase.getPath());
 	}
 	
 	public File copyFile(String fileName) throws IOException {

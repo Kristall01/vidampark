@@ -23,7 +23,8 @@ frontend:
         - cd src/main/frontend/rework
         - npm install
         - npm run build
-        - zip -r frontend.zip build
+        - cd build
+        - zip -r ../frontend.zip *
     artifacts:
         paths:
             - $CI_PROJECT_DIR/src/main/frontend/rework/frontend.zip
