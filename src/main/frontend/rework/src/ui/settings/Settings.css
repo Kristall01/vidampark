@@ -1,41 +1,41 @@
-.new-game-form {
+.settings {
     position: absolute;
     top: 70px;
-    right: 10px;
+    right: 20px;
+    z-index: 1;
 }
 
-.new-game-form .content {
+.settings .content {
     display: flex;
     flex-direction: row;
     height: 100%;
     padding: 0 10px 10px 10px;
     position: relative;
-    box-sizing: border-box;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
-.new-game-form .labels {
-    width: 25%;
-    margin-left: 3%;
+.settings .labels {
+    width: 42%;
+    margin-left: 19%;
 }
 
-.new-game-form .inputs {
-    width: 72%;
+.settings .inputs input {
+    width: 35px;
 }
 
-.new-game-form .labels, .new-game-form .inputs {
+.settings .labels, .settings .inputs {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-evenly;
 }
 
-.new-game-form .labels label, .new-game-form .inputs input {
+.settings .labels label, .settings .inputs input {
     display: block;
     margin: 5px 0;
 }
 
-.new-game-form .content .buttons {
+.settings .content .buttons {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -43,11 +43,11 @@
     justify-content: center;
 }
 
-.new-game-form button {
+.settings button {
     width: 80px;
     height: 30px;
     margin: 0 15px;
-    border: 2px solid #9147ff;
+    border: 2px solid #1477ff;
     background-color: white;
     font-size: 15px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -56,12 +56,12 @@
 }
 
 /* Green */
-.new-game-form button {
-border-color: #9147ff;
-color: #8737ff;
+.settings button {
+border-color: #1477ff;
+color: #0069fb;
 }
 
-.new-game-form button:hover {
-background-color: #9147ff;
+.settings button:hover {
+background-color: #1477ff;
 color: white;
 }

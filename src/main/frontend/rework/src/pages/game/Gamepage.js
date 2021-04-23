@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Map from './Map/Map';
 import "./Gamepage.css";
 import Catalog from "ui/catalog/Catalog"
+import Settings from "ui/settings/Settings"
 
 export default class Gamepage extends Component {
 
@@ -15,17 +16,26 @@ export default class Gamepage extends Component {
 			mapSize: null,
 			started: false,
 			catalogHidden: true,
+			settingsHidden: true,
 			catalog: [],
 			buildings: [],
 			targetBuilding: null,
 			cellSize: 35,
+			/*TEMP*/
+			buildingSettings: [
+				{name: "hotdog árus", usePrice: 5},
+				{name: "hamburgerező", usePrice: 10},
+				{name: "étterem", usePrice: 20},
+				{name: "ugrálóvár", usePrice: 10},
+				{name: "körhinta", usePrice: 8},
+			],
+			/*ENDTEMP*/
 		};
     }
 
 	componentDidMount() {
 		this.props.signal.subscribe((type, data) => this.handleSignal(type, data));
 		this.props.signal.send("init", {});
-
 	}
 
 	updateState(key, value) {
@@ -91,8 +101,12 @@ export default class Gamepage extends Component {
         return this.state.money;
     }
 
-	openCatalog(opened) {
-		this.updateState('catalogHidden', !opened);
+	openCatalog(close) {
+		this.updateState('catalogHidden', !close);
+	}
+
+	openSettings(close) {
+		this.updateState('settingsHidden', !close);
 	}
 
 	setTargetBuilding(type) {
@@ -132,14 +146,16 @@ export default class Gamepage extends Component {
         return (
             <div className="Gamepage" onWheel={this.zoomEvent.bind(this)}>
 				<Catalog setBuildTarget={this.setTargetBuilding.bind(this)} catalogData={this.state.catalog} closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
+				<Settings hidden={this.state.settingsHidden} buildings={this.state.buildingSettings} closeWindow={() => this.openSettings(false)} okWindow={() => this.openSettings(false)}></Settings>
                 <header>
                     <div className="money">Money: ${this.getMoney()} </div>
                     <div className="buttons">
                         <button disabled={disabledButton} className="openParkButton" onClick={() => this.props.signal.send("startpark", {})}>🚪Open Park</button>
                         <button className="pauseButton" onClick={ () => console.log("Pause") }>⏸ Pause</button>
 						{catalogBtn}
-                        <button className="pauseButton" onClick={ () => this.props.signal.send("menu", {}) }>Menu</button>
-						<button className="pauseButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
+                        {/*<button className="menuButton" onClick={ () => this.openSettings(open) }>Menu</button>*/}
+                        <button className="menuButton" onClick={ () => this.props.signal.send("settings", {}) }>Beállítások</button>
+						<button className="leaveButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
                     </div>
                 </header>
                 <div className="main">

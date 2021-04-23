@@ -1,8 +1,10 @@
 .gamestate-component {
 	width: 400px;
 	height: 200px;
-	border: 1px solid gray;
+	border: 2px solid rgb(214, 214, 214);
 	padding: 20px;
+	background-color: rgba(168, 168, 168, 0.753);
+	color: white;
 }
 
 .gamestate-component, .gamestate-component * {

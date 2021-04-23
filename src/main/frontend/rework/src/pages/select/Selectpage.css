@@ -53,6 +53,9 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	background-image: url('https://www.smartcitiesworld.net/AcuCustom/Sitename/DAM/019/Theme_park_AdobeStock_222547272_1.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .select-page .gamestate-component {
