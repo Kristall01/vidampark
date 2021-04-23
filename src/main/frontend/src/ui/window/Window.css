@@ -1,0 +1,71 @@
+.window-component {
+	display: flex;
+	flex-direction: column;
+	border-color: black;
+	box-sizing: border-box;
+	border-style: solid;
+	border-width: 2px;
+	background-color: white;
+	z-index: 100;
+}
+
+.window-component.hidden {
+	display: none;
+}
+
+.window-component .header {
+	height: 40px;
+	color: white;
+	background-color: black;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+	font-size: 24px;
+	flex-shrink: 0;
+	border-bottom: 2px solid black;
+}
+
+.window-component.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.window-component .header .close {
+	position: absolute;
+	right: 0;
+	height: 100%;
+	width: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.window-component .header .close svg {
+	height: 40%;
+}
+
+.window-component .header .close svg path {
+	fill: white;
+    d: path("M 10 9 L 1 0 L 0 1 L 9 10 L 0 19 L 1 20 L 10 11 L 19 20 L 20 19 L 11 10 L 20 1 L 19 0 Z");
+}
+
+.window-component .header .close:hover {
+	background-color: red;
+}
+
+.window-component .content {
+	overflow: auto;
+}
+
+.window-component .content .dump {
+	margin-bottom: 20px;
+	background-color: red;
+	padding: 0 20px;
+	height: 100px;
+	width: 100%;
+	box-sizing: border-box	;
+}

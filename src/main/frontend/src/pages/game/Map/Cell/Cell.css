@@ -1,0 +1,23 @@
+.Cell { 
+    background-color: rgb(152, 255, 121);
+    flex: 1;
+    position: relative;
+    display: flex;
+}
+
+.Cell .inner {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: solid gray;
+	border-width: 1px 1px 0 0;
+}
+
+.Cell .inner:hover {
+	background-color: #66e141;
+}
+
+.Cell .cellimage {
+	position: absolute;
+	z-index: 1;
+}

@@ -1,0 +1,45 @@
+.Gamepage {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.Gamepage header {
+    background-color: rgb(246, 125, 125);
+    height: 50px;
+	flex-shrink: 0;
+	z-index: 10;
+}
+
+.Gamepage .main {
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+	align-items: center;
+	flex: 1;
+}
+
+.Gamepage header, .Gamepage header .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.Gamepage header .buttons {
+    justify-content: flex-end;
+}
+
+.Gamepage header .money {
+    font-size: 30px;
+    padding: 5px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex; flex-direction: column; justify-content: center;
+}
+
+.Gamepage header button {
+    width: 100px;
+    background-color: burlywood;
+}

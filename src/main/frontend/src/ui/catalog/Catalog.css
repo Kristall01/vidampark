@@ -1,0 +1,11 @@
+.building-catalog {
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.building-catalog > * {
+	margin: 10px;
+}

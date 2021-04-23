@@ -1,0 +1,40 @@
+.gamestate-component {
+	width: 400px;
+	height: 200px;
+	border: 2px solid rgb(214, 214, 214);
+	padding: 20px;
+	background-color: rgba(168, 168, 168, 0.753);
+	color: white;
+}
+
+.gamestate-component, .gamestate-component * {
+	box-sizing: border-box;
+}
+
+.gamestate-component .content {
+	flex: 1;
+	width: 100%;
+}
+
+.gamestate-component .title {
+	text-overflow: ellipsis;
+	font-size: 24px;
+	margin-bottom: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.gamestate-component .button-line {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+	flex-direction: row-reverse;
+}
+
+.gamestate-component .inner {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	flex-direction: column;
+	justify-content: space-between;
+}
