@@ -3,7 +3,6 @@ import Map from './Map/Map';
 import "./Gamepage.css";
 import Catalog from "ui/catalog/Catalog"
 import Settings from "ui/settings/Settings"
-import Navigraph from "./Navigraph/Navigraph";
 
 export default class Gamepage extends Component {
 
@@ -13,7 +12,7 @@ export default class Gamepage extends Component {
 
 		this.state = {
 			initiated: false,
-			money: 0,
+			money: '?',
 			mapSize: null,
 			started: false,
 			catalogHidden: true,
@@ -22,8 +21,6 @@ export default class Gamepage extends Component {
 			buildings: [],
 			targetBuilding: null,
 			cellSize: 35,
-			mapmode: true,
-			graph: null
 			/*TEMP*/
 			buildingSettings: [
 				{name: "hotdog árus", usePrice: 5},
@@ -70,7 +67,6 @@ export default class Gamepage extends Component {
 			}
 			case "initiated": {
 				this.updateState('initiated', true);
-				break;
 			}
 			case "updatecell": {
 				if(data.type) {
@@ -87,16 +83,9 @@ export default class Gamepage extends Component {
 					});
 					this.updateState("buildings", copy);
 				}
-				break;
-			}
-			case "updategraph": {
-				console.log(data);
-				this.updateState("graph", data);
-				break;
 			}
 			default: {
-				console.error("unidentified signal: ",type,data);
-				break;
+
 			}
 		}
 	}
@@ -138,11 +127,14 @@ export default class Gamepage extends Component {
 		if(!this.state.initiated) {
 			return <></>;
 		}
-		let {width, height} = this.state.mapSize;
-		let renderWidth = this.state.cellSize*width;
-		let renderHeight = this.state.cellSize*height;
-		let map = <Map hidden={!this.state.mapmode} handleCellClick={this.handleCellClick.bind(this)} buildings={this.state.buildings} renderWidth={renderWidth} width={width} height={height} renderHeight={renderHeight}></Map>
-		let navigraph = <Navigraph graph={this.state.graph} hidden={this.state.mapmode} width={width} height={height} renderWidth={renderWidth} renderHeight={renderHeight}></Navigraph>;
+		let map = null;
+		if(this.state.mapSize) {
+			let {width, height} = this.state.mapSize;
+			let calcWidth = this.state.cellSize*width;
+			let calcHeight = this.state.cellSize*height;
+			map = <Map handleCellClick={this.handleCellClick.bind(this)} buildings={this.state.buildings} renderWidth={calcWidth} width={width} height={height} renderHeight={calcHeight}></Map>
+		}
+
 		let disabledButton = this.state.started ? "TRUE" : null;
 
 		let catalogBtn = this.state.targetBuilding ?
@@ -153,21 +145,21 @@ export default class Gamepage extends Component {
 
         return (
             <div className="Gamepage" onWheel={this.zoomEvent.bind(this)}>
+				<Catalog setBuildTarget={this.setTargetBuilding.bind(this)} catalogData={this.state.catalog} closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
 				<Settings hidden={this.state.settingsHidden} buildings={this.state.buildingSettings} closeWindow={() => this.openSettings(false)} okWindow={() => this.openSettings(false)}></Settings>
-				<Catalog currentMoney={this.state.money} setBuildTarget={this.setTargetBuilding.bind(this)} catalogData={this.state.catalog} closeWindow={() => this.openCatalog(false)} hidden={this.state.catalogHidden}></Catalog>
                 <header>
                     <div className="money">Money: ${this.getMoney()} </div>
                     <div className="buttons">
                         <button disabled={disabledButton} className="openParkButton" onClick={() => this.props.signal.send("startpark", {})}>🚪Open Park</button>
                         <button className="pauseButton" onClick={ () => console.log("Pause") }>⏸ Pause</button>
 						{catalogBtn}
-                        <button className="settingsButton" onClick={ () => this.props.signal.send("settings", {}) }>Beállítások</button>
+                        {/*<button className="menuButton" onClick={ () => this.openSettings(open) }>Menu</button>*/}
+                        <button className="menuButton" onClick={ () => this.openSettings(true) }>Beállítások</button>
 						<button className="leaveButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
                     </div>
                 </header>
                 <div className="main">
                     {map}
-					{navigraph}
                 </div>
             </div>
         );
