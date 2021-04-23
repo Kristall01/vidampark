@@ -50,7 +50,7 @@ export default class App extends React.Component {
 		this.setState(Object.assign(this.state, {signal: emiter}));
 		if(this.state.screen === "loading") {
 			setTimeout(() => {
-				new Connection("ws://127.0.0.1:8080", c => {
+					new Connection((location.protocol === "https:" ? "wss://" : "ws://") + location.host, c => {
 					c.addEventListener("connect", () => {
 						this.switchScreen("auth", {});
 						//this.setLoadingPhase("loading...", true);
