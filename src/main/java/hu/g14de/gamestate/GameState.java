@@ -1,6 +1,7 @@
 package hu.g14de.gamestate;
 
 import com.google.gson.JsonObject;
+import hu.g14de.TickCounter;
 import hu.g14de.TranslatedException;
 import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
@@ -27,6 +28,7 @@ public class GameState
 	private Scheduler scheduler;
 	private IBuildingCatalog catalog;
 	private ArrayList<Guest> guests = new ArrayList<>();
+	private TickCounter guestCounter = new TickCounter(this::addRandomGuest, 5);
 
 	public GameState(User user, String name, int ID, int width, int height, IBuildingCatalog catalog)
 	{
@@ -56,6 +58,10 @@ public class GameState
 		if(isStarted()) {
 			scheduler.stop();
 		}
+	}
+	
+	public void addRandomGuest() {
+		
 	}
 	
 	public VidamparkApp getApp() {
