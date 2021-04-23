@@ -50,9 +50,6 @@ export default class Map extends Component {
 			height: (this.props.renderHeight)+"px",
 			width: (this.props.renderWidth)+"px"
 		};
-		if(this.props.hidden) {
-			style['display'] = 'none';
-		}
 		return <div style={style} className="Map">{map}</div>;
 	}
 
