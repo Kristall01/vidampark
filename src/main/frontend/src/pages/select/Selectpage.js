@@ -84,8 +84,8 @@ class Selectpage extends Component {
 		this.props.signal.send("list", {});
 	}
 
-	createState() {
-		this.props.signal.send("create", {});
+	createState(name, height, width) {
+		this.props.signal.send("create", {name: name, height: height, width: width});
 	}
 
 	openNewGameForm(bool) {
@@ -115,7 +115,7 @@ class Selectpage extends Component {
 				<Button onClick={() => this.openNewGameForm(true)}>új játék</Button>
 				<Button onClick={() => this.props.signal.send("logout", {})}>kijelentkezés</Button>
 			</div>
-			<NewGameForm hidden={this.state.newGameFormHidden} closeWindow={() => this.openNewGameForm(false)} okWindow={() => this.createState()}></NewGameForm>
+			<NewGameForm hidden={this.state.newGameFormHidden} closeWindow={() => this.openNewGameForm(false)} okWindow={this.createState.bind(this)}></NewGameForm>
 			<div className="content">
 				{states}
 			</div>

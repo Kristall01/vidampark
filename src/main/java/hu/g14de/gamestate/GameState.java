@@ -88,8 +88,10 @@ public class GameState
 	
 	public void setName(String name)
 	{
-		if(name.length() > 16 || name.length() < 3)
+		if(name.trim().length() == 0)
 			throw new TranslatedException("error.gamestate.invalid-name", name);
+		if(name.length() > 16 || name.length() < 3)
+			throw new TranslatedException("error.gamestate.invalid-name-length");
 		this.name = name;
 	}
 	

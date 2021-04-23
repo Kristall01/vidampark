@@ -12,8 +12,8 @@ const Cell = ({onClick, content}) => {
 		img = <img alt={nickName} className="cellimage" style={style} src={"/buildings/map/"+mapIcon}></img>;
 	}
  	return (
-		<div className="Cell">
-			<div onClick={onClick} className="inner"></div>
+		<div onClick={onClick} className="Cell">
+			<div className="inner"></div>
 			{img}
 		</div>
 	);

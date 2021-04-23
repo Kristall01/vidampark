@@ -4,6 +4,17 @@ import Window from "ui/window/Window"
 
 class NewGameForm extends Component {
 
+    constructor(props) {
+        super(props);
+
+        
+        this.state = {
+            name: "Név",
+            height: 15,
+            width: 25
+        }
+    }
+
     render() {
         let {hidden, closeWindow, okWindow} = this.props;
         
@@ -16,12 +27,12 @@ class NewGameForm extends Component {
                         <label>Szélesség</label>
                     </div>
                     <div className="inputs">
-                        <input type="text" defaultValue="Név" />
-                        <input type="number" defaultValue="10" />
-                        <input type="number" defaultValue="20" />
+                        <input type="text" name="name" value={ this.state.name } onChange={event => this.setState({name: event.target.value})} />
+                        <input type="number" height="height" value={ this.state.height } onChange={event => this.setState({height: event.target.value})}/>
+                        <input type="number" width="width" value={ this.state.width } onChange={event => this.setState({width: event.target.value})}/>
                     </div>
                     <div className="buttons">
-                        <button onClick={okWindow}>Létrehoz</button>
+                        <button onClick={() => {okWindow(this.state.name, this.state.height, this.state.width);}}>Létrehoz</button>
                         <button onClick={closeWindow}>Mégse</button>
                     </div>
                 </Window>
