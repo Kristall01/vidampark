@@ -1,17 +1,17 @@
 package hu.g14de.gamestate;
 
+import hu.g14de.TranslatedException;
 import hu.g14de.Utils;
+import hu.g14de.VidamparkApp;
 import hu.g14de.gamestate.mapelements.IBuildingTemplate;
 import hu.g14de.gamestate.mapelements.Placeable;
-import hu.g14de.TranslatedException;
-import hu.g14de.VidamparkApp;
+import hu.g14de.gamestate.mapelements.basics.Road;
 import hu.g14de.gamestate.mapelements.food.FoodBuilding;
 import hu.g14de.gamestate.mapelements.game.GameBuilding;
 import hu.g14de.restapi.signals.out.game.SignalOutGameUpdatecell;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class IMap {
 	
@@ -55,11 +55,11 @@ public class IMap {
 	
 	public GameBuilding getRandomGame()
 	{
-		return gameBuildings.get(Utils.getRandom().nextInt(gameBuildings.size()));
+		return gameBuildings.size() == 0 ? null : gameBuildings.get(Utils.getRandom().nextInt(gameBuildings.size()));
 	}
 	
 	public FoodBuilding getRandomFood() {
-		return foodBuildings.get(Utils.getRandom().nextInt(foodBuildings.size()));
+		return foodBuildings.size() == 0 ? null : foodBuildings.get(Utils.getRandom().nextInt(foodBuildings.size()));
 	}
 	
 	public GameState getGamestate() {
@@ -74,6 +74,10 @@ public class IMap {
 	
 	private boolean isRoad(int x, int y) {
 		Cell c = getCellAt(x,y);
+		return isRoad(c);
+	}
+	
+	private boolean isRoad(Cell c) {
 		return c != null && c.hasContent() && c.getContent().getTemplate().isRoad();
 	}
 	
@@ -149,6 +153,59 @@ public class IMap {
 		}
 		buildings.add(p);
 		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(tlCell, buildTime));
+	}
+	
+	public Collection<Coordinate> findWay(int x, int y, Predicate<Cell> matcher) {
+			return findWay(getCellAt(x,y), matcher );
+		}
+		
+	public Collection<Coordinate> findWay(Cell from, Predicate<Cell> matcher) {
+		if(!isRoad(from)) {
+			return null;
+		}
+		
+		Road fromCell = (Road)from.getContent();
+		Queue<Cell> q = new LinkedList<Cell>();
+		q.add(from);
+		for (Placeable building : buildings) {
+			if(building instanceof Road) {
+				Road r = (Road)building;
+				r.visitedFrom = null;
+			}
+		}
+		fromCell.visitedFrom = from;
+		Cell[] neightbors = new Cell[4];
+		while(q.size() != 0) {
+			Cell current = q.poll();
+			
+			Coordinate currentCoord = current.getCoordinate();
+			neightbors[0] = getCellAt(currentCoord.getX()+1, currentCoord.getY());
+			neightbors[1] = getCellAt(currentCoord.getX()-1, currentCoord.getY());
+			neightbors[2] = getCellAt(currentCoord.getX(), currentCoord.getY()+1);
+			neightbors[3] = getCellAt(currentCoord.getX(), currentCoord.getY()-1);
+			for (int i = 0; i < 4; i++) {
+				Cell loopCurrent = neightbors[i];
+				
+				if(isRoad(loopCurrent)) {
+					Road currentRoad = ((Road)loopCurrent.getContent());
+					if(currentRoad.visitedFrom == null) {
+						currentRoad.visitedFrom = current;
+						q.add(loopCurrent);
+					}
+				}
+				if(matcher.test(loopCurrent)) {
+					LinkedList<Coordinate> rollback = new LinkedList<>();
+					rollback.addFirst(loopCurrent.getCoordinate());
+					Road rollbackCurrent = (Road)current.getContent();//((Road)loopCurrent.getContent()).visitedFrom.getContent();
+					while(!rollbackCurrent.getCell().getCoordinate().equals(((Road)rollbackCurrent).visitedFrom.getContent().getCell().getCoordinate())) {
+						rollback.addFirst(rollbackCurrent.getCell().getCoordinate());
+						rollbackCurrent = (Road)rollbackCurrent.visitedFrom.getContent();
+					}
+					return rollback;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public Collection<Placeable> getBuildings() {
