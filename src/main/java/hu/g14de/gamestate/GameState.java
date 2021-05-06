@@ -155,6 +155,7 @@ public class GameState
 			guest.tick();
 		}
 		//guestCounter.tick();
+		balance.broadcastChanges();
 	}
 	
 	public boolean isStarted() {
@@ -173,7 +174,6 @@ public class GameState
 		scheduler.start();
 		addRandomGuest();
 		broadcastSignal(new SignalOutGameStartpark());
-		Coordinate entrance = map.getEntrance().getCoordinate();
 	}
 	
 }

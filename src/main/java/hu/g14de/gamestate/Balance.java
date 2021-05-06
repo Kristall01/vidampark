@@ -4,12 +4,14 @@ import hu.g14de.VidamparkApp;
 import hu.g14de.restapi.signals.out.game.SignalOutGameBalance;
 
 import java.math.BigInteger;
+
 import static hu.g14de.Utils.checkNull;
 
 public class Balance
 {
     private final GameState gameState;
     private BigInteger money;
+    private boolean changed = false;
 
     public Balance(GameState gameState, BigInteger money)  {
         checkNull(gameState,money);
@@ -49,8 +51,15 @@ public class Balance
     	if(isNegative(i)) {
     		throw new NegativeMoneyException();
 		}
+    	changed = true;
     	this.money = i;
-		gameState.broadcastSignal(new SignalOutGameBalance(this.money));
+	}
+	
+	public void broadcastChanges() {
+    	if(changed) {
+			gameState.broadcastSignal(new SignalOutGameBalance(this.money));
+			changed = false;
+		}
 	}
 
     public void removeMoney(BigInteger amount) throws NegativeMoneyException
