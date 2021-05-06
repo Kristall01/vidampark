@@ -1,5 +1,8 @@
 package hu.g14de.gamestate;
 
+import com.google.gson.JsonElement;
+import hu.g14de.Utils;
+
 import java.util.Objects;
 
 public final class Coordinate {
@@ -40,5 +43,15 @@ public final class Coordinate {
 	public int hashCode() {
 		return Objects.hash(getX(), getY());
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("(%d %d)", x,y);
+	}
+	
+	public JsonElement serialize() {
+		return Utils.gson().toJsonTree(this);
+	}
+	
 	
 }

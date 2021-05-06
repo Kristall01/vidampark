@@ -7,20 +7,28 @@ class Settings extends Component {
     render() {
         let {hidden, closeWindow, okWindow, buildings} = this.props;
 
+		let buildingComponents = [];
+		let buildingKey = 0;
+		buildings.forEach(building => {
+			buildingComponents.push(<label key={buildingKey++}>{ building.name }</label>);
+		});
+
+		let buildingInputs = [];
+		buildingKey = 0;
+		buildings.forEach( building => {
+			buildingInputs.push(<input key={buildingKey++} type="number" defaultValue={ building.usePrice }/>);
+		});
+
         return(
             <div className="settings">
                 <Window onclose={closeWindow} hidden={hidden} height="350px" width="310px" bgColor="#f3f3f3" borderColor="#1477ff" title="Árak beállítása">
                     <div className="labels">
                         <label>Belépőjegy</label>
-                        {buildings.map( building => 
-                            <label>{ building.name }</label>
-                        )}
+						{buildingComponents}
                     </div>
                     <div className="inputs">
                         <input type="number" defaultValue="10" />
-                        {buildings.map( building => 
-                            <input type="number" defaultValue={ building.usePrice }/>
-                        )}
+						{buildingInputs}
                     </div>
                     <div className="buttons">
                         <button onClick={okWindow}>Beállítás</button>

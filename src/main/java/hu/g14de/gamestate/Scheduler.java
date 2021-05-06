@@ -26,7 +26,12 @@ public class Scheduler {
 	private void loopTask() {
 		try {
 			while(running()) {
-				state.receiveTick();
+				try {
+					state.receiveTick();
+				}
+				catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				Thread.sleep(tickGap);
 			}
 		}

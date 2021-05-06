@@ -9,8 +9,8 @@ import hu.g14de.gamestate.mapelements.game.GameBuilding;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalOut;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
-import hu.g14de.restapi.signals.out.game.SignalOutGameSpawnGuest;
 import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
+import hu.g14de.restapi.signals.out.game.guest.SignalOutGameGuestSpawn;
 import hu.g14de.usermanager.User;
 
 import java.math.BigInteger;
@@ -23,6 +23,7 @@ public class GameState
 {
 	private final User user;
 	private final int id;
+	private int nextGuestID = 0;
 	private String name;
 	private Balance balance;
 	private final IMap map;
@@ -67,10 +68,11 @@ public class GameState
 		if(game == null) {
 			return;
 		}
-		Guest guest = new Guest();
+		int nextID = nextGuestID++;
+		Cell entrance = map.getEntrance();
+		Guest guest = new Guest(this, nextID, entrance);
+		broadcastSignal(new SignalOutGameGuestSpawn(guest, entrance.getCoordinate()));
 		guests.add(guest);
-		Coordinate entrance = map.getEntrance().getCoordinate();
-		broadcastSignal(new SignalOutGameSpawnGuest(entrance.getX(), entrance.getY()));
 	}
 	
 	public VidamparkApp getApp() {
@@ -149,6 +151,10 @@ public class GameState
 	public synchronized void receiveTick() {
 		this.balance.addMoney(BigInteger.valueOf(1));
 		this.map.receiveTick();
+		for (Guest guest : guests) {
+			guest.tick();
+		}
+		//guestCounter.tick();
 	}
 	
 	public boolean isStarted() {
@@ -165,6 +171,7 @@ public class GameState
 		}
 		scheduler = new Scheduler(this);
 		scheduler.start();
+		addRandomGuest();
 		broadcastSignal(new SignalOutGameStartpark());
 		Coordinate entrance = map.getEntrance().getCoordinate();
 	}

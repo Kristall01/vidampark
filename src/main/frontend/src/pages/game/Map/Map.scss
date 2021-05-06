@@ -1,0 +1,33 @@
+.Map {
+
+	&:not(.component) {
+
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		margin: auto;
+		padding: 50px;
+		box-sizing: content-box;
+
+		.row {
+			display: flex;
+			flex-direction: row;
+			flex-flow: nowrap;
+			justify-content: center;
+			flex: 1;
+		}
+
+
+		.mapinner {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			border: 2px solid black;
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+	}
+
+}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Map from './Map/Map';
+import Mapelement from './Map/Map';
 import "./Gamepage.css";
 import Catalog from "ui/catalog/Catalog"
 import Settings from "ui/settings/Settings"
@@ -21,6 +21,7 @@ export default class Gamepage extends Component {
 			buildings: [],
 			targetBuilding: null,
 			cellSize: 35,
+			guests: new Map(),
 			/*TEMP*/
 			buildingSettings: [
 				{name: "hotdog árus", usePrice: 5},
@@ -83,6 +84,29 @@ export default class Gamepage extends Component {
 					});
 					this.updateState("buildings", copy);
 				}
+				break;
+			}
+			case "spawnguest": {
+				let {x, y, id} = data;
+				let guests = this.state.guests;
+				guests.set(id, {
+					path: [{x: x, y: y}]
+				});
+				this.updateState("guests", guests);
+				break;
+			}
+			case "moveguest": {
+				let {path, guestID} = data;
+				let guests = this.state.guests;
+				guests.set(guestID, {
+					path: path
+				});
+				this.updateState("guests", guests);
+				break;
+			}
+			case "route": {
+				console.log(data);
+				break;
 			}
 			default: {
 
@@ -132,7 +156,7 @@ export default class Gamepage extends Component {
 			let {width, height} = this.state.mapSize;
 			let calcWidth = this.state.cellSize*width;
 			let calcHeight = this.state.cellSize*height;
-			map = <Map handleCellClick={this.handleCellClick.bind(this)} buildings={this.state.buildings} renderWidth={calcWidth} width={width} height={height} renderHeight={calcHeight}></Map>
+			map = <Mapelement guests={this.state.guests} handleCellClick={this.handleCellClick.bind(this)} buildings={this.state.buildings} renderWidth={calcWidth} width={width} height={height} renderHeight={calcHeight}></Mapelement>
 		}
 
 		let disabledButton = this.state.started ? "TRUE" : null;
@@ -159,7 +183,7 @@ export default class Gamepage extends Component {
                     </div>
                 </header>
                 <div className="main">
-                    {map}
+					{map}
                 </div>
             </div>
         );

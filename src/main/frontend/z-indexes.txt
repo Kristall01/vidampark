@@ -1,4 +1,5 @@
 default: 0
 map placeable: 1
+map dot: 5
 gamepage header: 10
 window: 100

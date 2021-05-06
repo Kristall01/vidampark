@@ -50,7 +50,8 @@ export default class App extends React.Component {
 		this.setState(Object.assign(this.state, {signal: emiter}));
 		if(this.state.screen === "loading") {
 			setTimeout(() => {
-					new Connection((location.protocol === "https:" ? "wss://" : "ws://") + location.host, c => {
+				//new Connection((location.protocol === "https:" ? "wss://" : "ws://") + location.host, c => {
+				new Connection(("ws://127.0.0.1:8080"), c => {
 					c.addEventListener("connect", () => {
 						this.switchScreen("auth", {});
 						//this.setLoadingPhase("loading...", true);
@@ -66,6 +67,8 @@ export default class App extends React.Component {
 						this.setLoadingPhase("connection lost", false);
 					});
 					emiter.subscribeSend((type,data) => c.sendSignal(type,data));
+					window.sendSignal = c.sendSignal.bind(c);
+					window.simulateSignal = this.handleSignal.bind(this);
 				});
 			}, 1000);
 		}

@@ -45,5 +45,9 @@ public class Cell
 	public void setContent(Placeable p) {
     	this.content = p;
 	}
+	
+	public boolean hasContentType(String type) {
+    	return hasContent() && getContent().getTemplate().type().equals(type);
+	}
 
 }

@@ -8,6 +8,7 @@ import hu.g14de.restapi.signals.in.auth.SignalInAuthSessionid;
 import hu.g14de.restapi.signals.in.common.SignalInCommonLogout;
 import hu.g14de.restapi.signals.in.game.*;
 import hu.g14de.restapi.signals.in.select.*;
+import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsCloseContext;
@@ -28,6 +29,7 @@ public class ConnectionServer {
 		this.app = app;
 		
 		commonDomain.add("logout", new SignalInCommonLogout());
+		commonDomain.add("uitest", (connection, data) -> connection.sendSignal(new SignalOutCommonSetscene("uitest")));
 		
 		authDomain.add("login", new SignalInAuthLogin());
 		authDomain.add("sessionid", new SignalInAuthSessionid());
@@ -37,6 +39,7 @@ public class ConnectionServer {
 		gameDomain.add("placebuilding", new SignalInGamePlaceBuilding());
 		gameDomain.add("startpark", new SignalInGameStartpark());
 		gameDomain.add("leave", new SignalInGameLeave());
+		//gameDomain.add("route", new SignalInGameRoute());
 		
 		selectDomain.add("create", new SignalInSelectCreate());
 		selectDomain.add("select", new SignalInSelectSelect());
@@ -61,20 +64,40 @@ public class ConnectionServer {
 	}
 	
 	private void handleWsConnect(WsConnectContext connectEvent) {
-		connectEvent.session.setIdleTimeout(3600000);
-		connectEvent.attribute("connection", new Connection(this, connectEvent));
+		try {
+			connectEvent.session.setIdleTimeout(3600000);
+			connectEvent.attribute("connection", new Connection(this, connectEvent));
+		}
+		catch (Throwable ex) {
+			app.getExceptionCollector().add(ex);
+		}
 	}
 	
 	private void handleWsMessage(WsMessageContext messageEvent) {
-		messageEvent.<Connection>attribute("connection").signalReceive(messageEvent.message());
+		try {
+			messageEvent.<Connection>attribute("connection").signalReceive(messageEvent.message());
+		}
+		catch (Throwable ex) {
+			app.getExceptionCollector().add(ex);
+		}
 	}
 	
 	private void handleWsError(WsErrorContext errorEvent) {
-		errorEvent.<Connection>attribute("connection").close();
+		try {
+			errorEvent.<Connection>attribute("connection").close();
+		}
+		catch (Throwable ex) {
+			app.getExceptionCollector().add(ex);
+		}
 	}
 	
 	private void handleWsClose(WsCloseContext closeEvent) {
-		closeEvent.<Connection>attribute("connection").close();
+		try {
+			closeEvent.<Connection>attribute("connection").close();
+		}
+		catch (Throwable ex) {
+			app.getExceptionCollector().add(ex);
+		}
 	}
 	
 	public VidamparkApp getApp() {

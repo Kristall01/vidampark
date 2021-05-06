@@ -14,7 +14,7 @@
 			"shopIcon": "road.svg",
 			"mapIcon": "road.svg",
 			"idleCost": 0,
-			"category": "other",
+			"category": "road",
 			"needsRoad": false
 		},
 		{
@@ -108,7 +108,7 @@
 			"type": "bouncehouse",
 			"nickname": "ugrálóvár",
 			"buildCost": 500,
-			"buildTime": 40,
+			"buildTime": 4,
 			"width": 4,
 			"height": 4,
 			"shopIcon": "bouncehouse.svg",

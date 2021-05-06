@@ -56,7 +56,7 @@ public class Connection  {
 			sendSignal(new SignalOutCommonLog(msg));
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			getApp().getExceptionCollector().add(e);
 			crash(e.toString());
 		}
 	}
@@ -93,6 +93,7 @@ public class Connection  {
 			if(o instanceof SignalOutConnectioncrash) {
 				return;
 			}
+			getApp().getExceptionCollector().add(ex);
 			ex.printStackTrace();
 			crash("failed to send signal. "+ex);
 		}

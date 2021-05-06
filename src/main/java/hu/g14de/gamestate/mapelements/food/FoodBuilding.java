@@ -4,12 +4,13 @@ import hu.g14de.TickCounter;
 import hu.g14de.Tickable;
 import hu.g14de.gamestate.Cell;
 import hu.g14de.gamestate.Guest;
+import hu.g14de.gamestate.mapelements.Joinable;
 import hu.g14de.gamestate.mapelements.basics.BasicPlaceable;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class FoodBuilding extends BasicPlaceable {
+public class FoodBuilding extends BasicPlaceable implements Joinable {
 	
 	private LinkedList<Guest> waitingGuests;
 	private LinkedList<EatingSession> eatings;
@@ -50,6 +51,7 @@ public class FoodBuilding extends BasicPlaceable {
 		}
 	}
 	
+	@Override
 	public void joinGuest(Guest guest) {
 		if(eatings.size() != getTemplate().getMaxGuests()) {
 			eatings.add(new EatingSession(guest, getTemplate().getEatTime()));

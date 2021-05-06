@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import hu.g14de.gamestate.IBuildingCatalog;
 import hu.g14de.gamestate.mapelements.IBuildingTemplate;
 import hu.g14de.gamestate.mapelements.basics.PrimitiveTemplate;
+import hu.g14de.gamestate.mapelements.basics.RoadTemplate;
 import hu.g14de.gamestate.mapelements.food.JsonFoodTemplate;
 import hu.g14de.gamestate.mapelements.game.JsonGameTemplate;
 import hu.g14de.i18n.Lang;
@@ -22,6 +23,7 @@ public class VidamparkApp {
 	private ConnectionServer connectionServer;
 	private JsonObject config;
 	private IBuildingCatalog catalog;
+	private ExceptionCollector exceptionCollector;
 	
 	public VidamparkApp() throws IOException {
 		EnvironmentBootstrapper bootstrapper = new EnvironmentBootstrapper(new File(System.getProperty("user.dir")));
@@ -34,6 +36,7 @@ public class VidamparkApp {
 		userManager = new UserManager(this);
 		
 		catalog = readCatalog(config.get("buildings"));
+		exceptionCollector = new ExceptionCollector();
 		connectionServer = new ConnectionServer(this, bootstrapper.getPort(8080));
 	}
 	
@@ -60,6 +63,9 @@ public class VidamparkApp {
 					temp = new PrimitiveTemplate(o);
 					break;
 				}
+				case "road": {
+					temp = new RoadTemplate(o);
+				}
 			}
 			catalog.register(temp.type(), temp);
 		}
@@ -76,6 +82,10 @@ public class VidamparkApp {
 	
 	public UserManager getUserManager() {
 		return userManager;
+	}
+	
+	public ExceptionCollector getExceptionCollector() {
+		return exceptionCollector;
 	}
 	
 	public JsonObject getConfig() {

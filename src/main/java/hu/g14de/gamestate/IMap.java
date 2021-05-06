@@ -85,8 +85,8 @@ public class IMap {
 		return getRoadConnection(x, y, width, height) != null;
 	}
 	
-	public Collection<Cell> findRoute(Cell from, Cell to) {
-		return null;
+	public LinkedList<Cell> findRoute(Cell from, Cell to) {
+		return findWay(from, c -> c.getCoordinate().equals(to.getCoordinate()));
 	}
 	
 	public Cell getRoadConnection(int x, int y, int width, int height) {
@@ -152,56 +152,60 @@ public class IMap {
 			buildTime = template.getBuildTime()*getGamestate().getScheduler().getTickGap();
 		}
 		buildings.add(p);
+		if(p instanceof GameBuilding) {
+			gameBuildings.add((GameBuilding) p);
+		}
 		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(tlCell, buildTime));
 	}
 	
-	public Collection<Coordinate> findWay(int x, int y, Predicate<Cell> matcher) {
+	public LinkedList<Cell> findWay(int x, int y, Predicate<Cell> matcher) {
 			return findWay(getCellAt(x,y), matcher );
 		}
 		
-	public Collection<Coordinate> findWay(Cell from, Predicate<Cell> matcher) {
+	public LinkedList<Cell> findWay(Cell from, Predicate<Cell> matcher) {
 		if(!isRoad(from)) {
 			return null;
 		}
 		
-		Road fromCell = (Road)from.getContent();
-		Queue<Cell> q = new LinkedList<Cell>();
-		q.add(from);
+		Road fromRoad = (Road)from.getContent();
+		Queue<Road> q = new LinkedList<>();
+		q.add(fromRoad);
 		for (Placeable building : buildings) {
 			if(building instanceof Road) {
-				Road r = (Road)building;
-				r.visitedFrom = null;
+				((Road)building).visitedFrom = null;
 			}
 		}
-		fromCell.visitedFrom = from;
-		Cell[] neightbors = new Cell[4];
+		fromRoad.visitedFrom = fromRoad;
+		Cell[] neighbours = new Cell[4];
 		while(q.size() != 0) {
-			Cell current = q.poll();
+			Road currentRoad = q.poll();
 			
-			Coordinate currentCoord = current.getCoordinate();
-			neightbors[0] = getCellAt(currentCoord.getX()+1, currentCoord.getY());
-			neightbors[1] = getCellAt(currentCoord.getX()-1, currentCoord.getY());
-			neightbors[2] = getCellAt(currentCoord.getX(), currentCoord.getY()+1);
-			neightbors[3] = getCellAt(currentCoord.getX(), currentCoord.getY()-1);
+			Coordinate currentCoord = currentRoad.getCell().getCoordinate();
+			neighbours[0] = getCellAt(currentCoord.getX()+1, currentCoord.getY());
+			neighbours[1] = getCellAt(currentCoord.getX()-1, currentCoord.getY());
+			neighbours[2] = getCellAt(currentCoord.getX(), currentCoord.getY()+1);
+			neighbours[3] = getCellAt(currentCoord.getX(), currentCoord.getY()-1);
 			for (int i = 0; i < 4; i++) {
-				Cell loopCurrent = neightbors[i];
-				
-				if(isRoad(loopCurrent)) {
-					Road currentRoad = ((Road)loopCurrent.getContent());
-					if(currentRoad.visitedFrom == null) {
-						currentRoad.visitedFrom = current;
-						q.add(loopCurrent);
+				Cell currentNeighbour = neighbours[i];
+				if(currentNeighbour == null) {
+					continue;
+				}
+				if(isRoad(currentNeighbour)) {
+					Road neighbourRoad = ((Road)currentNeighbour.getContent());
+					if(neighbourRoad.visitedFrom == null) {
+						neighbourRoad.visitedFrom = currentRoad;
+						q.add(neighbourRoad);
 					}
 				}
-				if(matcher.test(loopCurrent)) {
-					LinkedList<Coordinate> rollback = new LinkedList<>();
-					rollback.addFirst(loopCurrent.getCoordinate());
-					Road rollbackCurrent = (Road)current.getContent();//((Road)loopCurrent.getContent()).visitedFrom.getContent();
-					while(!rollbackCurrent.getCell().getCoordinate().equals(((Road)rollbackCurrent).visitedFrom.getContent().getCell().getCoordinate())) {
-						rollback.addFirst(rollbackCurrent.getCell().getCoordinate());
-						rollbackCurrent = (Road)rollbackCurrent.visitedFrom.getContent();
+				if(matcher.test(currentNeighbour)) {
+					LinkedList<Cell> rollbackList = new LinkedList<>();
+					rollbackList.addFirst(currentNeighbour);
+					Road rollbackCurrent = currentRoad;
+					while(!rollbackCurrent.getCell().getCoordinate().equals(rollbackCurrent.visitedFrom.getCell().getCoordinate())) {
+						rollbackList.addFirst(rollbackCurrent.getCell());
+						rollbackCurrent = rollbackCurrent.visitedFrom;
 					}
-					return rollback;
+					return rollbackList;
 				}
 			}
 		}
@@ -213,7 +217,9 @@ public class IMap {
 	}
 	
 	public void receiveTick() {
-	
+		for (Placeable building : buildings) {
+			building.receiveTick();
+		}
 	}
 	
 	public static class BuildingNeedsRoadException extends TranslatedException {

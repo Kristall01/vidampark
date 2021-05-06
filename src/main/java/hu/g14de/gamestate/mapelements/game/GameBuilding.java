@@ -5,13 +5,14 @@ import hu.g14de.Tickable;
 import hu.g14de.TranslatedException;
 import hu.g14de.gamestate.Cell;
 import hu.g14de.gamestate.Guest;
+import hu.g14de.gamestate.mapelements.Joinable;
 import hu.g14de.gamestate.mapelements.basics.BasicPlaceable;
 
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class GameBuilding extends BasicPlaceable {
+public class GameBuilding extends BasicPlaceable implements Joinable {
 	
 	private Guest[] ingameGuestArray;
 	private int ingameGuestCount;
@@ -58,6 +59,7 @@ public class GameBuilding extends BasicPlaceable {
 		checkStart();
 	}
 	
+	@Override
 	public void joinGuest(Guest guest) {
 		waitingGuests.add(guest);
 		checkStart();

@@ -4,4 +4,6 @@ public interface Tickable {
 	
 	void tick();
 	
+	Tickable none = () -> {};
+	
 }
