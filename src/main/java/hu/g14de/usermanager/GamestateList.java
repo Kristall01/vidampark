@@ -35,13 +35,13 @@ public class GamestateList {
 	public GameState createGamestate(String name, int height, int width) {
 
 		if (name.trim().length() == 0)
-			throw new TranslatedException("invalid-name",name);
+			throw new TranslatedException("error.gamestate.invalid-name",name);
 		if (name.length() < 3 || name.length() > 16)
-			throw new TranslatedException("invalid-name-length");
+			throw new TranslatedException("error.gamestate.invalid-name-length");
 		if (height < 5 || height > 200)
-			throw new TranslatedException("invalid-map-size");
+			throw new TranslatedException("error.gamestate.invalid-map-size");
 		if (width < 5 || width > 200)
-			throw new TranslatedException("invalid-map-size");
+			throw new TranslatedException("error.gamestate.invalid-map-size");
 
 		int id = ++nextID;
 		IBuildingCatalog fakeCatalog = getApp().getCatalog();
