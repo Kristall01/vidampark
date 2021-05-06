@@ -25,14 +25,17 @@ public class Scheduler {
 	
 	private void loopTask() {
 		try {
+			long now, then;
 			while(running()) {
+				now = System.currentTimeMillis();
 				try {
 					state.receiveTick();
 				}
 				catch (Exception ex) {
 					ex.printStackTrace();
 				}
-				Thread.sleep(tickGap);
+				then = System.currentTimeMillis();
+				Thread.sleep(tickGap - (then-now));
 			}
 		}
 		catch (InterruptedException e) {
