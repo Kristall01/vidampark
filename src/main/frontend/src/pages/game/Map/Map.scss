@@ -1,5 +1,7 @@
 .Map {
 
+
+
 	&:not(.component) {
 
 		display: flex;
@@ -8,6 +10,7 @@
 		margin: auto;
 		padding: 50px;
 		box-sizing: content-box;
+		flex-shrink: 0;
 
 		.row {
 			display: flex;
