@@ -189,7 +189,9 @@ public class IMap {
 			return null;
 		}
 		if(matcher.test(from)) {
-			return new LinkedList<>();
+			LinkedList<Cell> l = new LinkedList<Cell>();
+			l.add(from);
+			return l;
 		}
 		
 		Road fromRoad = (Road)from.getContent();
