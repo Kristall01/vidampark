@@ -9,6 +9,7 @@ public class Map
 	private final int height;
 	private Cell[] cellmatrix;
 
+
     public Map (int width, int height, GameState gameState)
     {
         checkNull(gameState);
@@ -69,7 +70,7 @@ public class Map
 		if(cell == null) {
 			throw new BadCoordinateExcception();
 		}
-		//TODO do the actual placement
+
 	}*/
 	
 	private Cell getCell(int x, int y) {
@@ -79,7 +80,7 @@ public class Map
 		return cellmatrix[x*y + x];
 	}
 
-    /*private Cell searchCellByCoordinates(int x, int y) // [TODO] Redundancy: can be swapped to a lambda function
+    /*private Cell searchCellByCoordinates(int x, int y)
     {
         for (Cell var : cellmatrix)
         {
@@ -92,7 +93,7 @@ public class Map
 
     }
 
-    private ArrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY) //[FIXME] where is coordinates checked for validity
+    private ArrayList<Coordinate> generateBuildingCoords(int startX, int startY, int endX, int endY)
     {
         if(startX < 0 || startY < 0 || endX < 0 ||endY < 0)
                 throw new TranslatedException("error.map.negative-coordinate");

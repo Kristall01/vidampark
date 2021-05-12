@@ -140,6 +140,11 @@ public class Guest {
 		this.funLevel += roundMoralBoost; //FIXME: Placeholder, needs clarification
 	}
 
+	public void addFoodLevel(int foodLevelBoost)
+	{
+		this.foodLevel +=foodLevelBoost;
+	}
+
 	public void setLastJoined(IBuildingTemplate temp) {
 		lastBuildingEntered = temp;
 	}
