@@ -1,4 +1,5 @@
 package hu.g14de.gamestate;
+import hu.g14de.gamestate.mapelements.IBuildingTemplate;
 import hu.g14de.gamestate.mapelements.Placeable;
 import hu.g14de.VidamparkApp;
 
@@ -46,8 +47,8 @@ public class Cell
     	this.content = p;
 	}
 	
-	public boolean hasContentType(String type) {
-    	return hasContent() && getContent().getTemplate().type().equals(type);
+	public boolean hasContentType(IBuildingTemplate template) {
+    	return hasContent() && getContent().getTemplate().equals(template);
 	}
 
 }

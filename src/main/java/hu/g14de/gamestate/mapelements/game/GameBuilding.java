@@ -60,9 +60,10 @@ public class GameBuilding extends BasicPlaceable implements Joinable {
 	}
 	
 	@Override
-	public void joinGuest(Guest guest) {
+	public boolean joinGuest(Guest guest) {
 		waitingGuests.add(guest);
 		checkStart();
+		return true;
 	}
 	
 	private void checkStart() {
@@ -80,10 +81,10 @@ public class GameBuilding extends BasicPlaceable implements Joinable {
 				for(int j = 0; j < ingameGuestCount; ++j) {
 					Guest c = ingameGuestArray[j];
 					c.addFunLevel(getTemplate().getRoundMoralBoost());
-					getCell().getMap().getGamestate().dropGuestAt(c, getCell());
+					getCell().getMap().getGamestate().dropGuestAt(c, getRandomRoadConnection().getCell());
 					ingameGuestArray[j] = null;
-					ingameGuestCount = 0;
 				}
+				ingameGuestCount = 0;
 				switchToWaitPhase();
 			}, getTemplate().getPlaytime());
 		}

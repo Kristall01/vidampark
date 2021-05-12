@@ -1,10 +1,11 @@
 package hu.g14de.gamestate;
 
 import hu.g14de.VidamparkApp;
+import hu.g14de.restapi.signals.out.game.SignalOutGameTickspeed;
 
 public class Scheduler {
 	
-	private static final long initialSpeed = 1000;
+	private static final long initialSpeed = 500;
 	
 	private Thread loopThread;
 	private GameState state;
@@ -19,8 +20,26 @@ public class Scheduler {
 		return state.getApp();
 	}
 	
-	public synchronized void setSpeed(double d) {
-		tickGap = (long)(initialSpeed*d);
+	public synchronized void setRelativeSpeed(double d) {
+		setAbsoluteSpeed((long)(initialSpeed*d));
+	}
+	
+	public synchronized void setAbsoluteSpeed(long ticks) {
+		this.tickGap = ticks;
+		state.broadcastSignal(new SignalOutGameTickspeed(this));
+	}
+	
+	public void recalcState() {
+		boolean newState = !state.isManualPause() && state.hasObserver() && state.isOpen();
+		if(running() == newState) {
+			return;
+		}
+		if(newState) {
+			start();
+		}
+		else {
+			stop();
+		}
 	}
 	
 	private void loopTask() {
@@ -35,7 +54,7 @@ public class Scheduler {
 					ex.printStackTrace();
 				}
 				then = System.currentTimeMillis();
-				Thread.sleep(tickGap - (then-now));
+				Thread.sleep(Math.max(1, tickGap - (then-now)));
 			}
 		}
 		catch (InterruptedException e) {
@@ -47,7 +66,7 @@ public class Scheduler {
 		return loopThread != null;
 	}
 	
-	public synchronized void stop() {
+	private synchronized void stop() {
 		loopThread = null;
 	}
 	
@@ -55,7 +74,7 @@ public class Scheduler {
 		return tickGap;
 	}
 	
-	public synchronized void start() {
+	private synchronized void start() {
 		if(running()) {
 			return;
 		}

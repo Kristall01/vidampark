@@ -1,144 +1,118 @@
 package hu.g14de.gamestate;
 
-import hu.g14de.Tickable;
 import hu.g14de.Utils;
+import hu.g14de.gamestate.guestactions.IGuestState;
+import hu.g14de.gamestate.guestactions.Idle;
+import hu.g14de.gamestate.guestactions.Leaving;
+import hu.g14de.gamestate.guestactions.Wandering;
+import hu.g14de.gamestate.mapelements.IBuildingTemplate;
 import hu.g14de.gamestate.mapelements.Joinable;
 import hu.g14de.restapi.signals.out.game.guest.SignalOutGameGuestDespawn;
-import hu.g14de.restapi.signals.out.game.guest.SignalOutGameGuestMove;
+import hu.g14de.restapi.signals.out.game.guest.SignalOutGameGuestMoveto;
 import hu.g14de.restapi.signals.out.game.guest.SignalOutGameGuestSpawn;
 
-import java.util.LinkedList;
 import java.util.Queue;
 
 public class Guest {
 	
 	private int id, funLevel, foodLevel, money;
 	private GameState parent;
-	private Action currentAction;
-	private Queue<Cell> path = null;
+	private IGuestState currentState;
 	private Cell currentCell;
-	private Joinable wanderingTarget;
+	private boolean visible = false;
+	private String color;
+	private IBuildingTemplate lastBuildingEntered;
 	
-	private Action wandering, leaving, idle,
-		busy = new Action(Tickable.none, GuestState.BUSY),
-		done = new Action(Tickable.none, GuestState.DONE);
+	public Guest(GameState parent, int id, Cell entrance) {
+		this.id = id;
+		this.parent = parent;
+		this.currentState = new Idle(this);
+		this.currentCell = entrance;
+		this.color = '#'+Integer.toHexString(Utils.getRandom().nextInt(16777216)); //256 ^ 3
+		
+		setVisible(true);
+	}
 	
-	//setup tasks
-	private Guest() {
-		wandering = new Action(() -> {
-			Cell currentCell = path.poll();
-			if(currentCell == null) {
-				wanderingTarget.joinGuest(this);
-				this.currentAction = busy;
-				parent.broadcastSignal(new SignalOutGameGuestDespawn(this));
-				return;
-			}
-			//check if road was removed
-			if(!currentCell.hasContentType("road")) {
-				currentAction = done;
-				return;
-			}
-			this.currentCell = currentCell;
-		}, GuestState.WANDERING);
-		idle = new Action(() -> {
-			boolean i = Utils.getRandom().nextBoolean();
-			//TODO remove me, hardcoded game targeting
-			final Joinable j = parent.getMap().getRandomGame();
-			/*
-			if(i) {
-				j = parent.getMap().getRandomFood();
-			}
-			else{
-				j = parent.getMap().getRandomGame();
-			}
-			*/
-			if(j == null) {
-				this.currentAction = leaving;
-				LinkedList<Cell> cells = parent.getMap().findRoute(currentCell, parent.getMap().getEntrance());
-				if(cells == null) {
-					this.currentAction = done;
-					return;
-				}
-				
-				parent.broadcastSignal(new SignalOutGameGuestMove(this, cells));
-				return;
-			}
-			
-			/*LinkedList<Cell> cellWay = parent.getMap().findWay(
-				currentCell,
-				c -> c.hasContentType(j.getTemplate().type())
-			);*/
-			
-			LinkedList<Cell> cellWay = parent.getMap().findWay(
-				currentCell,
-				c -> c.hasContent() && c.getContent().equals(j)
-			);
-			
-			parent.broadcastSignal(new SignalOutGameGuestMove(this, cellWay));
-			wanderingTarget = j;
-			currentAction = wandering;
-			path = cellWay;
-		}, GuestState.IDLE);
+	public void setVisible(boolean newState) {
+		if(visible == newState) {
+			return;
+		}
+		this.visible = newState;
+		if(newState) {
+			parent.broadcastSignal(new SignalOutGameGuestSpawn(this));
+		}
+		else {
+			parent.broadcastSignal(new SignalOutGameGuestDespawn(this));
+		}
+	}
+	
+	public String getColor() {
+		return color;
+	}
+	
+	public void setState(IGuestState state) {
+		if(currentState != null) {
+			currentState.unmounted();
+		}
+		this.currentState = state;
+		state.mounted();
+	}
+	
+	public GameState getParent() {
+		return parent;
+	}
+	
+	public void setCell(Cell cell) {
+		this.currentCell = cell;
+		if(visible) {
+			parent.broadcastSignal(new SignalOutGameGuestMoveto(this));
+		}
+	}
+	
+	public void goTo(Joinable target) {
+		Queue<Cell> cellWay = parent.getMap().findWay(currentCell, c -> c.hasContent() && c.getContent().equals(target), false);
+		setState(new Wandering(this, target, cellWay));
+	}
+	
+	public void leavePark() {
+		IMap map = parent.getMap();
+		Queue<Cell> cells = map.findRoute(currentCell, map.getEntrance(), true);
+		setState(new Leaving(this, cells));
 	}
 	
 	public Coordinate getPosition() {
 		return currentCell.getCoordinate();
 	}
 	
-	public Guest(GameState parent, int id, Cell entrance) {
-		this();
-		this.id = id;
-		this.parent = parent;
-		this.currentAction = idle;
-		this.currentCell = entrance;
-	}
-	
-	public void addFunLevel(int roundMoralBoost) {
-	
-	}
-	
-	public void addFoodLevel(int foodLevel) {
-	
-	}
-	
 	public void tick() {
-		currentAction.tickable.tick();
+		currentState.tick();
 	}
 	
 	public void notifyGameover(Cell leaveCell) {
-		if(currentAction.state == GuestState.BUSY) {
-			currentAction = idle;
-			currentCell = leaveCell;
-			parent.broadcastSignal(new SignalOutGameGuestSpawn(this, leaveCell.getCoordinate()));
-		}
+		setCell(leaveCell);
+		setState(new Idle(this));
 	}
 	
-	public boolean remove() {
-		return currentAction.state == GuestState.DONE;
+	public boolean readyToRemove() {
+		return currentState.readyToRemove();
 	}
 	
 	public int getID() {
 		return id;
 	}
 	
-	private static class Action {
-		
-		public final Tickable tickable;
-		public final GuestState state;
-		
-		public Action(Tickable tickable, GuestState state) {
-			this.tickable = tickable;
-			this.state = state;
-		}
-		
+	public void addFunLevel(int roundMoralBoost) {
 	}
 	
-	private static enum GuestState {
-		WANDERING,
-		LEAVING,
-		IDLE,
-		BUSY,
-		DONE
+	public void setLastJoined(IBuildingTemplate temp) {
+		lastBuildingEntered = temp;
 	}
 	
+	public IBuildingTemplate getLastBuildingEntered() {
+		return lastBuildingEntered;
+	}
+	
+	public boolean isVisible() {
+		return visible;
+	}
 }

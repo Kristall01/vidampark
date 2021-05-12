@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -45,6 +46,13 @@ public class Utils {
 		{
 			Objects.requireNonNull(arg);
 		}
+	}
+	
+	public static <T> T getRandomElement(List<T> l) {
+		if(l.isEmpty()) {
+			return null;
+		}
+		return l.get(getRandom().nextInt(l.size()));
 	}
 	
 }

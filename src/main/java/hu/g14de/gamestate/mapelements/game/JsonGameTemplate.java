@@ -38,7 +38,7 @@ public class JsonGameTemplate extends JsonBuildingTemplate implements IGameTempl
 	
 	@Override
 	public int getRoundMoralBoost() {
-		return o.get("moralBoost").getAsInt();
+		return o.get("moraleBoost").getAsInt();
 	}
 	
 }

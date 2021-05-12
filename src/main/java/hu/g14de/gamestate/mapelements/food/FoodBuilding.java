@@ -13,7 +13,7 @@ import java.util.LinkedList;
 public class FoodBuilding extends BasicPlaceable implements Joinable {
 	
 	private LinkedList<Guest> waitingGuests;
-	private LinkedList<EatingSession> eatings;
+	private LinkedList<EatingSession> eatings = new LinkedList<>();
 	private Tickable tickable;
 	
 	public FoodBuilding(IFoodTemplate template, Cell cell, boolean instantBuild) {
@@ -41,7 +41,7 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 			EatingSession s = it.next();
 			s.tick();
 			if(s.remove()) {
-				getCell().getMap().getGamestate().dropGuestAt(s.guest, getCell());
+				getCell().getMap().getGamestate().dropGuestAt(s.guest, getRandomRoadConnection().getCell());
 				it.remove();
 			}
 		}
@@ -52,13 +52,14 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 	}
 	
 	@Override
-	public void joinGuest(Guest guest) {
+	public boolean joinGuest(Guest guest) {
 		if(eatings.size() != getTemplate().getMaxGuests()) {
 			eatings.add(new EatingSession(guest, getTemplate().getEatTime()));
 		}
 		else {
 			waitingGuests.add(guest);
 		}
+		return true;
 	}
 	
 	@Override

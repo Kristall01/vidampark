@@ -4,6 +4,7 @@ import hu.g14de.TranslatedException;
 import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
 import hu.g14de.gamestate.mapelements.IBuildingTemplate;
+import hu.g14de.gamestate.mapelements.Joinable;
 import hu.g14de.gamestate.mapelements.Placeable;
 import hu.g14de.gamestate.mapelements.basics.Road;
 import hu.g14de.gamestate.mapelements.food.FoodBuilding;
@@ -53,13 +54,27 @@ public class IMap {
 		return this.height;
 	}
 	
-	public GameBuilding getRandomGame()
-	{
-		return gameBuildings.size() == 0 ? null : gameBuildings.get(Utils.getRandom().nextInt(gameBuildings.size()));
+	
+	
+	private Joinable getFromExcept(List<? extends Joinable> list, IBuildingTemplate temp) {
+		if(gameBuildings.isEmpty()) {
+			return null;
+		}
+		if(temp == null) {
+			return Utils.getRandomElement(list);
+		}
+		ArrayList<Joinable> listCopy = new ArrayList<>(list);
+		listCopy.removeIf(e -> e.getTemplate().equals(temp));
+		return Utils.getRandomElement(listCopy);
 	}
 	
-	public FoodBuilding getRandomFood() {
-		return foodBuildings.size() == 0 ? null : foodBuildings.get(Utils.getRandom().nextInt(foodBuildings.size()));
+	public GameBuilding getRandomGameExcept(IBuildingTemplate temp)
+	{
+		return (GameBuilding) getFromExcept(gameBuildings, temp);
+	}
+	
+	public FoodBuilding getRandomFoodExecpt(IBuildingTemplate temp) {
+		return (FoodBuilding) getFromExcept(foodBuildings, temp);
 	}
 	
 	public GameState getGamestate() {
@@ -81,12 +96,16 @@ public class IMap {
 		return c != null && c.hasContent() && c.getContent().getTemplate().isRoad();
 	}
 	
-	private boolean hasRoadConnection(int x, int y, int width, int height) {
-		return getRoadConnection(x, y, width, height) != null;
+	public boolean hasRestaurant() {
+		return !foodBuildings.isEmpty();
 	}
 	
-	public LinkedList<Cell> findRoute(Cell from, Cell to) {
-		return findWay(from, c -> c.getCoordinate().equals(to.getCoordinate()));
+	public boolean hasGame() {
+		return !gameBuildings.isEmpty();
+	}
+	
+	private boolean hasRoadConnection(int x, int y, int width, int height) {
+		return getRoadConnection(x, y, width, height) != null;
 	}
 	
 	public Cell getRoadConnection(int x, int y, int width, int height) {
@@ -141,30 +160,36 @@ public class IMap {
 		}
 		
 		//set cells' content
-		Placeable p = template.createInstance(tlCell, !getGamestate().isStarted());
+		Placeable p = template.createInstance(tlCell, !getGamestate().isOpen());
 		for(int iX = x; iX < x+template.width(); ++iX) {
 			for (int iY = y; iY < y+template.height(); ++iY) {
 				getCellAt(iX, iY).setContent(p);
 			}
 		}
 		long buildTime = 0;
-		if(getGamestate().isStarted()) {
+		if(getGamestate().isOpen()) {
 			buildTime = template.getBuildTime()*getGamestate().getScheduler().getTickGap();
 		}
 		buildings.add(p);
 		if(p instanceof GameBuilding) {
 			gameBuildings.add((GameBuilding) p);
 		}
+		else if(p instanceof FoodBuilding) {
+			foodBuildings.add((FoodBuilding) p);
+		}
 		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(tlCell, buildTime));
 	}
 	
-	public LinkedList<Cell> findWay(int x, int y, Predicate<Cell> matcher) {
-			return findWay(getCellAt(x,y), matcher );
-		}
-		
-	public LinkedList<Cell> findWay(Cell from, Predicate<Cell> matcher) {
+	public Queue<Cell> findRoute(Cell from, Cell to, boolean addLastElement) {
+		return findWay(from, c -> c.getCoordinate().equals(to.getCoordinate()), addLastElement);
+	}
+	
+	public Queue<Cell> findWay(Cell from, Predicate<Cell> matcher, boolean addLastElement) {
 		if(!isRoad(from)) {
 			return null;
+		}
+		if(matcher.test(from)) {
+			return new LinkedList<>();
 		}
 		
 		Road fromRoad = (Road)from.getContent();
@@ -199,7 +224,9 @@ public class IMap {
 				}
 				if(matcher.test(currentNeighbour)) {
 					LinkedList<Cell> rollbackList = new LinkedList<>();
-					rollbackList.addFirst(currentNeighbour);
+					if(addLastElement) {
+						rollbackList.addFirst(currentNeighbour);
+					}
 					Road rollbackCurrent = currentRoad;
 					while(!rollbackCurrent.getCell().getCoordinate().equals(rollbackCurrent.visitedFrom.getCell().getCoordinate())) {
 						rollbackList.addFirst(rollbackCurrent.getCell());

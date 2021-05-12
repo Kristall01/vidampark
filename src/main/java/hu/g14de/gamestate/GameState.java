@@ -5,17 +5,18 @@ import hu.g14de.TickCounter;
 import hu.g14de.TranslatedException;
 import hu.g14de.Utils;
 import hu.g14de.VidamparkApp;
-import hu.g14de.gamestate.mapelements.game.GameBuilding;
 import hu.g14de.restapi.Connection;
 import hu.g14de.restapi.signals.SignalOut;
 import hu.g14de.restapi.signals.out.common.SignalOutCommonSetscene;
+import hu.g14de.restapi.signals.out.game.SignalOutGamePause;
 import hu.g14de.restapi.signals.out.game.SignalOutGameStartpark;
-import hu.g14de.restapi.signals.out.game.guest.SignalOutGameGuestSpawn;
 import hu.g14de.usermanager.User;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import static hu.g14de.Utils.checkNull;
 
@@ -31,7 +32,10 @@ public class GameState
 	private Scheduler scheduler;
 	private IBuildingCatalog catalog;
 	private ArrayList<Guest> guests = new ArrayList<>();
-	private TickCounter guestCounter = new TickCounter(this::addRandomGuest, 5);
+	private TickCounter guestCounter = new TickCounter(this::addRandomGuest, 4);
+	
+	private boolean manualPause = false;
+	private ParkStatus parkStatus = ParkStatus.CLOSED;
 
 	public GameState(User user, String name, int ID, int width, int height, IBuildingCatalog catalog)
 	{
@@ -51,27 +55,33 @@ public class GameState
 		this.map = new IMap(this,width,height);
 		Coordinate entrance = map.getEntrance().getCoordinate();
 		this.map.placeBuilding(entrance.getX(), entrance.getY(), catalog.getTemplateByID("road"));
-		this.scheduler = null;
+		this.scheduler = new Scheduler(this);
 	}
 
 	public void destructor()
 	{
 		broadcastSignal(new SignalOutCommonSetscene("select"));
 		observers.clear();
-		if(isStarted()) {
-			scheduler.stop();
-		}
+	}
+	
+	public void togglePaused() {
+		this.manualPause = !manualPause;
+		broadcastSignal(new SignalOutGamePause(this));
+		scheduler.recalcState();
+	}
+	
+	public boolean isManualPause() {
+		return manualPause;
+	}
+	
+	public boolean hasObserver() {
+		return observers.size() != 0;
 	}
 	
 	public void addRandomGuest() {
-		GameBuilding game = map.getRandomGame();
-		if(game == null) {
-			return;
-		}
 		int nextID = nextGuestID++;
 		Cell entrance = map.getEntrance();
 		Guest guest = new Guest(this, nextID, entrance);
-		broadcastSignal(new SignalOutGameGuestSpawn(guest, entrance.getCoordinate()));
 		guests.add(guest);
 	}
 	
@@ -126,16 +136,13 @@ public class GameState
 	public void addObserver(Connection c) {
 		Utils.checkNull(c);
 		observers.add(c);
-		if(observers.size() == 1 && isStarted()) {
-			scheduler.start();
-		}
+		
+		scheduler.recalcState();
 	}
 	
 	public void removeObserver(Connection c) {
 		observers.remove(c);
-		if(observers.size() == 0 && isStarted()) {
-			scheduler.stop();
-		}
+		scheduler.recalcState();
 	}
 	
 	public void broadcastSignal(SignalOut signalOut) {
@@ -151,29 +158,48 @@ public class GameState
 	public synchronized void receiveTick() {
 		this.balance.addMoney(BigInteger.valueOf(1));
 		this.map.receiveTick();
-		for (Guest guest : guests) {
-			guest.tick();
+		Iterator<Guest> it = guests.iterator();
+		while(it.hasNext()) {
+			Guest g = it.next();
+			g.tick();
+			if(g.readyToRemove()) {
+				it.remove();
+			}
 		}
-		//guestCounter.tick();
+		guestCounter.tick();
 		balance.broadcastChanges();
 	}
 	
-	public boolean isStarted() {
-		return scheduler != null;
-	}
-	
 	public void dropGuestAt(Guest g, Cell cell) {
-		//TODO implement
+		g.notifyGameover(cell);
 	}
 	
-	public void startPark() {
-		if(isStarted()) {
+	/*public void closePark() {
+		if(parkStatus != ParkStatus.OPEN) {
 			return;
 		}
-		scheduler = new Scheduler(this);
-		scheduler.start();
-		addRandomGuest();
+		parkStatus = ParkStatus.CLOSING;
+	}*/
+	
+	public void startPark() {
+		if(parkStatus != ParkStatus.CLOSED) {
+			return;
+		}
+		parkStatus = ParkStatus.OPEN;
 		broadcastSignal(new SignalOutGameStartpark());
+		scheduler.recalcState();
+	}
+	
+	public boolean isOpen() {
+		return parkStatus == ParkStatus.OPEN;
+	}
+	
+	public void setTickSpeed(long i) {
+		scheduler.setAbsoluteSpeed(i);
+	}
+	
+	public List<Guest> getGuestsCopy() {
+		return List.copyOf(guests);
 	}
 	
 }
