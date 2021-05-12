@@ -6,7 +6,9 @@ import hu.g14de.gamestate.IMap;
 import hu.g14de.gamestate.mapelements.Joinable;
 
 public class Idle extends GuestState {
-	
+
+	enum Target {Food, Fun, Leave}
+
 	public Idle(Guest g) {
 		super(g);
 	}
@@ -30,15 +32,43 @@ public class Idle extends GuestState {
 		}
 		getGuest().goTo(randomBuilding);
 	}
-	
+
+	public Target thinkAboutLife() //FIXME: Naming conventions
+	{
+		int lowerBoundForFun = 1; //FIXME: Decide when enough is enough for the guest
+		int lowerBoundForFood = 1; //FIXME: Decide when enough is enough for the guest
+		int lowerBoundForMoney = 0; //FIXME: Decide when enough is enough for the guest
+
+		int funLevel = this.getGuest().getFunLevel();
+		int foodLevel = this.getGuest().getFoodLevel();
+		int money = this.getGuest().getMoney();
+
+		if(funLevel > foodLevel && foodLevel >lowerBoundForFood &&funLevel > lowerBoundForFun)
+		{
+			return Target.Food;
+		}
+		else if(funLevel < foodLevel && foodLevel >lowerBoundForFood &&funLevel > lowerBoundForFun)
+		{
+			return Target.Fun;
+		}
+
+
+		return Target.Leave;
+	}
+
 	@Override
 	public void tick() {
-		boolean targetCategory = Utils.getRandom().nextBoolean();
-		if(targetCategory) {
-			tryFood();
-		}
-		else {
-			tryGame();
+		switch (thinkAboutLife())
+		{
+			case Food:
+				tryFood();
+				break;
+			case Fun:
+				tryGame();
+				break;
+			default:
+				this.getGuest().leavePark(); //FIXME: Not sure this is how it works
+				break;
 		}
 	}
 }
