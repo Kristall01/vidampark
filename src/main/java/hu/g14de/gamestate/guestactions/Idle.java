@@ -13,7 +13,7 @@ public class Idle extends GuestState {
 		super(g);
 	}
 	
-	private void tryFood() {
+	private void tryFood() { //TODO: Swap this with a closest place searching algorithm
 		IMap map = getGuest().getParent().getMap();
 		Joinable randomBuilding = map.getRandomFoodExecpt(getGuest().getLastBuildingEntered());
 		if(randomBuilding == null) {
@@ -33,21 +33,26 @@ public class Idle extends GuestState {
 		getGuest().goTo(randomBuilding);
 	}
 
-	public Target thinkAboutLife() //FIXME: Naming conventions
+	public Target thinkAboutLife() //FIXME: Naming conventions, refactor nested if
 	{
-		int lowerBoundForFun = 1; //FIXME: Decide when enough is enough for the guest
-		int lowerBoundForFood = 1; //FIXME: Decide when enough is enough for the guest
-		int lowerBoundForMoney = 0; //FIXME: Decide when enough is enough for the guest
+		int lowerBoundForFood = this.getGuest().getLowerBoundForFood();
+		int lowerBoundForFun = this.getGuest().getLowerBoundForFood();
+		int lowerBoundForMoney = this.getGuest().getLowerBoundForMoney();
 
 		int funLevel = this.getGuest().getFunLevel();
 		int foodLevel = this.getGuest().getFoodLevel();
 		int money = this.getGuest().getMoney();
 
-		if(funLevel > foodLevel && foodLevel >lowerBoundForFood &&funLevel > lowerBoundForFun)
+		if(money > lowerBoundForMoney)
+		{
+			return  Target.Leave;
+		}
+
+		if(funLevel > foodLevel && foodLevel > lowerBoundForFood &&funLevel > lowerBoundForFun)
 		{
 			return Target.Food;
 		}
-		else if(funLevel < foodLevel && foodLevel >lowerBoundForFood &&funLevel > lowerBoundForFun)
+		else if(funLevel < foodLevel && foodLevel > lowerBoundForFood &&funLevel > lowerBoundForFun)
 		{
 			return Target.Fun;
 		}
@@ -58,6 +63,9 @@ public class Idle extends GuestState {
 
 	@Override
 	public void tick() {
+		this.getGuest().gettingBored();
+		this.getGuest().emptyingStomach();
+
 		switch (thinkAboutLife())
 		{
 			case Food:
@@ -66,8 +74,9 @@ public class Idle extends GuestState {
 			case Fun:
 				tryGame();
 				break;
-			default:
+			case Leave:
 				this.getGuest().leavePark(); //FIXME: Not sure this is how it works
+			default:
 				break;
 		}
 	}
