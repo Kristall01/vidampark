@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Cell from "./Cell/Cell";
 import "./Map.scss";
-import Dot from "ui/Dot/Dot";
+import Guest from "./Guest/Guest";
 
 export default class Map extends Component {
 
@@ -52,9 +52,8 @@ export default class Map extends Component {
 			width: (this.props.renderWidth)+"px"
 		};
 		let guests = [];
-		let dotkey = 0;
 		this.props.guests.forEach(g => {
-			guests.push(<Dot key={dotkey++} path={g.path} cellSize={this.props.renderWidth / this.props.width} time={250}></Dot>);
+			guests.push(<Guest key={g.id} cellSize={this.props.renderWidth / this.props.width} time={this.props.time} {...g}></Guest>);
 		});
 		//const path = [{"x":0,"y":1},{"x":0,"y":2},{"x":0,"y":3},{"x":0,"y":4},{"x":0,"y":5},{"x":0,"y":6},{"x":1,"y":6},{"x":2,"y":6},{"x":3,"y":6},{"x":4,"y":6},{"x":4,"y":7},{"x":5,"y":7},{"x":6,"y":7},{"x":6,"y":6},{"x":7,"y":6},{"x":8,"y":6},{"x":8,"y":7},{"x":9,"y":7},{"x":10,"y":7},{"x":10,"y":6},{"x":10,"y":5},{"x":10,"y":4},{"x":10,"y":3},{"x":10,"y":2},{"x":9,"y":2},{"x":8,"y":2},{"x":7,"y":2},{"x":6,"y":2},{"x":5,"y":2}]
 		//const path= [{"x":1,"y":0}];
