@@ -1,0 +1,9 @@
+.guest-component {
+	position: absolute;
+	transition-property: all;
+	transition-timing-function: linear;
+	transition-duration: 1s;
+	transform: translate(-50%, -50%);
+	z-index: 5;
+	border: 1px solid black;
+}
