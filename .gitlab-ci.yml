@@ -1,7 +1,13 @@
 stages:
+    - start
     - build
     - merge
     - deploy
+
+start:
+    stage: start
+    when:
+        manual
 
 backend:
     stage: build
@@ -11,8 +17,6 @@ backend:
     artifacts:
         paths:
             - $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar
-    when:  
-        manual
 
 frontend:
     stage: build
@@ -28,8 +32,6 @@ frontend:
     artifacts:
         paths:
             - $CI_PROJECT_DIR/src/main/frontend/frontend.zip
-    when:  
-        manual
 
 merge:
     stage: merge
@@ -42,8 +44,6 @@ merge:
     artifacts:
         paths:
             - $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar
-    when:
-        manual
 
 deploy:
     stage: deploy
@@ -56,5 +56,3 @@ deploy:
         - npm install -g heroku
         - heroku plugins:install heroku-cli-deploy
         - heroku deploy:jar $CI_PROJECT_DIR/build/libs/g14-digital-entertainment.jar --jdk 11 --app g14-vidampark
-    when:  
-        manual
