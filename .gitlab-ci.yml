@@ -16,7 +16,7 @@ backend:
 
 frontend:
     stage: build
-    image: node:latest
+    image: node:15
     script:
         - apt update
         - apt install -y zip
