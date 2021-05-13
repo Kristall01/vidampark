@@ -4,8 +4,10 @@ stages:
     - merge
     - deploy
 
-start:
+startstage:
     stage: start
+    script:
+        - echo hello world
     when:
         manual
 
