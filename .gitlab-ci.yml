@@ -1,15 +1,7 @@
 stages:
-    - start
     - build
     - merge
     - deploy
-
-startstage:
-    stage: start
-    script:
-        - echo hello world
-    when:
-        manual
 
 backend:
     stage: build
