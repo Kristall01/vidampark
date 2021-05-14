@@ -24,8 +24,12 @@ public class Wandering extends Walking {
 	@Override
 	protected void reachedTarget() {
 		Guest g = getGuest();
-		target.joinGuest(g);
-		g.setState(new Busy(g, target.getTemplate()));
+		if(target.joinGuest(g)) {
+			g.setState(new Busy(g, target.getTemplate()));
+		}
+		else {
+			g.setState(new Idle(g));
+		}
 	}
 	
 }

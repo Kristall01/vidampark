@@ -12,35 +12,49 @@ import java.util.LinkedList;
 
 public class FoodBuilding extends BasicPlaceable implements Joinable {
 	
-	private LinkedList<Guest> waitingGuests;
+	private LinkedList<Guest> waitingGuests = new LinkedList<>();
 	private LinkedList<EatingSession> eatings = new LinkedList<>();
 	private Tickable tickable;
-	private boolean doneBuilding = false;
+	private FoodBuildingPhase phase;
 	
 	public FoodBuilding(IFoodTemplate template, int id, Cell cell, boolean instantBuild) {
 		super(cell, id, template);
 		Runnable switchToLive = () -> {
 			waitingGuests = new LinkedList<>();
 			tickable = this::tick;
-			doneBuilding = true;
+			phase = FoodBuildingPhase.RUNNING;
 		};
 		if(instantBuild) {
 			switchToLive.run();
-			doneBuilding = false;
 		}
 		else {
+			phase = FoodBuildingPhase.BUILDING;
 			tickable = new TickCounter(switchToLive, template.getBuildTime());
-			doneBuilding = true;
 		}
 	}
 	
 	public boolean isDoneBuilding() {
-		return doneBuilding;
+		return phase != FoodBuildingPhase.BUILDING;
 	}
 	
 	@Override
 	public void receiveTick() {
 		tickable.tick();
+	}
+	
+	@Override
+	public void beginDestruct() {
+		phase = FoodBuildingPhase.DESTUCT;
+		Cell c = getRandomRoadConnection().getCell();
+		for (Guest waitingGuest : waitingGuests) {
+			waitingGuest.notifyGameover(c);
+		}
+		waitingGuests.clear();
+	}
+	
+	@Override
+	public boolean readyToBeRemoved() {
+		return phase == FoodBuildingPhase.DESTUCT && eatings.isEmpty();
 	}
 	
 	private void tick() {
@@ -50,7 +64,7 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 			s.tick();
 			if(s.remove()) {
 				s.guest.addFoodLevel(this.getTemplate().getFoodBoost());
-				getCell().getMap().getGamestate().dropGuestAt(s.guest, getRandomRoadConnection().getCell());
+				s.guest.notifyGameover(getRandomRoadConnection().getCell());
 				it.remove();
 			}
 		}
@@ -62,6 +76,9 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 	
 	@Override
 	public boolean joinGuest(Guest guest) {
+		if(!readyToQueue()) {
+			return false;
+		}
 		if(eatings.size() != getTemplate().getMaxGuests()) {
 			eatings.add(new EatingSession(guest, getTemplate().getEatTime()));
 		}
@@ -81,7 +98,7 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 	}
 	
 	public boolean readyToQueue() {
-		return waitingGuests != null;
+		return phase == FoodBuildingPhase.RUNNING;
 	}
 	
 	private static class EatingSession {

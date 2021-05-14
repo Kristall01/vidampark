@@ -16,8 +16,8 @@ import java.util.Queue;
 public class Guest {
 
 	private int id, funLevel, foodLevel, money; //TODO: Ask Scrum master about lowerbounds
-	private int lowerBoundForFun, lowerBoundForFood, lowerBoundForMoney;
-	private int funDeprecationLevel, foodDeprecationLevel;
+	private double lowerBoundForFun, lowerBoundForFood, lowerBoundForMoney;
+	private double funDeprecationLevel, foodDeprecationLevel;
 	private GameState parent;
 	private IGuestState currentState;
 	private Cell currentCell;
@@ -34,7 +34,7 @@ public class Guest {
 		this.currentCell = entrance;
 		this.color = '#'+Integer.toHexString(Utils.getRandom().nextInt(16777216)); //256 ^ 3
 
-		this.funLevel = Utils.getRandom().nextInt(500);
+		/*this.funLevel = Utils.getRandom().nextInt(500);
 		this.lowerBoundForFun=Utils.getRandom().nextInt(this.funLevel/4);
 		this.funDeprecationLevel=Utils.getRandom().nextInt(funLevel/100);
 
@@ -43,7 +43,7 @@ public class Guest {
 		this.foodDeprecationLevel=Utils.getRandom().nextInt(foodLevel/100);
 
 		this.money = Utils.getRandom().nextInt(9999);
-		this.lowerBoundForMoney=Utils.getRandom().nextInt(money/20);
+		this.lowerBoundForMoney=Utils.getRandom().nextInt(money/20);*/
 
 		setVisible(true);
 	}
@@ -71,9 +71,9 @@ public class Guest {
 
 	public int getMoney() {return this.money;}
 
-	public int getLowerBoundForFun() { return this.lowerBoundForFun; }
+	/*public int getLowerBoundForFun() { return this.lowerBoundForFun; }
 	public int getLowerBoundForFood() { return this.lowerBoundForFood; }
-	public int getLowerBoundForMoney() { return this.lowerBoundForMoney; }
+	public int getLowerBoundForMoney() { return this.lowerBoundForMoney; }*/
 
 	public void emptyingStomach()
 	{

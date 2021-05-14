@@ -57,7 +57,13 @@ public class Connection  {
 		}
 		catch (Exception e) {
 			getApp().getExceptionCollector().add(e);
-			crash(e.toString());
+			StringBuilder b = new StringBuilder();
+			b.append(e.toString());
+			for (StackTraceElement traceElement : e.getStackTrace()) {
+				b.append(traceElement.toString());
+				b.append('\n');
+			}
+			crash(b.toString());
 		}
 	}
 	
