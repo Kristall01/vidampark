@@ -58,7 +58,7 @@ public class IMap {
 	
 	
 	private Joinable getFromExcept(List<? extends Joinable> list, IBuildingTemplate temp) {
-		if(gameBuildings.isEmpty()) {
+		if(list.isEmpty()) {
 			return null;
 		}
 		if(temp == null) {
@@ -178,7 +178,15 @@ public class IMap {
 		else if(p instanceof FoodBuilding) {
 			foodBuildings.add((FoodBuilding) p);
 		}
-		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(tlCell, buildTime));
+		getGamestate().broadcastSignal(new SignalOutGameUpdatecell(tlCell/*, buildTime*/));
+	}
+	
+	public void destroyBuilding(int x, int y) {
+		Cell cell = getCellAt(x,y);
+		if(cell == null || !cell.hasContent()) {
+			return;
+		}
+		cell.getContent().beginDestruct();
 	}
 	
 	public Queue<Cell> findRoute(Cell from, Cell to, boolean addLastElement) {
@@ -247,6 +255,23 @@ public class IMap {
 	}
 	
 	public void receiveTick() {
+		Iterator<Placeable> j = buildings.iterator();
+		while(j.hasNext()) {
+			Placeable b = j.next();
+			b.receiveTick();
+			if(b.readyToBeRemoved()) {
+				IBuildingTemplate template = b.getTemplate();
+				Coordinate ownCoord = b.getCell().getCoordinate();
+				for(int x = 0; x < template.width(); ++x) {
+					for (int y = 0; y < template.height(); y++) {
+						getCellAt(x+ownCoord.getX(), y+ownCoord.getY()).setContent(null);
+					}
+				}
+				j.remove();
+				gamestate.broadcastSignal(new SignalOutGameUpdatecell(b.getCell()));
+			}
+		}
+		
 		for (Placeable building : buildings) {
 			building.receiveTick();
 		}

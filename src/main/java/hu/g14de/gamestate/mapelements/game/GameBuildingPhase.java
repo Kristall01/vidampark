@@ -4,6 +4,8 @@ public enum GameBuildingPhase {
 	
 	BUILDING,
 	WAITING,
-	PLAYING;
+	PLAYING,
+	DESTUCTING_PLAYING,
+	DESTUCTED
 	
 }

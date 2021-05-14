@@ -23,7 +23,7 @@ public class SignalInGameInit implements SignalIn {
 		}
 		c.sendSignal(new SignalOutGameCatalog(c.getObservedGamestate().getCatalog().getAvailableTemplates()));
 		for (Placeable building : c.getObservedGamestate().getMap().getBuildings()) {
-			c.sendSignal(new SignalOutGameUpdatecell(building.getCell(), 0));
+			c.sendSignal(new SignalOutGameUpdatecell(building.getCell()));
 		}
 		for(Guest guest : g.getGuestsCopy()) {
 			if(guest.isVisible()) {

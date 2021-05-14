@@ -42,6 +42,25 @@ public class GameBuilding extends BasicPlaceable implements Joinable {
 	}
 	
 	@Override
+	public void beginDestruct() {
+		if(currentPhase == GameBuildingPhase.WAITING) {
+			currentPhase = GameBuildingPhase.DESTUCTED;
+		}
+		else {
+			currentPhase = GameBuildingPhase.DESTUCTING_PLAYING;
+		}
+		for(Guest g : waitingGuests) {
+			g.notifyGameover(getRandomRoadConnection().getCell());
+		}
+		waitingGuests.clear();
+	}
+	
+	@Override
+	public boolean readyToBeRemoved() {
+		return currentPhase == GameBuildingPhase.DESTUCTED;
+	}
+	
+	@Override
 	public IGameTemplate getTemplate() {
 		return (IGameTemplate) super.getTemplate();
 	}
@@ -61,9 +80,12 @@ public class GameBuilding extends BasicPlaceable implements Joinable {
 	
 	@Override
 	public boolean joinGuest(Guest guest) {
-		waitingGuests.add(guest);
-		checkStart();
-		return true;
+		if(readyToQueue()) {
+			waitingGuests.add(guest);
+			checkStart();
+			return true;
+		}
+		return false;
 	}
 	
 	private void checkStart() {
@@ -81,11 +103,16 @@ public class GameBuilding extends BasicPlaceable implements Joinable {
 				for(int j = 0; j < ingameGuestCount; ++j) {
 					Guest c = ingameGuestArray[j];
 					c.addFunLevel(getTemplate().getRoundMoralBoost());
-					getCell().getMap().getGamestate().dropGuestAt(c, getRandomRoadConnection().getCell());
+					c.notifyGameover(getRandomRoadConnection().getCell());
 					ingameGuestArray[j] = null;
 				}
 				ingameGuestCount = 0;
-				switchToWaitPhase();
+				if(currentPhase == GameBuildingPhase.DESTUCTING_PLAYING) {
+					this.currentPhase = GameBuildingPhase.DESTUCTED;
+					this.receiver = Tickable.none;
+					return;
+				}
+ 				switchToWaitPhase();
 			}, getTemplate().getPlaytime());
 		}
 	}

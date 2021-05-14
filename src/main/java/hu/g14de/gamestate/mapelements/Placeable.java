@@ -11,4 +11,7 @@ public interface Placeable
 	void receiveTick();
 	Road getRandomRoadConnection();
 	int getID();
+	void beginDestruct();
+	boolean readyToBeRemoved();
+	
 }

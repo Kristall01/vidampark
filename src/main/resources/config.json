@@ -152,7 +152,7 @@
 			"idleCost": 100,
 			"category": "game",
 			"maxPlayers": 16,
-			"playTime": 240,
+			"playTime": 20,
 			"roundCost": 20,
 			"minPlayers": 8,
 			"moraleBoost": 40,

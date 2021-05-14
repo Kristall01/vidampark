@@ -33,7 +33,7 @@ public class Idle extends GuestState {
 		getGuest().goTo(randomBuilding);
 	}
 
-	public Target thinkAboutLife() //FIXME: Naming conventions, refactor nested if
+/*	public Target thinkAboutLife() //FIXME: Naming conventions, refactor nested if
 	{
 		int lowerBoundForFood = this.getGuest().getLowerBoundForFood();
 		int lowerBoundForFun = this.getGuest().getLowerBoundForFood();
@@ -59,7 +59,7 @@ public class Idle extends GuestState {
 
 
 		return Target.Leave;
-	}
+	}*/
 
 	@Override
 	public void tick() {

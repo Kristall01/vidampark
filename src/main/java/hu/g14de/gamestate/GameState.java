@@ -159,7 +159,7 @@ public class GameState
 		this.balance.addMoney(BigInteger.valueOf(1));
 		this.map.receiveTick();
 		Iterator<Guest> it = guests.iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			Guest g = it.next();
 			g.tick();
 			if(g.readyToRemove()) {
@@ -168,10 +168,6 @@ public class GameState
 		}
 		guestCounter.tick();
 		balance.broadcastChanges();
-	}
-	
-	public void dropGuestAt(Guest g, Cell cell) {
-		g.notifyGameover(cell);
 	}
 	
 	/*public void closePark() {
