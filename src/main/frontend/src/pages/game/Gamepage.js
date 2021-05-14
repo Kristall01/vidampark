@@ -3,6 +3,7 @@ import Mapelement from './Map/Map';
 import "./Gamepage.css";
 import Catalog from "ui/catalog/Catalog"
 import Settings from "ui/settings/Settings"
+import BuildingInfo from "ui/buildinginfo/BuildingInfo"
 
 export default class Gamepage extends Component {
 
@@ -17,6 +18,10 @@ export default class Gamepage extends Component {
 			started: false,
 			catalogHidden: true,
 			settingsHidden: true,
+			buildingInfo: {
+				hidden: true,
+				title: "title",
+			},
 			catalog: [],
 			buildings: [],
 			targetBuilding: null,
@@ -68,6 +73,10 @@ export default class Gamepage extends Component {
 				this.updateState("catalog", data);
 				break;
 			}
+			case "buildinginfo": {
+				this.updateState("buildingInfo", data);
+				break;
+			}
 			case "initiated": {
 				this.updateState('initiated', true);
 			}
@@ -116,20 +125,6 @@ export default class Gamepage extends Component {
 				this.updateState("tickspeed", data);
 				break;
 			}
-			//removed
-			/*case "moveguest": {
-				let {path, guestID} = data;
-				let guests = this.state.guests;
-				guests.set(guestID, {
-					path: path
-				});
-				this.updateState("guests", guests);
-				break;
-			}
-			case "route": {
-				console.log(data);
-				break;
-			}*/
 			default: {
 
 			}
@@ -159,6 +154,20 @@ export default class Gamepage extends Component {
 		this.updateState('targetBuilding', type);
 	}
 
+	handleBuildingClick(x,y) {
+		this.props.signal.send("getbuildinginfo", {
+			x: x,
+			y: y,
+		});
+	}
+
+	handleDestroyClick(x,y) {
+		this.props.signal.send("destroybuilding", {
+			x: x,
+			y: y,
+		});
+	}
+
 	handleCellClick(x,y) {
 		if(this.state.targetBuilding) {
 			this.props.signal.send("placebuilding", {
@@ -178,7 +187,7 @@ export default class Gamepage extends Component {
 			let {width, height} = this.state.mapSize;
 			let calcWidth = this.state.cellSize*width;
 			let calcHeight = this.state.cellSize*height;
-			map = <Mapelement time={this.state.tickspeed} guests={this.state.guests} handleCellClick={this.handleCellClick.bind(this)} buildings={this.state.buildings} renderWidth={calcWidth} width={width} height={height} renderHeight={calcHeight}></Mapelement>
+			map = <Mapelement time={this.state.tickspeed} guests={this.state.guests} handleCellClick={this.handleCellClick.bind(this)}  handleBuildingClick={this.handleBuildingClick.bind(this)} buildings={this.state.buildings} renderWidth={calcWidth} width={width} height={height} renderHeight={calcHeight}></Mapelement>
 		}
 
 		let disabledButton = this.state.started ? "TRUE" : null;
@@ -188,6 +197,11 @@ export default class Gamepage extends Component {
 			:
 			<button className="pauseButton" onClick={this.openCatalog.bind(this)}>🏢 katalógus</button>
 		;
+
+		let buildingInfo = <></>;
+		if(!this.state.buildingInfo.hidden) {
+			buildingInfo = <BuildingInfo onDestroyClick={this.handleDestroyClick.bind(this)} data={this.state.buildingInfo} ></BuildingInfo>;
+		}
 
         return (
             <div className="Gamepage" onWheel={this.zoomEvent.bind(this)}>
@@ -199,12 +213,12 @@ export default class Gamepage extends Component {
                         <button disabled={disabledButton} className="openParkButton" onClick={() => this.props.signal.send("startpark", {})}>🚪Open Park</button>
                         <button className="pauseButton" onClick={() => this.props.signal.send("pause")}>{this.state.paused ? "▶ Play" : "⏸ Pause"}</button>
 						{catalogBtn}
-                        {/*<button className="menuButton" onClick={ () => this.openSettings(open) }>Menu</button>*/}
                         <button className="menuButton" onClick={ () => this.openSettings(true) }>Beállítások</button>
 						<button className="leaveButton" onClick={ () => this.props.signal.send("leave", {}) }>🔙 vissza</button>
                     </div>
                 </header>
                 <div className="main">
+					{buildingInfo}
 					{map}
                 </div>
             </div>

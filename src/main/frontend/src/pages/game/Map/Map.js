@@ -7,13 +7,11 @@ export default class Map extends Component {
 
 	getWidth() 
 	{
-		//return this.props.sizeWidth;
 		return this.props.width;
 	}
 
 	getHeight() 
 	{
-		//return this.props.sizeHeight;
 		return this.props.height;
 	}
 
@@ -39,7 +37,7 @@ export default class Map extends Component {
 			for(let x = 0; x < this.getWidth(); ++x) 
 			{
 				if(fakeMap[y][x]) {
-					row.push(<Cell onClick={() => this.props.handleCellClick(x,y)} key={++key} content={fakeMap[y][x]} x={x} y={y}/>);
+					row.push(<Cell onClick={() => this.props.handleCellClick(x,y)} onBuildingClick={() => this.props.handleBuildingClick(x,y)} key={++key} content={fakeMap[y][x]} x={x} y={y}/>);
 				}
 				else {
 					row.push(<Cell onClick={() => this.props.handleCellClick(x,y)} key={++key} x={x} y={y}/>);

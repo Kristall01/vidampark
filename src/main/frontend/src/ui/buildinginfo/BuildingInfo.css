@@ -1,0 +1,40 @@
+.building-info {
+    width: min-content;
+    border: 2px solid black;
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(177,177,177,1) 100%);
+    border-radius: 20px;
+    padding: 15px;
+    padding-top: 13px;
+    position: absolute;
+    z-index: 1;
+}
+
+.building-info h1 {
+    text-align: center;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+}
+
+.building-info-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-flow: nowrap;
+}
+
+.building-info-body-right {
+    margin-left: 20px;
+}
+
+.building-info label {
+    display: block;
+    white-space: nowrap;
+}
+
+.destroy-building-button {
+    margin-top: 10px;
+    display: block;
+    background-color: rgb(228, 139, 139);
+    border-radius: 10px;
+    width: 100%;
+}
