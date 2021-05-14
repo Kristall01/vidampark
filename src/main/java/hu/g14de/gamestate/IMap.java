@@ -23,6 +23,7 @@ public class IMap {
 	private final List<GameBuilding> gameBuildings = new ArrayList<>();
 	private final List<FoodBuilding> foodBuildings = new ArrayList<>();
 	private Cell entrance;
+	private int nextID = 0;
 	
 	public IMap(GameState gamestate, int width, int height) {
 		this.gamestate = gamestate;
@@ -160,7 +161,7 @@ public class IMap {
 		}
 		
 		//set cells' content
-		Placeable p = template.createInstance(tlCell, !getGamestate().isOpen());
+		Placeable p = template.createInstance(tlCell, ++nextID, !getGamestate().isOpen());
 		for(int iX = x; iX < x+template.width(); ++iX) {
 			for (int iY = y; iY < y+template.height(); ++iY) {
 				getCellAt(iX, iY).setContent(p);

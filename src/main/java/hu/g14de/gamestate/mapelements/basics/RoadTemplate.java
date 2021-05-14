@@ -12,8 +12,13 @@ public class RoadTemplate extends JsonBuildingTemplate {
 	}
 	
 	@Override
-	public Placeable createInstance(Cell at, boolean instantBuild) {
-		return new Road(at, this, instantBuild);
+	public Placeable createInstance(Cell at, int id, boolean instantBuild) {
+		return new Road(at, id, this, instantBuild);
+	}
+	
+	@Override
+	public boolean isComplex() {
+		return false;
 	}
 	
 }

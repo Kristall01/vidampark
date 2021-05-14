@@ -22,8 +22,8 @@ public class GameBuilding extends BasicPlaceable implements Joinable {
 	private Tickable receiver;
 	private GameBuildingPhase currentPhase;
 	
-	public GameBuilding(IGameTemplate template, Cell cell, boolean instantBuild) {
-		super(cell, template);
+	public GameBuilding(IGameTemplate template, int id, Cell cell, boolean instantBuild) {
+		super(cell, id, template);
 		ingameGuestArray = new Guest[template.getMaxPlayers()];
 		if(instantBuild) {
 			minPlayers = template.getMinPlayersDefault();

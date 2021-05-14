@@ -12,8 +12,13 @@ public class JsonGameTemplate extends JsonBuildingTemplate implements IGameTempl
 	}
 	
 	@Override
-	public Placeable createInstance(Cell cell, boolean instantBuild) {
-		return new GameBuilding(this, cell, instantBuild);
+	public Placeable createInstance(Cell cell, int id, boolean instantBuild) {
+		return new GameBuilding(this, id, cell, instantBuild);
+	}
+	
+	@Override
+	public boolean isComplex() {
+		return true;
 	}
 	
 	@Override

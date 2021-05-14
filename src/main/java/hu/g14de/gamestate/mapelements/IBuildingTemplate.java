@@ -10,12 +10,13 @@ public interface IBuildingTemplate {
 	int getBuildCost();
 	int getBuildTime();
 	boolean isRoad();
-	Placeable createInstance(Cell at, boolean instantBuild);
+	Placeable createInstance(Cell at, int id, boolean instantBuild);
 	int width();
 	int height();
 	String mapIcon();
 	String shopIcon();
 	Object serialize();
 	int getIdleCost();
+	boolean isComplex();
 	
 }

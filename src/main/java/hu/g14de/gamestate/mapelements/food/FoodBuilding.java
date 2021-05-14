@@ -16,8 +16,8 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 	private LinkedList<EatingSession> eatings = new LinkedList<>();
 	private Tickable tickable;
 	
-	public FoodBuilding(IFoodTemplate template, Cell cell, boolean instantBuild) {
-		super(cell, template);
+	public FoodBuilding(IFoodTemplate template, int id, Cell cell, boolean instantBuild) {
+		super(cell, id, template);
 		Runnable switchToLive = () -> {
 			waitingGuests = new LinkedList<>();
 			tickable = this::tick;

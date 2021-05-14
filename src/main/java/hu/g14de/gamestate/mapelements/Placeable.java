@@ -10,5 +10,5 @@ public interface Placeable
 	IBuildingTemplate getTemplate();
 	void receiveTick();
 	Road getRandomRoadConnection();
-	
+	int getID();
 }

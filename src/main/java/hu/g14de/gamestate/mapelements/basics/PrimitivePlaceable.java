@@ -10,8 +10,8 @@ public class PrimitivePlaceable extends BasicPlaceable {
 	private boolean built;
 	private Tickable t;
 	
-	public PrimitivePlaceable(Cell cell, IBuildingTemplate template, boolean instantBuild) {
-		super(cell, template);
+	public PrimitivePlaceable(Cell cell, int id, IBuildingTemplate template, boolean instantBuild) {
+		super(cell, id, template);
 		if(instantBuild) {
 			t = () -> {};
 		}

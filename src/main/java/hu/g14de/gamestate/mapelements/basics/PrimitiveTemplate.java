@@ -11,8 +11,13 @@ public class PrimitiveTemplate extends JsonBuildingTemplate {
 	}
 	
 	@Override
-	public PrimitivePlaceable createInstance(Cell cell, boolean instantBuild) {
-		return new PrimitivePlaceable(cell,this,instantBuild);
+	public PrimitivePlaceable createInstance(Cell cell, int id, boolean instantBuild) {
+		return new PrimitivePlaceable(cell,id, this,instantBuild);
+	}
+	
+	@Override
+	public boolean isComplex() {
+		return false;
 	}
 	
 }

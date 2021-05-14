@@ -7,8 +7,8 @@ public class Road extends PrimitivePlaceable {
 	
 	public Road visitedFrom = null;
 	
-	public Road(Cell cell, IBuildingTemplate template, boolean instantBuild) {
-		super(cell, template, instantBuild);
+	public Road(Cell cell, int id, IBuildingTemplate template, boolean instantBuild) {
+		super(cell, id, template, instantBuild);
 	}
 	
 }

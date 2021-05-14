@@ -9,8 +9,9 @@ public abstract class BasicPlaceable implements Placeable {
 	
 	private Cell cell;
 	private IBuildingTemplate template;
+	private int id;
 	
-	public BasicPlaceable(Cell cell, IBuildingTemplate template) {
+	public BasicPlaceable(Cell cell, int id, IBuildingTemplate template) {
 		this.cell = cell;
 		this.template = template;
 	}
@@ -29,5 +30,10 @@ public abstract class BasicPlaceable implements Placeable {
 	@Override
 	public IBuildingTemplate getTemplate() {
 		return template;
+	}
+	
+	@Override
+	public int getID() {
+		return this.id;
 	}
 }

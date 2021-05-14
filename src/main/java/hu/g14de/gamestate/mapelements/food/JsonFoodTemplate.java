@@ -11,8 +11,13 @@ public class JsonFoodTemplate extends JsonBuildingTemplate implements IFoodTempl
 	}
 	
 	@Override
-	public FoodBuilding createInstance(Cell cell, boolean instantBuild) {
-		return new FoodBuilding(this, cell, instantBuild);
+	public FoodBuilding createInstance(Cell cell, int id, boolean instantBuild) {
+		return new FoodBuilding(this, id, cell, instantBuild);
+	}
+	
+	@Override
+	public boolean isComplex() {
+		return true;
 	}
 	
 	@Override
