@@ -5,7 +5,7 @@ import "./Cell.scss";
 class Cell extends PureComponent {
 
 	render() {
-		let {onClick, content, building} = this.props;
+		let {onClick, onBuildingClick, content, building} = this.props;
 		let htmlContent = null;
 		if(content) {
 			let {width, height, mapIcon, nickName} = content;
@@ -21,7 +21,7 @@ class Cell extends PureComponent {
 			}
 			htmlContent =
 				<div className="content" style={style}>
-					<img alt={nickName} className="image" src={"/buildings/map/"+mapIcon}></img>
+					<img alt={nickName} onClick={onBuildingClick} className="image" src={"/buildings/map/"+mapIcon}></img>
 					{hammer}
 					{buildtime}
 				</div>;
