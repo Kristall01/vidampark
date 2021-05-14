@@ -39,6 +39,6 @@ public class SignalOutGameBuildinginfo extends SignalOut {
 			data.addProperty("státusz: ", building.isDoneBuilding() ? "várja a vendégkeket" : "építkezés alatt");
 		}
 		o.add("data", data);
-		return data;
+		return o;
 	}
 }
