@@ -1,6 +1,7 @@
 package hu.g14de.restapi.signals.out.game;
 
 import com.google.gson.JsonObject;
+import hu.g14de.gamestate.Coordinate;
 import hu.g14de.gamestate.mapelements.Placeable;
 import hu.g14de.gamestate.mapelements.food.FoodBuilding;
 import hu.g14de.gamestate.mapelements.game.GameBuilding;
@@ -21,7 +22,11 @@ public class SignalOutGameBuildinginfo extends SignalOut {
 	@Override
 	public Object serializedData() {
 		JsonObject o = new JsonObject();
-		o.addProperty("id", p.getID());
+		
+		Coordinate coord = p.getCell().getCoordinate();
+		o.addProperty("x", coord.getX());
+		o.addProperty("y", coord.getY());
+		
 		o.addProperty("title", p.getTemplate().getNickname());
 		JsonObject data = new JsonObject();
 		if(p instanceof GameBuilding) {
