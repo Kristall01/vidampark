@@ -44,9 +44,10 @@ public class EnvironmentBootstrapper {
 		if(frontendDir.exists()) {
 			return;
 		}
-		copyFile("frontend.zip");
-		ZipFile file = new ZipFile("frontend.zip");
-		file.extractAll("frontend");
+		if(null != copyFile("frontend.zip")) {
+			ZipFile file = new ZipFile("frontend.zip");
+			file.extractAll("frontend");
+		}
 	}
 	
 	public File copyFile(String fileName) throws IOException {
@@ -62,6 +63,9 @@ public class EnvironmentBootstrapper {
 				in.transferTo(out);
 				in.close();
 				out.close();
+			}
+			else {
+				return null;
 			}
 		}
 		return target;
