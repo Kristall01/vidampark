@@ -41,6 +41,7 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 			EatingSession s = it.next();
 			s.tick();
 			if(s.remove()) {
+				s.guest.addFoodLevel(this.getTemplate().getFoodBoost());
 				getCell().getMap().getGamestate().dropGuestAt(s.guest, getRandomRoadConnection().getCell());
 				it.remove();
 			}
@@ -80,7 +81,9 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 			guest = g;
 			eatTicks = e;
 		}
-		
+
+		//public getGuest() {return this.guest;}
+
 		public void tick() {
 			--eatTicks;
 		}
