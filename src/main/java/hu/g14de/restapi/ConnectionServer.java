@@ -41,6 +41,7 @@ public class ConnectionServer {
 		gameDomain.add("leave", new SignalInGameLeave());
 		gameDomain.add("pause", new SignalInGamePause());
 		gameDomain.add("tickspeed", new SignalInGameTickspeed());
+		gameDomain.add("getbuildinginfo", new SignalInGameGetbuildinginfo());
 		//gameDomain.add("route", new SignalInGameRoute());
 		
 		selectDomain.add("create", new SignalInSelectCreate());

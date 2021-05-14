@@ -15,19 +15,27 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 	private LinkedList<Guest> waitingGuests;
 	private LinkedList<EatingSession> eatings = new LinkedList<>();
 	private Tickable tickable;
+	private boolean doneBuilding = false;
 	
 	public FoodBuilding(IFoodTemplate template, int id, Cell cell, boolean instantBuild) {
 		super(cell, id, template);
 		Runnable switchToLive = () -> {
 			waitingGuests = new LinkedList<>();
 			tickable = this::tick;
+			doneBuilding = true;
 		};
 		if(instantBuild) {
 			switchToLive.run();
+			doneBuilding = false;
 		}
 		else {
 			tickable = new TickCounter(switchToLive, template.getBuildTime());
+			doneBuilding = true;
 		}
+	}
+	
+	public boolean isDoneBuilding() {
+		return doneBuilding;
 	}
 	
 	@Override
@@ -63,6 +71,10 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 		return true;
 	}
 	
+	public int getGuestsWaitingInQueue() {
+		return waitingGuests.size();
+	}
+	
 	@Override
 	public IFoodTemplate getTemplate() {
 		return (IFoodTemplate) super.getTemplate();
@@ -93,5 +105,7 @@ public class FoodBuilding extends BasicPlaceable implements Joinable {
 		}
 		
 	}
+	
+	
 	
 }

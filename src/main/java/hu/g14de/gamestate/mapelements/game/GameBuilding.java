@@ -90,8 +90,15 @@ public class GameBuilding extends BasicPlaceable implements Joinable {
 		}
 	}
 	
+	public int playersInQueue() {
+		return this.waitingGuests.size();
+	}
+	
 	public boolean readyToQueue() {
 		return currentPhase == GameBuildingPhase.PLAYING || currentPhase == GameBuildingPhase.WAITING;
 	}
 	
+	public GameBuildingPhase getCurrentPhase() {
+		return currentPhase;
+	}
 }
