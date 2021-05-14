@@ -64,8 +64,16 @@ public class Idle extends GuestState {
 	@Override
 	public void tick() {
 
-
-		switch (thinkAboutLife())
+		boolean tmp = Utils.getRandom().nextBoolean();
+		if( tmp)
+		{
+			tryFood();
+		}
+		else
+		{
+			tryGame();
+		}
+		/*switch (thinkAboutLife())
 		{
 			case Food:
 				tryFood();
@@ -77,6 +85,6 @@ public class Idle extends GuestState {
 				this.getGuest().leavePark(); //FIXME: Not sure this is how it works
 			default:
 				break;
-		}
+		}*/
 	}
 }
