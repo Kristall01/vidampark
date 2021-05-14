@@ -120,6 +120,8 @@ public class Guest {
 	}
 
 	public void tick() {
+		gettingBored();
+		emptyingStomach();
 		currentState.tick();
 	}
 

@@ -63,8 +63,7 @@ public class Idle extends GuestState {
 
 	@Override
 	public void tick() {
-		this.getGuest().gettingBored();
-		this.getGuest().emptyingStomach();
+
 
 		switch (thinkAboutLife())
 		{
